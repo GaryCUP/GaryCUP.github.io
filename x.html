@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="x.js"></script>
+    <link rel="stylesheet" type="text/css" href="x.css">
+</head>
+<body>
+<div class="bg">
+
+    <div class="out">
+        <div class="easy"> Easy:
+            <button name="btnStart" id="btnStartE" onclick="startE()">Start</button>
+            <h1>Objective: Get 5000 points in 10 rounds</h1>
+            <h3>Guess the correct number between 1-10</h3>
+            <h5>Rules:</h5>
+            <ol>
+                <li>2000 points if you guess the number correctly</li>
+                <li>1000 points if you are within 3 digits</li>
+                <li>10 points if you are within 6 digits</li>
+                <li>5 points if you are within 9 digits.</li>
+                <li>You don't lose points for placing non-numerical values in.</li>
+
+            </ol>
+            <input type="number" name="yourNum" id="yourNumE">
+            <button name="btnSubmit" id="btnSubmitE" onclick="guessNumEasy()">Submit</button>
+            <p id="roundE"></p>
+            <p id="scoreNumE"></p>
+        </div>
+
+        <div class="med"> Med:
+            <button name="btnStart" id="btnStartM" onclick="startM()">Start</button>
+            <h1>Objective: Get 10000 points in 5 rounds</h1>
+            <h3>Guess the correct number between 1-100</h3>
+            <h5>Rules:</h5>
+            <ol>
+                <li>10000 points if you guess the number correctly</li>
+                <li>5000 points if you are within 9 digits.</li>
+                <li>2000 points if you are within 25 digits</li>
+                <li>1000 points if you are within 50 digits</li>
+                <li>10 points if you are within 100 digits.</li>
+                <li>You will lose 10 points for placing non-numerical values in.</li>
+
+            </ol>
+            <input type="number" name="yourNum" id="yourNumM">
+            <button name="btnSubmit" id="btnSubmitM" onclick="guessNumMed()">Submit</button>
+            <p id="scoreNumM"></p>
+        </div>
+
+        <div class="hard"> Hard:
+            <button name="btnStart" id="btnStartH" onclick="startH()">Start</button>
+            <p></p>
+            <input type="number" name="yourNum" id="yourNumH">
+            <button name="btnSubmit" id="btnSubmitH" onclick="guessNumHard()">Submit</button>
+            <p id="scoreNumH"></p>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
