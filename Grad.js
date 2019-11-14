@@ -6,6 +6,7 @@ function getTime()
     var current_hour = date.getHours() ;
     var current_min = date.getMinutes();
     var current_sec=date.getSeconds();
-     window.alert(current_min , current_sec );
+    var theTime=new date(current_hour, current_min, current_sec);
+     window.alert(current_hour, current_min , current_sec );
 }
 
