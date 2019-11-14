@@ -6,3 +6,4 @@ function getTime()
     var current_hour = date.getHours();
     window.alert(current_hour);
 }
+
