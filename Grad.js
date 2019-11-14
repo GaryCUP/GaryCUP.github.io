@@ -1,5 +1,8 @@
-window.onload = getTime()
-
+function checkTime(i) {
+  if (i < 10) {
+    i = "0" + i;
+  }
+  return i;
 function getTime()
 {
     var date = new Date();
@@ -16,9 +19,5 @@ function getTime()
   }, 500)
    
 }
-function checkTime(i) {
-  if (i < 10) {
-    i = "0" + i;
-  }
-  return i;
+
 }
