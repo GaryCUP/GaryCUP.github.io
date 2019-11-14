@@ -1,4 +1,4 @@
-window.onload = Alpha;
+//window.onload = Alpha;
 var lives;
 var points=0;
 var yourNum;
