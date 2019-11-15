@@ -3,7 +3,7 @@ function checkTime(i) {
     i = "0" + i;
   }
   return i;
-
+}
 function getTime()
 {
     var date = new Date();
@@ -18,5 +18,5 @@ function getTime()
   t = setTimeout(function() {
     startTime()
   }, 500)
-}}
+}
 getTime();
