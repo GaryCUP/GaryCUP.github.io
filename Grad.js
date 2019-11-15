@@ -16,7 +16,7 @@ function getTime()
   current_sec = checkTime(current_sec);
   document.getElementById('time').innerHTML = current_hour + ":" + current_min + ":" + current_sec;
   t = setTimeout(function() {
-    startTime()
+    getTime()
   }, 500)
 }
 getTime();
