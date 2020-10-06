@@ -48,7 +48,7 @@ function startH(){
 
 }
 function guessNumEasy() {
-    document.getElementById("roundE").innerHTML=("Round: " + round);
+    //document.getElementById("roundE").innerHTML=("Round: " + round);
     var theNum = Math.floor(Math.random() * 10);
     yourNum = parseInt(document.getElementById("yourNumE").value);
     //alert(yourNum);
@@ -56,6 +56,10 @@ function guessNumEasy() {
 
    if(points>=5000){
         alert("You Win!!!")
+<<<<<<< HEAD
+=======
+        document.getElementById("btnSubmitE").disabled=true; }
+>>>>>>> 56dea9685d920a035ef3aa91389cf3bb898da693
    }
 
    else
@@ -63,7 +67,6 @@ function guessNumEasy() {
          if (yourNum == theNum) {
            alert("YOU WIN!!!");
            points += 2000;
-           round++;
        } else if (Math.abs(yourNum - theNum) >= 1 && Math.abs(yourNum - theNum) < 4) {
              alert("YOU did well!!!");
            points += 1000;
