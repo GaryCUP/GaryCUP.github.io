@@ -48,7 +48,7 @@ function startH(){
 
 }
 function guessNumEasy() {
-    document.getElementById("roundE").innerHTML=("Round: " + round);
+    //document.getElementById("roundE").innerHTML=("Round: " + round);
     var theNum = Math.floor(Math.random() * 10);
     yourNum = parseInt(document.getElementById("yourNumE").value);
     //alert(yourNum);
@@ -78,7 +78,7 @@ function guessNumEasy() {
        }
        document.getElementById("scoreNumE").innerText = "The actual number was: " + theNum + "\n" +
            "Score: " + points;
-       //document.getElementById("roundE").innerHTML = ("Round: " + round);
+       document.getElementById("roundE").innerHTML = ("Round: " + round);
 
    }
 
