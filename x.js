@@ -63,7 +63,6 @@ function guessNumEasy() {
          if (yourNum == theNum) {
            alert("YOU WIN!!!");
            points += 2000;
-           round++;
        } else if (Math.abs(yourNum - theNum) >= 1 && Math.abs(yourNum - theNum) < 4) {
              alert("YOU did well!!!");
            points += 1000;
@@ -79,7 +78,7 @@ function guessNumEasy() {
        }
        document.getElementById("scoreNumE").innerText = "The actual number was: " + theNum + "\n" +
            "Score: " + points;
-       document.getElementById("roundE").innerHTML = ("Round: " + round);
+       //document.getElementById("roundE").innerHTML = ("Round: " + round);
 
    }
 
