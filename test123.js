@@ -1,3 +1,4 @@
+window.onload=function(){
 function checkTime(i) {
     if (i < 10) {
         i = "0" + i;
@@ -19,3 +20,4 @@ function startTime() {
     }, 500);
 }
 startTime();
+}
