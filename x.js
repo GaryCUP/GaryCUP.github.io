@@ -56,6 +56,7 @@ function guessNumEasy() {
 
    if(points>=5000){
         alert("You Win!!!")
+        document.getElementById("btnSubmitE").disabled=true; }
    }
 
    else
