@@ -53,22 +53,27 @@ function guessNumEasy() {
     yourNum = parseInt(document.getElementById("yourNumE").value);
     //alert(yourNum);
    if(round>10){alert("Game Over!!"); document.getElementById("btnSubmitE").disabled=true; }
-   if(points<5000)
+
+   if(points>=5000){
+        alert("You Win!!!")
+   }
+
+   else
    {
          if (yourNum == theNum) {
-           //alert("YOU WIN!!!");
+           alert("YOU WIN!!!");
            points += 2000;
            round++;
        } else if (Math.abs(yourNum - theNum) >= 1 && Math.abs(yourNum - theNum) < 4) {
-             //alert("YOU did well!!!");
+             alert("YOU did well!!!");
            points += 1000;
            round++;
        } else if (Math.abs(yourNum - theNum) >= 4 && Math.abs(yourNum - theNum) < 7) {
-           //alert("YOU did ok!!!");
+           alert("YOU did ok!!!");
            points += 10;
            round++;
        } else {
-          // alert("YOU did awful!!!");
+          alert("YOU did awful!!!");
            points += 1;
            round++;
        }
@@ -78,9 +83,7 @@ function guessNumEasy() {
 
    }
 
-    else{
-        alert("You Win!!!")
-   }
+   
 
 }
 
