@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+    <link rel="stylesheet" href="Daylio.css">
+
+</head>
+
+<body>
+    <div class="file-upload">
+        <div class="file-upload-button">
+            <input type="file" name="File Upload" id="update-data-from-file" accept=".csv" />
+            <label class="button" id="fileLabel" for="update-data-from-file">
+                Upload CSV
+            </label>
+
+            <label class="button" id="epwwd" onclick="EPWD()">
+                Entries per weeekday
+            </label>
+            <label class="button" id="mood" onclick="TotalMoods()">
+                Total Moods
+            </label>
+            <label class="button" id="acts" onclick="TotalActs()">
+                Total Activities
+            </label>
+            <label class="button" id="MRat" onclick="TotalMoodRatings()">
+                Mood Ratings
+            </label>
+            <label class="button" id="MRatRollAvg" onclick="MoodRateRollingAverage()">
+                Mood Rolling Avg
+            </label>
+
+            <button onclick="MoodAvg()">Click me</button>
+            <button onclick="MoodRollingAvg()">Rolling</button>
+        </div>
+        <div class="file-upload-name" id="filename">No file chosen</div>
+    </div>
+
+
+    <canvas id="myChart" height="200"></canvas>
+    <script src="require.js"></script>
+    <script src=".\SMA\index.js"></script>
+    <script src="Daylio.js"></script>
+
+</body>
+
+</html>
