@@ -555,6 +555,6 @@ function GetMoodRollingAvg(arr, range, format) {
 }
 function MoodRollingAvg() {
     
-    mooRA=(sma(AllRoodRateofInts , 500,2));
+    mooRA=(sma(AllRoodRateofInts , 7,2));
     
 }
