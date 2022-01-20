@@ -46,9 +46,15 @@ function TotalTags() {
       bezierCurve: false,
       plugins: {
         zoom: {
+          limits: {
+            y: { min: 0 }
+          },
           zoom: {
             wheel: {
               enabled: true
+            },
+            pinch: {
+              ////enabled: true
             }
           }
         }
@@ -70,12 +76,6 @@ function TotalTags() {
               beginAtZero: true
               //reverse: true
             }
-          }
-        ],
-        xAxes: [
-          {
-            offset: true
-            //reverse: true
           }
         ]
       }
@@ -159,6 +159,16 @@ function loadFile() {
     //var AllTimes = [];
     //var alltagstimes = [,];
 
+    /*
+    var startDate = new Date("2013-07-10");
+var endDate = new Date("2013-07-10");
+
+for(i = 0; i < arrayDates.length; i++){
+if(arrayDates[i] >= startDate &&   arrayDates[i] <= endDate) {
+   alert('Yes');
+ }
+}
+    */
     for (var i = 0; i < newArr.length; i++) {
       AllTags[i] = newArr[i].tags;
       AllTimes[i] = convertTime(newArr[i].timestamp);
@@ -166,7 +176,7 @@ function loadFile() {
     }
     //return alltagstimes;
     ////////////////////////////////////countTags(alltagstimes);
-    countTags(AllTags);
+    countTags(AllTags, AllTimes);
   }
 }
 var BrTagCounter;
@@ -178,8 +188,7 @@ var test = [,];
 var hold = {};
 var counter = 0;
 
-function countTags(tags) {
-  //for some reason, it pushes everything to the beginning..
+function countTags(tags, times) {
   for (var bug = 0; bug < 1; bug++) {
     BrTagCounter = {};
     TagCounter = {};
@@ -286,3 +295,9 @@ function convertTime(epoch) {
   var time = new Date(epoch * 1000);
   return time.toLocaleString();
 }
+/*
+var arrayDates = [];
+
+arrayDates.push(new Date(2013, 7, 26));
+arrayDates.push(new Date(2013, 7, 27));
+*/
