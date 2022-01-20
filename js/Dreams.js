@@ -1,25 +1,40 @@
 ﻿document.getElementById("btnGraph").disabled = true;
 //document.getElementById("btnLoad").disabled = true;
-
+var coloor;
 var colorarray;
 var myBarChart;
 var ctx = document.getElementById("myChart");
 
 function getRandomColor() {
-  colorarray = [];
-  var letters = "0123456789ABCDEF".split("");
-  var color = "#";
+  var o = Math.round,
+    r = Math.random,
+    s = 255;
+  return (
+    "rgba(" +
+    o(r() * s) +
+    "," +
+    o(r() * s) +
+    "," +
+    o(r() * s) +
+    "," +
+    r().toFixed(1) +
+    ")"
+  );
+
+  ////colorarray = [];
+  ////var letters = "0123456789ABCDEF".split("");
+  ////var color = "#";
   // for (var cF = 0; cF < Object.keys(this).length; cF++)
   //{
 
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
+  ////for (var i = 0; i < 6; i++) {
+  ////    color += letters[Math.floor(Math.random() * 16)];
+  ////}
   // colorarray[cF] = color;
   //color = "#";
   // return color;
   // }
-  return color;
+  //// return color;
 }
 var x = 0;
 
@@ -30,12 +45,13 @@ function TotalTags() {
     data: {
       labels: AllTimes,
       //labels: "",
-      //hidden: true,
+      hidden: true,
+      // backgroundColor:,
       responsive: true,
       bezierCurve: false,
       animation: false,
       spanGaps: true, // enable for all datasets
-      fill: false,
+
       tension: 0,
 
       datasets: []
@@ -65,9 +81,10 @@ function TotalTags() {
           radius: 0
         }
       },
+      fill: true,
       animation: false,
       spanGaps: true, // enable for all datasets
-      // fill: false,
+
       tension: 0,
       scales: {
         yAxes: [
@@ -90,10 +107,13 @@ function TotalTags() {
 
   for (en in hold) {
     //hold[c].reverse();
+    coloor = getRandomColor();
     var newDataset = {
       label: en,
       data: [],
-      borderColor: getRandomColor(),
+      borderColor: coloor,
+      backgroundColor: coloor,
+      //backgroundColor:
       hidden: true
     };
     // var c = 0;
@@ -116,7 +136,6 @@ function TotalTags() {
 
   myChart.update();
 }
-
 var AllTimes = [];
 var AllTags = [];
 var alltagstimes = [,];
