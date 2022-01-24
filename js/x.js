@@ -52,14 +52,10 @@ function guessNumEasy() {
     var theNum = Math.floor(Math.random() * 10);
     yourNum = parseInt(document.getElementById("yourNumE").value);
     //alert(yourNum);
-   if(round>10){alert("Game Over!!"); document.getElementById("btnSubmitE").disabled=true; }
+   if(round>10 ){alert("Game Over!!"); document.getElementById("btnSubmitE").disabled=true; }
 
    if(points>=5000){
         alert("You Win!!!")
-<<<<<<< HEAD
-=======
-        document.getElementById("btnSubmitE").disabled=true; }
->>>>>>> 56dea9685d920a035ef3aa91389cf3bb898da693
    }
 
    else
