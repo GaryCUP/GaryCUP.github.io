@@ -17,7 +17,7 @@ function getRandomColor() {
     "," +
     o(r() * s) +
     "," +
-    r().toFixed(1) +
+    .5 +
     ")"
   );
 
