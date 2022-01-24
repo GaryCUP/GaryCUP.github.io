@@ -1,4 +1,4 @@
-﻿document.getElementById("btnGraph").disabled = true;
+﻿//document.getElementById("btnGraph").disabled = true;
 //document.getElementById("btnLoad").disabled = true;
 var coloor;
 var colorarray;
