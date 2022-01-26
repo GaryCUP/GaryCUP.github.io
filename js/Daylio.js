@@ -1021,6 +1021,45 @@ function EPWD() {
     });
 }
 
+function EPHOD() {
+    var obj = {
+        and: 2,
+        two: 1,
+        too: 1,
+        mother: 2
+    };
+    var ctx = document.getElementById("myChart");
+    alert("you are here.");
+    var data = {
+        labels: [],
+        datasets: [
+            {
+                label: "My dataset",
+                backgroundColor: getRandomColor(),
+                borderColor: getRandomColor(),
+                data: []
+            }
+        ]
+    };
+
+    Chart.pluginService.register({
+        beforeInit: function (chart) {
+            var data = chart.config.data;
+            for (var key in hourCounter) {
+                if (hourCounter.hasOwnProperty(key)) {
+                    data.labels.push("Hour of Day: " + key);
+                    data.datasets[0].data.push(hourCounter[key]);
+                }
+            }
+        }
+    });
+
+    var myBarChart = new Chart(ctx, {
+        type: "pie",
+        data: data
+    });
+}
+
 function TotalMoods() {
     var ctx = document.getElementById("myChart");
     alert("you are here.");
@@ -1220,7 +1259,9 @@ function csvToJson(data) {
         }
     */
         var DOW = data[i][2];
-        var HOD = data[i][3];
+        
+        //var HOD = data[i][3];
+        var HOD=moment((data[i][3]),'HH:mm').format('HH');
         var Mood = data[i][4];
         var Activities = data[i][5];
         var MoodRate = data[i].MoodLabRate;
@@ -1335,17 +1376,18 @@ var currTime;
 var hour;
 var hourCounter;
 function countTime(hourz) {
-    // currTime = new Date('March 13, 08 04:20');
-    hourCounter = {};
+     //currTime = moment().format("HH:MM");
+        hourCounter = {};
     for (var h = 1; h < hourz.length; h++) {
-        currTime = Date.parse(hourz[h]);
+       // currTime =moment([hourz[h]]).format("HH");
+        //currTime=moment((hourz[h]),'HH:mm').format('HH');
         if (hourCounter[hourz[h]]) {
             hourCounter[hourz[h]] += 1;
         } else {
             hourCounter[hourz[h]] = 1;
         }
     }
-    //console.log(moodCounter[1]);
+    console.log(hourCounter);
 }
 
 //  use for mood level avg

@@ -8,14 +8,18 @@
      
    </head>
    <body>
+      <canvas id="myChart"></canvas>
+      <h4 id="DreamRemRate">Dream Rememberance Rate</h4>
       <form id="jsonFile" name="jsonFile" enctype="multipart/form-data" method="post">
-	  <canvas id="myChart"></canvas>
          <fieldset>
             <h2>Dream Thing</h2>
             
             <input type='file' id='fileinput'>
             <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
             <input type='button' id='btnGraph' value='Graph It' onclick='TotalTags();' disabled='true'>
+            <input type='button' id='btnDreamMake' value='Make Dream File' onclick='makeADreams();'>
+            <input type='button' id='btnDreamDownload' value='Download Dream File' onclick='DownloadJSON();'>
+            <a id="downloadAnchorElem" style="display:none"></a>
             <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
          </fieldset>
       </form>

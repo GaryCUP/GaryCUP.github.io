@@ -3,7 +3,196 @@
 var coloor;
 var colorarray;
 var myBarChart;
+var numOfDreams;
+var totalDaysInDreamRange;
+var startDreamDate;
+var endDreamDate;
+var rateOfRememberence;
+var numDreamsToMake;
+var numTagsToMake=20;
+var selectedTags;
 var ctx = document.getElementById("myChart");
+var DreamFile=[{}];
+DreamFileTags=[];
+//DreamFile.timestamp="";
+function DownloadJSON(){
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(DreamFile));
+  var dlAnchorElem = document.getElementById('downloadAnchorElem');
+  dlAnchorElem.setAttribute("href",     dataStr     );
+  dlAnchorElem.setAttribute("download", "scene.json");
+  dlAnchorElem.click();}
+  
+function makeADreams(){
+  for(var x=0;x<1000;x++)
+  {
+    DreamFile.push(DreamFile.timestamp=9729);
+    DreamFile.push(DreamFile.tags=selectedTags);
+    
+  }
+}
+var listoffauxtags=["Role-playing",
+"Shortwave",
+"Speed-cubing",
+"Stand-up",
+"Sudoku",
+"Table",
+"Tesla",
+"Tetris",
+"Tutoring",
+"TV",
+"Video",
+"War-hammer",
+"Watching",
+"Watching",
+"Woodcarving",
+"Woodworking",
+"World-building",
+"Janggi",
+"Xiangqi",
+"Card",
+"Apples",
+"Asshole",
+"B/RTR",
+"Bang!",
+"Bid",
+"Blackjack",
+"Bluff",
+"Bridge",
+"Bohnanza",
+"Boss",
+"Canasta",
+"Cardfight!!Vanguard",
+"Cards",
+"Cassino",
+"Citadels",
+"Contract",
+"Coup",
+"Crazy",
+"Cribbage",
+"Dominion",
+"Double",
+"Dutch",
+"Egyptian",
+"Euchre",
+"Exploding",
+"Family",
+"Famous",
+"Fight",
+"Fluxx",
+"Gin",
+"Gods’",
+"GoFish",
+"Golf",
+"Guillotine",
+"Hanabi",
+"Hearts",
+"Hearthstone",
+"Jaipur",
+"Kings",
+"Legendary:",
+"Legendary",
+"Ligretto",
+"LoveLetter",
+"LuckandLogic",
+"MageRage",
+"Magic:",
+"Memory",
+"Mille",
+"Monopoly",
+"MONSTER",
+"Munchkin",
+"Nerts",
+"Old",
+"Phase",
+"Pinochle",
+"Pokémon",
+"Poker",
+"President",
+"Presidential",
+"Race",
+"Ratuki",
+"ROOK",
+"Rummy",
+"Scrabble",
+"Screw",
+"SentinelsoftheMultiverse",
+"Skat",
+"Skip",
+"Solitaire",
+"Speed",
+"Spit",
+"Splendor",
+"Spoons",
+"Star",
+"Sushi",
+"The",
+"Twenty-two",
+"UNO",
+"Up",
+"War",
+"Werewolf",
+"Whist",
+"Wonders",
+"You’re",
+"Yu-Gi-Oh!",
+"Acro",
+"Ballet",
+"Ballroom",
+"Bassoon",
+"Belly",
+"Bernie",
+"Bollywood",
+"Break",
+"Calypso",
+"Cheer",
+"Campos",
+"Double",
+"Fire",
+"Flamenco",
+"Flying",
+"Foxtrot",
+"Glockenspiel",
+"Gongs",
+"Greek",
+"Hip",
+"Kizomba",
+"Line",
+"Linya",
+"Modern",
+"Native",
+"Quickstep",
+"Soca",
+"Tango",
+"Viennese",
+"Waltz",
+"Zumba",
+"Bagpipes",
+"Banjo",
+"Bass",
+"Bassoon",
+"Bell",
+"Bongo",
+"Castanets",
+"Cello",
+"Clarinet",
+"Clavichord",
+"Conga",
+"Contrabassoon",
+"Cornet",
+"Cymbals",
+"Drums",
+"Dulcian",
+"Dynamophone",
+"Flute",
+"Flutophone",
+"Glockenspiel",
+"Gongs",
+"Guitar",
+"Harmonica"];
+
+var shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
+
+var selectedTags=shuffledTags.slice(0,numTagsToMake);
 
 function getRandomColor() {
   var o = Math.round,
@@ -195,6 +384,19 @@ if(arrayDates[i] >= startDate &&   arrayDates[i] <= endDate) {
     }
     //return alltagstimes;
     ////////////////////////////////////countTags(alltagstimes);
+    startDreamDate=AllTimes[AllTimes.length-1];
+    endDreamDate=AllTimes[0];
+    numOfDreams=AllTimes.length;
+    const realStartDreamTime=new Date(startDreamDate);
+    const realEndDreamTime=new Date(endDreamDate);
+    const aDayIs=1000*60*60*24;
+    const diffTimes=realEndDreamTime-realStartDreamTime;
+    totalDaysInDreamRange=Math.round(diffTimes/aDayIs);
+    console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
+    //rateOfRememberence=numOfDreams/totalDaysInDreamRange;
+    rateOfRememberence=(Math.round(((numOfDreams/totalDaysInDreamRange)+Number.EPSILON)*100)/1000)*100;
+  //rateOfRememberence*=100;
+    document.getElementById("DreamRemRate").innerHTML=("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
     countTags(AllTags, AllTimes);
   }
 }
@@ -304,6 +506,7 @@ function countTags(tags, times) {
     console.log(hold["Charissa"]);
 
     alert("Done " + bug);
+    
   }
 
   document.getElementById("btnGraph").disabled = false;
