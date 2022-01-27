@@ -12,24 +12,22 @@
     display: none;
 }
 
-.file-upload {
-    height: 40px;
-    margin-bottom: 10px;
-}
+
 
 .file-upload-button,
 .file-upload-name {
-    display: inline-block;
+    display: block;
 }
 
 .button {
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(44, 88, 66, 0.24);
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-    background: #45b29d;
+    background: #6cade3;
     color: #fff;
     cursor: pointer;
     padding: 10px;
-    display: inline-block;
+    display: block;
+    white-space: nowrap;
 }
 
     .button:hover {

@@ -1,12 +1,14 @@
 ﻿var colorarray;
 var myBarChart;
 var DaylioFileData;
-var numOfRandActivities = 10;
+var numOfRandActivities;// =Math.floor(Math.random() * 11);
 var stringofRandActivities = "";
+var randHH;
+var randmm;
 //var sma;
 function makeCSV() {
   DaylioFileData = [];
-  var numToMake = 50000;
+  var numToMake = 10000;
   var setOfRandMoods = [
     "Surprised",
     "Stressed",
@@ -869,23 +871,25 @@ function makeCSV() {
   //get random activity list
   function getThoseActivities() {
     //get random activity list
-    for (var RandActs = 0; RandActs < numOfRandActivities; RandActs++) {
-      stringofRandActivities =
-        setOfRandActivities[
-          Math.floor(Math.random() * setOfRandActivities.length)
+    for (var RandActs = 0; RandActs < 1; RandActs++) {
+        stringofRandActivities="";
+        numOfRandActivities =Math.floor(Math.random() * 11);
+      stringofRandActivities+=setOfRandActivities[ Math.floor(numOfRandActivities * setOfRandActivities.length)
         ] + " | ";
       return stringofRandActivities;
     }
   }
 
   for (var looping = 0; looping < numToMake; looping++) {
+      randHH=Math.floor(Math.random() * 24);
+      randmm=Math.floor(Math.random() * 60);
     DaylioFileData.push([
       "1900-01-01",
       "October 31",
       setOfRandWeekdays[Math.floor(Math.random() * setOfRandWeekdays.length)],
-      "04:20",
+      (randHH+":"+randmm),
       setOfRandMoods[Math.floor(Math.random() * setOfRandMoods.length)],
-      "THIS IS BROKEN | I WILL FIX IT LATER",
+      "NOPE!BROKEN",
       "hello " + looping,
       ""
     ]);
@@ -1002,7 +1006,7 @@ function EPWD() {
             }
         ]
     };
-
+    
     Chart.pluginService.register({
         beforeInit: function (chart) {
             var data = chart.config.data;
