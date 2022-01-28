@@ -256,7 +256,7 @@ function TotalTags() {
           },
           zoom: {
             wheel: {
-              enabled: true
+             // enabled: true
             },
             pinch: {
               ////enabled: true
