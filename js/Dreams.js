@@ -11,24 +11,39 @@ var rateOfRememberence;
 var numDreamsToMake;
 var numTagsToMake=20;
 var selectedTags;
+var shuffledTags;
+//local dream vars
+var indRateOfOcc;
+var indNumOfDream;
+var indStartDreamDate;
+var indEndDreamDate;
+var junkcount=2147483647;
+/////////////////////////////
 var ctx = document.getElementById("myChart");
-var DreamFile=[{}];
+var holder=[];
+var DreamFile={};
 DreamFileTags=[];
 //DreamFile.timestamp="";
 function DownloadJSON(){
-  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(DreamFile));
+  var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(holder));
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
   dlAnchorElem.setAttribute("href",     dataStr     );
   dlAnchorElem.setAttribute("download", "scene.json");
   dlAnchorElem.click();}
   
 function makeADreams(){
-  for(var x=0;x<1000;x++)
+  for(var x=0;x<500;x++)
   {
-    DreamFile.push(DreamFile.timestamp=9729);
-    DreamFile.push(DreamFile.tags=selectedTags);
+    junkcount-=6000000;
+      shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
+     selectedTags=shuffledTags.slice(0,numTagsToMake-1);
+     const TnadT = Object.create(DreamFile);
+    TnadT.timestamp=junkcount,
+    TnadT.tags=selectedTags.slice(0);
+    holder.push(TnadT);
     
   }
+  alert("Done making file");
 }
 var listoffauxtags=["Role-playing",
 "Shortwave",
@@ -190,9 +205,9 @@ var listoffauxtags=["Role-playing",
 "Guitar",
 "Harmonica"];
 
-var shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
+//var shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
 
-var selectedTags=shuffledTags.slice(0,numTagsToMake);
+//var selectedTags=shuffledTags.slice(0,numTagsToMake);
 
 function getRandomColor() {
   var o = Math.round,
@@ -490,9 +505,9 @@ function countTags(tags, times) {
     //console.log(AllTimes);
     //TotalTags();
 
-    //going through completed hold object to set all entry arrrays that have indecies that don't exist yet to empty(null.not empty. not undefined. null.it has to be null)
     for (var logs in hold) {
       //hold[logs].reverse();
+      indNumOfDream=(hold[logs]).at(-1);
       for (var entr in logs) {
         if (!hold[logs][entr]) {
           //hold[logs][entr] = 0;
@@ -500,11 +515,7 @@ function countTags(tags, times) {
       }
     }
 
-    //hold.reverse();
-    console.log(hold["Casey"]);
-    console.log(hold["Emily"]);
-    console.log(hold["Charissa"]);
-
+   
     alert("Done " + bug);
     
   }
