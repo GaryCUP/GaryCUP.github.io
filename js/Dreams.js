@@ -249,7 +249,7 @@ function TotalTags() {
     data: {
       labels: AllTimes,
       //labels: "",
-      hidden: false,
+      
       // backgroundColor:,
       responsive: true,
       bezierCurve: false,
@@ -290,7 +290,7 @@ function TotalTags() {
         }
       },
       elements: {
-        hidden: false,
+        
         point: {
           radius: 0
         }
@@ -328,7 +328,7 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-     hidden: true
+    // hidden: true
     };
     // var c = 0;
     for (var c = 0; c < hold[en].length; c++) {
