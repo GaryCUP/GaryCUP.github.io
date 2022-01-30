@@ -290,7 +290,7 @@ function TotalTags() {
         }
       },
       elements: {
-       // hidden: true,
+        hidden: true,
         point: {
           radius: 0
         }
