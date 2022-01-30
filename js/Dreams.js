@@ -32,9 +32,9 @@ function DownloadJSON(){
   dlAnchorElem.click();}
   
 function makeADreams(){
-  for(var x=0;x<365000;x++)
+  for(var x=0;x<3650;x++)
   {
-    junkcount-=600;
+    junkcount-=6000;
       shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
      selectedTags=shuffledTags.slice(0,numTagsToMake-1);
      const TnadT = Object.create(DreamFile);
