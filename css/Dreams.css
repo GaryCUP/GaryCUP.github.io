@@ -1,2 +1,10 @@
-﻿body {
+﻿body
+{
+     margin: 3rem;
+}
+ 
+#chartHolder
+{
+    height: 1000px;
+     border: 1px solid black;
 }

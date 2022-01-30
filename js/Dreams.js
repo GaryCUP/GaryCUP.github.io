@@ -9,7 +9,7 @@ var startDreamDate;
 var endDreamDate;
 var rateOfRememberence;
 var numDreamsToMake;
-var numTagsToMake=20;
+var numTagsToMake=7;
 var selectedTags;
 var shuffledTags;
 //local dream vars
@@ -32,9 +32,9 @@ function DownloadJSON(){
   dlAnchorElem.click();}
   
 function makeADreams(){
-  for(var x=0;x<500;x++)
+  for(var x=0;x<365000;x++)
   {
-    junkcount-=6000000;
+    junkcount-=600;
       shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
      selectedTags=shuffledTags.slice(0,numTagsToMake-1);
      const TnadT = Object.create(DreamFile);
@@ -249,7 +249,7 @@ function TotalTags() {
     data: {
       labels: AllTimes,
       //labels: "",
-      hidden: true,
+      //hidden: true,
       // backgroundColor:,
       responsive: true,
       bezierCurve: false,
@@ -262,9 +262,19 @@ function TotalTags() {
     },
     options: {
       spanGaps: true,
-      responsive: true,
-      bezierCurve: false,
+      maintainAspectRatio: false,
+      //responsive: false,
+      bezierCurve: true,
+     
       plugins: {
+         legend: {
+        display: true,
+        labels: {
+          usePointStyle: true
+        },
+        position: 'top'
+       
+     },
         zoom: {
           limits: {
             y: { min: 0 }
@@ -280,12 +290,12 @@ function TotalTags() {
         }
       },
       elements: {
-        hidden: true,
+       // hidden: true,
         point: {
           radius: 0
         }
       },
-      fill: true,
+      //fill: true,
       animation: false,
       spanGaps: true, // enable for all datasets
 
@@ -318,7 +328,7 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-      hidden: true
+     hidden: true
     };
     // var c = 0;
     for (var c = 0; c < hold[en].length; c++) {
