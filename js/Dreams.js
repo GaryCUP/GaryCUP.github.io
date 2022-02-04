@@ -253,7 +253,7 @@ function TotalTags() {
       // backgroundColor:,
       responsive: true,
       bezierCurve: false,
-      animation: false,
+      animation: true,
       spanGaps: true, // enable for all datasets
 
       tension: 0,
@@ -328,7 +328,8 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-    // hidden: true
+      hidden:true
+    
     };
     // var c = 0;
     for (var c = 0; c < hold[en].length; c++) {

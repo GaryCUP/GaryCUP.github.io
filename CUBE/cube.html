@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My first three.js app</title>
+    <style>
+        body { margin: 0; }
+        canvas { width: 100%; height: 100% }
+    </style>
+    <meta charset="UTF-8">
+</head><script src="three.js"></script>
+<script src="OrbitControls.js"></script>
+<body>
+<script>
+    /*CUBE: A look at some of the planets as they revolve around the sun.
+    * I tried to guess the approx distance between each planet, as well as rotation and revolution information.
+    * This was the max number of planets PC could handle. */
+    var t=0.0;
+    var scene = new THREE.Scene();
+    var camera = new THREE.PerspectiveCamera( 50, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+    var renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //////////////////////////////SUN///////////////////////////////////////////
+    var sol = new THREE.SphereGeometry( 35.5,48.5,48.5 );
+    var sunlight = new THREE.PointLight( 0xffee88, 10, 1000, 20 );
+    sunSkin = new THREE.MeshStandardMaterial({
+        emissive: 0xffffee,
+        emissiveIntensity: 10,
+        color: 0x000000
+    });
+    sunlight.add(new THREE.Mesh( sol, sunSkin ));
+    sunlight.position.set( 0, 0, 0 );
+    sunlight.castShadow = true;
+    scene.add( sunlight );
+    /////////////////////////////SUN///////////////////////////////////////////
+
+    /////////////////////////////////////Mercury////////////////////////////////////////
+    var MercuryG = new THREE.SphereGeometry( .70,70,70);
+    var MercurySkin = new THREE.MeshPhongMaterial();
+    MercurySkin.map = THREE.ImageUtils.loadTexture('mercury.jpg');
+    var Mercury = new THREE.Mesh( MercuryG, MercurySkin);
+    scene.add(Mercury);
+    /////////////////////////////////////Mercury////////////////////////////////////////
+
+    /////////////////////////////////////Venus////////////////////////////////////////
+    var VenusG = new THREE.SphereGeometry( .70,70,70);
+    var VenusSkin = new THREE.MeshPhongMaterial();
+    VenusSkin.map = THREE.ImageUtils.loadTexture('venus.jpg');
+    var Venus = new THREE.Mesh( VenusG, VenusSkin);
+    scene.add(Venus);
+    /////////////////////////////////////Venus////////////////////////////////////////
+
+    ////////////////////////////////////Earth//////////////////////////////////////
+    var EarthG = new THREE.SphereGeometry( .79,79, 79);
+    var EarthSkin = new THREE.MeshPhongMaterial();
+    EarthSkin.map = THREE.ImageUtils.loadTexture('earth.jpg');
+    EarthSkin.bumpMap = THREE.ImageUtils.loadTexture('earf.jpg');
+    EarthSkin.bumpScale = 0.7;
+    var Earth = new THREE.Mesh( EarthG, EarthSkin);
+    //Earth.add(camera);
+    scene.add( Earth );
+    ////////////////////////////////////Earth//////////////////////////////////////
+
+    /////////////////////////////////////Saturn////////////////////////////////////////
+    var SaturnG = new THREE.SphereGeometry( 8.0,100,100);
+    var SaturnSkin = new THREE.MeshPhongMaterial();
+    SaturnSkin.map = THREE.ImageUtils.loadTexture('saturn.jpg');
+    var Saturn = new THREE.Mesh( SaturnG, SaturnSkin);
+    scene.add(Saturn);
+    /////////////////////////////////////Saturn////////////////////////////////////////
+
+    /////////////////////////////////////Mars////////////////////////////////////////
+    var MarsG = new THREE.SphereGeometry( .40,40,40);
+    var MarsSkin = new THREE.MeshPhongMaterial();
+    MarsSkin.map = THREE.ImageUtils.loadTexture('mars.jpg');
+    var Mars = new THREE.Mesh( MarsG, MarsSkin);
+    scene.add(Mars);
+    /////////////////////////////////////Mars////////////////////////////////////////
+
+    /////////////////////////////////////Jupiter////////////////////////////////////////
+    var JupiterG = new THREE.SphereGeometry( 12,40,40);
+    var JupiterSkin = new THREE.MeshPhongMaterial();
+    JupiterSkin.map = THREE.ImageUtils.loadTexture('jupiter.jpg');
+    var Jupiter = new THREE.Mesh(JupiterG, JupiterSkin);
+    scene.add(Jupiter);
+    /////////////////////////////////////Jupiter////////////////////////////////////////
+
+    var controls = new THREE.OrbitControls( camera );
+
+    controls.update();
+
+    var render = function () {
+        requestAnimationFrame( render );
+        //x=tilt
+        Earth.rotation.x=0.42;
+        Mars.rotation.x=0.40;
+
+        //y=rotation speed
+        Mercury.rotation.y+=-.01;
+        Earth.rotation.y+=0.24;
+        Saturn.rotation.y+=.6;
+        Venus.rotation.y+=-.01;
+        Mars.rotation.y+=.23;
+
+        //universal time for revolution around the star
+        t+=.05;
+
+        //sun spins very slowly
+        //y is inclination
+        sunlight.rotation.y += 0.005;
+        //Object.position.x=distance*Math.sin(or math.cos)(time/time changing constant)
+        Mercury.position.x=85*Math.sin(t/10);
+        Mercury.position.y =.05*Math.cos(t);
+        Mercury.position.z =85*Math.cos(t/10);
+        Venus.position.x =90*Math.sin(t/7);
+        Venus.position.z =90*Math.cos(t/7);
+        Earth.position.x =95*Math.cos(Math.random()/100);
+        Earth.position.z =95*Math.sin(Math.random()/100);
+        Mars.position.x =110.3*Math.cos(t+.4);
+        Mars.position.z =110.3*Math.sin(t+.4);
+        Jupiter.position.x =180.3*Math.cos(t);
+        Jupiter.position.z =180.3*Math.sin(t);
+        Jupiter.position.y =15.3*Math.sin(t);
+        Saturn.position.x =250.3*Math.cos(t/2);
+        Saturn.position.z =-250.3*Math.sin(t/2);
+        //looking at the sun from the perspective of Earth. Sun is always centered.
+        camera.position.z=Earth.position.z;
+        camera.position.x=Earth.position.x;
+        camera.position.y=Earth.position.y;
+        camera.lookAt(sunlight.position);
+        renderer.render(scene, camera);
+    };
+
+    render();
+</script>
+
+<div class="References"> References:
+   <br> <a href="http://learningthreejs.com/blog/2013/09/16/how-to-make-the-earth-in-webgl/"> Drawing of the planets</a></br>
+	<a href="http://threejs.org"> Initial framework</a>
+
+    </div>
+</body>
+</html>
