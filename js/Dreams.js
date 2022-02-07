@@ -32,9 +32,9 @@ function DownloadJSON(){
   dlAnchorElem.click();}
   
 function makeADreams(){
-  for(var x=0;x<3650;x++)
+  for(var x=0;x<5000;x++)
   {
-    junkcount-=60000;
+    junkcount-=Math.floor(Math.random() * (5000000 - 50000 + 1) ) + 50000; //60000;
       shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
      selectedTags=shuffledTags.slice(0,numTagsToMake-1);
      const TnadT = Object.create(DreamFile);
@@ -203,6 +203,7 @@ var listoffauxtags=["Role-playing",
 "Glockenspiel",
 "Gongs",
 "Guitar",
+"Pokadits",
 "Harmonica"];
 
 //var shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
@@ -487,6 +488,7 @@ function countTags(tags, times) {
           //  hold[arr[i]][z] = hold[arr[i]][z - 1];
           hold[arr[i]][z] = 0;
           hold[arr[i]][z] = hold[arr[i]][z - 1] + 1;
+          //document.getElementById("RDRID").innerHTML+=("You have had " +   hold[arr[i]][z] + "  dreams about " + hold[arr][i] )  ;
         }
         if (!hold[arr[i]]) {
           counter++;
@@ -519,7 +521,9 @@ function countTags(tags, times) {
     for (var logs in hold) {
       //hold[logs].reverse();
       indNumOfDream=(hold[logs]).at(-1);
+      console.log(logs + " has " + indNumOfDream + " dream logs.");// + " starting at " + AllTimes[hold[logs]]);
       for (var entr in logs) {
+        //console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + AllTimes[hold[logs][entr]]);
         if (!hold[logs][entr]) {
           //hold[logs][entr] = 0;
         }

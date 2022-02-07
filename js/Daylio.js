@@ -919,7 +919,7 @@ function DownloadDaylioFile() {
   hiddenElement.download = "DaylioTest.csv";
   hiddenElement.click();
 }
-
+/*
 function getRandomColor() {
     colorarray = [];
     var letters = "0123456789ABCDEF".split("");
@@ -934,6 +934,38 @@ function getRandomColor() {
     }
     return colorarray;
 }
+*/
+function getRandomColor() {
+    var o = Math.round,
+      r = Math.random,
+      s = 255;
+    return (
+      "rgba(" +
+      o(r() * s) +
+      "," +
+      o(r() * s) +
+      "," +
+      o(r() * s) +
+      "," +
+      .5 +
+      ")"
+    );
+  
+    ////colorarray = [];
+    ////var letters = "0123456789ABCDEF".split("");
+    ////var color = "#";
+    // for (var cF = 0; cF < Object.keys(this).length; cF++)
+    //{
+  
+    ////for (var i = 0; i < 6; i++) {
+    ////    color += letters[Math.floor(Math.random() * 16)];
+    ////}
+    // colorarray[cF] = color;
+    //color = "#";
+    // return color;
+    // }
+    //// return color;
+  }
 
 // Event handlers
 $("#update-data-from-file").change(function (e) {
@@ -1193,6 +1225,7 @@ var AllActs = [];
 var AllMoodRate = [];
 var arr = [];
 var AllRoodRateofInts=[];
+var AllDays=[]
 
 //var MoodLevel = "";
 // Parse the CSV input into JSON
@@ -1268,6 +1301,7 @@ function csvToJson(data) {
         var HOD=moment((data[i][3]),'HH:mm').format('HH');
         var Mood = data[i][4];
         var Activities = data[i][5];
+        var days=data[i][0]+ " " + data[i][3];
         var MoodRate = data[i].MoodLabRate;
         AllDOW[i] = DOW;
         // AllHOD=New Date
@@ -1275,6 +1309,7 @@ function csvToJson(data) {
         AllActs[i] = Activities;
         AllHOD[i] = HOD;
         AllMoodRate[i] = MoodRate;
+        AllDays[i]=days;
         AllRoodRateofInts[i] = parseInt(MoodRate);
        // AllRoodRateofInts.filter(Number) 
         //  console.log(data[i][3]);
@@ -1290,7 +1325,7 @@ function csvToJson(data) {
     countActs(AllActs);
     countTime(AllHOD);
     countMoodRates(AllMoodRate);
-
+    countMoodsLineGr(AllMoods);
     return out;
 }
 
@@ -1375,6 +1410,37 @@ function countMoodRates(moodRatings) {
         }
     }
 }
+
+var moodhold={};
+function countMoodsLineGr(moods4line)
+{
+    moods4line.reverse();
+    AllDays.reverse();
+    for(var liner=0;liner<moods4line.length;liner++ )
+    {
+        var indMoodHold=moods4line[liner];
+        //if(moodhold[indMoodHold[liner]]){}
+        if(moodhold[moods4line[liner]])
+        {
+            moodhold[moods4line[liner]][liner]=0;
+            moodhold[moods4line[liner]][liner] =moodhold[moods4line[liner]][liner-1]+1;
+        }
+
+        else{
+            moodhold[moods4line[liner]]=[];
+            moodhold[moods4line[liner]][liner]=1;
+        }
+
+        for (var nou in moodhold) {
+            if (moodhold[nou][liner] === undefined) {
+              moodhold[nou][liner] = moodhold[nou][liner - 1];
+            }
+          }
+        }
+    
+}
+
+
 var currTime;
 //var date;
 var hour;
@@ -1531,3 +1597,113 @@ function MoodRollingAvg() {
     mooRA=(sma(AllRoodRateofInts , 2,2));
     
 }
+
+function TotalMoodsLG() {
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: AllDays,
+        //labels: "",
+        
+        // backgroundColor:,
+        responsive: true,
+        bezierCurve: false,
+        animation: true,
+        spanGaps: true, // enable for all datasets
+  
+        tension: 0,
+  
+        datasets: []
+      },
+      options: {
+        spanGaps: true,
+        maintainAspectRatio: false,
+        //responsive: false,
+        bezierCurve: true,
+       
+        plugins: {
+           legend: {
+          display: true,
+          labels: {
+            usePointStyle: true
+          },
+          position: 'top'
+         
+       },
+          zoom: {
+            limits: {
+              y: { min: 0 }
+            },
+            zoom: {
+              wheel: {
+               // enabled: true
+              },
+              pinch: {
+                ////enabled: true
+              }
+            }
+          }
+        },
+        elements: {
+          
+          point: {
+            radius: 0
+          }
+        },
+        //fill: true,
+        animation: false,
+        spanGaps: true, // enable for all datasets
+  
+        tension: 0,
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true
+                //reverse: true
+              }
+            }
+          ]
+        }
+      }
+    });
+  
+    var model = {
+      2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
+      2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
+      2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
+    };
+  
+    for (en in moodhold) {
+      //hold[c].reverse();
+      coloor = getRandomColor();
+      var newDataset = {
+        label: en,
+        data: [],
+        borderColor: coloor,
+        backgroundColor: coloor,
+        //backgroundColor:
+        hidden:true
+      
+      };
+      // var c = 0;
+      for (var c = 0; c < moodhold[en].length; c++) {
+        ////console.log(c);
+        newDataset.data.splice(c, 0, moodhold[en][c]);
+      }
+      for (value in moodhold[en]) {
+        //newDataset.data[c] = 0;
+        //  newDataset.data[c].push(hold[en][value]);
+        //////  newDataset.data.splice(value, 0, hold[en][value]);
+        // c++;
+      }
+      // newDataset.data.shift();
+      myChart.data.datasets.push(newDataset);
+      //myChart.getDatasetMeta(hold[c]).hidden = true;
+      //  myChart.update();
+    }
+    //myChart.getDatasetMeta(hold[c]).hidden = true;
+  
+    myChart.update();
+  }
