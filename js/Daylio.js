@@ -1,925 +1,924 @@
 ﻿var colorarray;
 var myBarChart;
 var DaylioFileData;
-var numOfRandActivities;// =Math.floor(Math.random() * 11);
+var numOfRandActivities; // =Math.floor(Math.random() * 11);
 var stringofRandActivities = "";
 var randHH;
 var randmm;
 //var sma;
 function makeCSV() {
-  DaylioFileData = [];
-  var numToMake = 10000;
-  var setOfRandMoods = [
-    "Surprised",
-    "Stressed",
-    "Mad",
-    "Loved",
-    "Lonely",
-    "Weird",
-    "Uncomfortable",
-    "Touched",
-    "Tired",
-    "Thankful",
-    "Sympathetic",
-    "Smart",
-    "Sleepy",
-    "Silly",
-    "Pleased",
-    "Pessimistic",
-    "Sick",
-    "Shocked",
-    "Satisfied",
-    "Sad",
-    "Rushed",
-    "Restless",
-    "Relieved",
-    "Relaxed",
-    "Rejuvenated",
-    "Rejected",
-    "Refreshed",
-    "Recumbent",
-    "Quixotic",
-    "Predatory",
-    "Peaceful",
-    "Optimistic",
-    "Okay",
-    "Numb",
-    "Giggly",
-    "Giddy",
-    "Not specified",
-    "Nerdy",
-    "Infuriated",
-    "Indifferent",
-    "Indescribable",
-    "Naughty",
-    "Morose",
-    "Moody",
-    "Mischievous",
-    "Mellow",
-    "Melancholy",
-    "Listless",
-    "Lethargic",
-    "Lazy",
-    "Jubilant",
-    "Jealous",
-    "Irritated",
-    "Irate",
-    "Impressed",
-    "Hyper",
-    "Hungry",
-    "Hot",
-    "Hopeful",
-    "High",
-    "Happy",
-    "Guilty",
-    "Grumpy",
-    "Groggy",
-    "Grateful",
-    "Dorky",
-    "Ditzy",
-    "Discontent",
-    "Good",
-    "Gloomy",
-    "Geeky",
-    "Full",
-    "Frustrated",
-    "Flirty",
-    "Exhausted",
-    "Excited",
-    "Enraged",
-    "Energetic",
-    "Anxious",
-    "Annoyed",
-    "Angry",
-    "Ecstatic",
-    "Drunk",
-    "Drained",
-    "Disappointed",
-    "Dirty",
-    "Devious",
-    "Determined",
-    "Depressed",
-    "Dark",
-    "Cynical",
-    "Curious",
-    "Alone",
-    "Aggravated",
-    "Accomplished",
-    "Accepted",
-    "Crushed",
-    "Crazy",
-    "Crappy",
-    "Cranky",
-    "Content",
-    "Confused",
-    "Complacent",
-    "Cold",
-    "Chipper",
-    "Cheerful",
-    "Calm",
-    "Bouncy",
-    "Bored",
-    "Blissful",
-    "Blank",
-    "Blah",
-    "Bittersweet",
-    "Bewildered",
-    "Awake",
-    "Ashamed",
-    "Apathetic",
-    "Amused",
-    "Exanimate",
-    "Envious",
-    "Enthralled"
-  ];
-  var setOfRandActivities = [
-    "American",
-    "Archery",
-    "Australian",
-    "Badminton",
-    "Baton",
-    "Baseball",
-    "Basketball",
-    "Beach",
-    "Bicycling",
-    "Billiards",
-    "Bodybuilding",
-    "Bowling",
-    "Boxing",
-    "Cheer-leading",
-    "Chess",
-    "Cooking",
-    "Color",
-    "Cricket",
-    "Curling",
-    "Cycling",
-    "Dancing",
-    "Darts",
-    "Debate",
-    "Disc",
-    "Dodge-ball",
-    "Dog",
-    "Falconry",
-    "Fantasy",
-    "Fencing",
-    "Field",
-    "Figure",
-    "Fish",
-    "Flag",
-    "Floor-ball",
-    "Golfing",
-    "Handball",
-    "Horseback",
-    "Hot",
-    "Ice",
-    "Lacrosse",
-    "Longboarding",
-    "Marksmanship",
-    "Paintball",
-    "Racquetball",
-    "Roller",
-    "Roller",
-    "Rugby",
-    "Sailing",
-    "Skateboarding",
-    "Skeet",
-    "Skiing",
-    "Snowboarding",
-    "Soccer",
-    "Speed",
-    "Surfing",
-    "Swimming",
-    "Table",
-    "Tennis",
-    "Ultimate",
-    "Volleyball",
-    "Wrestling",
-    "Competitive",
-    "Fighting",
-    "Street",
-    "Super",
-    "Marvel",
-    "Tekken",
-    "Killer",
-    "First-person",
-    "Doom",
-    "Quake",
-    "Counter-Strike",
-    "Call",
-    "Unreal",
-    "Halo",
-    "Battlefield",
-    "CrossFire",
-    "Overwatch",
-    "Team",
-    "Rainbow",
-    "Alliance",
-    "Special",
-    "Real-time",
-    "StarCraft:",
-    "Warcraft",
-    "StarCraft",
-    "Age",
-    "Sports",
-    "FIFA",
-    "Madden",
-    "NBA",
-    "Pro",
-    "Rocket",
-    "Racing",
-    "Gran",
-    "iRacing",
-    "Project",
-    "TrackMania",
-    "Multiplayer",
-    "Dota",
-    "League",
-    "Smite",
-    "Heroes",
-    "Vainglory",
-    "Mobile",
-    "Other",
-    "Gears",
-    "War",
-    "World",
-    "World",
-    "Hearthstone",
-    "Pokémon",
-    "Puyo",
-    "Tetris",
-    "snowboard",
-    "Outdoor",
-    "Adventure",
-    "Cross",
-    "Fellrunning",
-    "Marathon",
-    "Road",
-    "Track",
-    "Trail",
-    "Tower",
-    "Bicycle",
-    "Track",
-    "Road",
-    "Mountain",
-    "BMX",
-    "Alpine",
-    "Cross-country",
-    "Kicksled",
-    "Speed",
-    "Roller",
-    "All-terrain",
-    "Board",
-    "Drag",
-    "Dirt",
-    "Open-wheel",
-    "Formula",
-    "Sprint",
-    "Offroad",
-    "Pickup",
-    "Production",
-    "Rallycross",
-    "Road",
-    "Sports",
-    "Stock",
-    "Touring",
-    "Truck",
-    "Kart",
-    "Lawnmower",
-    "Grand",
-    "Pocketbike",
-    "Superbike",
-    "Track",
-    "Flat",
-    "Speedway",
-    "Grasstrack",
-    "Motocross",
-    "Supercross",
-    "Beachcross",
-    "Supermoto",
-    "Snowmobile",
-    "Watercraft",
-    "Canoe",
-    "Drag",
-    "Dragon",
-    "Hydroplane",
-    "Jet",
-    "Offshore",
-    "Outrigger",
-    "Rowing",
-    "Sail",
-    "Yacht",
-    "Orienteering",
-    "Foot",
-    "Mountain",
-    "Ski",
-    "Trail",
-    "Radio",
-    "Canoe",
-    "Rogaining",
-    "Sport",
-    "Mountain",
-    "Car",
-    "Racewalking",
-    "Swimming",
-    "Animal",
-    "Ostrich",
-    "Bull",
-    "Buffalo",
-    "Bull",
-    "Camel",
-    "Greyhound",
-    "Sled",
-    "Horse-racing,",
-    "Chariot",
-    "Flat",
-    "Thoroughbred",
-    "Trotting",
-    "Steeplechase",
-    "Kambala",
-    "Karapan",
-    "Lobster",
-    "Pigeon",
-    "Pig",
-    "Ostrich",
-    "Snail",
-    "Skijoring",
-    "Turtle",
-    "Zebra",
-    "drone",
-    "Model",
-    "Drone",
-    "Radio-controlled",
-    "Slot",
-    "Adventure",
-    "Kinetic",
-    "Aikido",
-    "Boxing",
-    "Brazilian",
-    "Capoeira",
-    "Eskrima,",
-    "Hapkido",
-    "Jeet",
-    "Judo",
-    "Jiu-Jitsu",
-    "Karate",
-    "Kendo",
-    "Kenpo",
-    "Kickboxing",
-    "Krav",
-    "Kung",
-    "Military",
-    "Mixed",
-    "Muay",
-    "Ninjutsu",
-    "Sambo",
-    "Taekwondo",
-    "Tai",
-    "Tang",
-    "Wing",
-    "Wrestling",
-    "Aircraft",
-    "Astrology",
-    "Astronomy",
-    "Base",
-    "Beach/Sun",
-    "Beach-combing",
-    "Beekeeping",
-    "Bell",
-    "Bicycle",
-    "Bird",
-    "Building",
-    "Bus",
-    "Butterfly",
-    "Camping",
-    "Canoeing",
-    "Cave",
-    "Climbing",
-    "Cloud",
-    "Driving",
-    "Dumpster",
-    "Equestrianism",
-    "Fishing",
-    "Fish-keeping",
-    "Flower",
-    "Flower",
-    "Flying",
-    "Foraging",
-    "Fossil",
-    "Four",
-    "Frisbee",
-    "Gardening",
-    "Geocaching",
-    "Hiking",
-    "Hunting",
-    "Inline",
-    "Jogging",
-    "Jumping",
-    "Kayaking",
-    "Kite",
-    "Kite",
-    "Knapping",
-    "Knife-making",
-    "Knife",
-    "Lawn",
-    "Metal",
-    "Mountain",
-    "Mountain",
-    "Parachuting",
-    "Paragliding",
-    "Pinochle",
-    "Polo",
-    "Rafting",
-    "Rail",
-    "Rappelling",
-    "Rock",
-    "Rock",
-    "Rocket",
-    "Sand",
-    "Sand",
-    "Scuba",
-    "Sculling",
-    "Shooting",
-    "Skimboarding",
-    "Slacklining",
-    "Slingshots",
-    "Snorkeling",
-    "Spelunking",
-    "Squash",
-    "Stone",
-    "Storm",
-    "Surf",
-    "Survivalism",
-    "Weather",
-    "Windsurfing",
-    "Wingsuit",
-    "Boomeranging",
-    "collection",
-    "Antique",
-    "Artwork",
-    "Book",
-    "Button",
-    "Card",
-    "Coin",
-    "Comic",
-    "Deltiology",
-    "Diecast",
-    "Elements",
-    "Gun",
-    "Hat",
-    "Insect",
-    "Metal",
-    "Movie",
-    "Music",
-    "Sea",
-    "Seashell",
-    "Sports",
-    "Stamp",
-    "Stone",
-    "Sword",
-    "Tool",
-    "Toy",
-    "Train",
-    "Video",
-    "Mineral",
-    "Creative",
-    "Airbrushing",
-    "Blacksmithing",
-    "Book",
-    "Book-binding",
-    "Building",
-    "Calligraphy",
-    "Candle-making",
-    "Cartooning",
-    "Ceramics",
-    "Coloring",
-    "Crocheting",
-    "Cross-Stitch",
-    "Digital",
-    "Digital",
-    "Drawing",
-    "Embroidery",
-    "Fashion",
-    "Felting",
-    "Glassblowing",
-    "Graffiti",
-    "Gunsmith",
-    "Handwriting",
-    "Illusion",
-    "Impersonations",
-    "Jewelry",
-    "Knitting",
-    "Knotting",
-    "Lace-making",
-    "Lapidary",
-    "LARPing",
-    "Letter-boxing",
-    "Macramé",
-    "Nail",
-    "Needlepoint",
-    "Origami",
-    "Painting",
-    "Paper",
-    "Paper-making",
-    "Photography",
-    "Pole",
-    "Pottery",
-    "Puppetry",
-    "Quilting",
-    "Scrap-booking",
-    "Sewing",
-    "Singing",
-    "Sketching",
-    "Soap-making",
-    "Storytelling",
-    "String",
-    "Tatting",
-    "Taxidermy",
-    "Textiles",
-    "Topiary",
-    "Whittling",
-    "Model",
-    "Architectural",
-    "Cardboard",
-    "Firearm",
-    "Freelance",
-    "Gundam",
-    "Live",
-    "Locomotive",
-    "Matchstick",
-    "Military",
-    "Model",
-    "Rail",
-    "Scale",
-    "Guide:",
-    "Music",
-    "Creative",
-    "Blogging",
-    "Songs",
-    "Poetry",
-    "Novels",
-    "Articles",
-    "E-Books",
-    "Children’s",
-    "Books",
-    "Letters",
-    "Writing",
-    "Help",
-    "Can",
-    "Promotes",
-    "Assists",
-    "Fun",
-    "Increases",
-    "Great",
-    "Animal",
-    "Ant",
-    "Aquarium",
-    "Beekeeping",
-    "Bird",
-    "Dolphin",
-    "Falconry",
-    "Farming",
-    "Foster",
-    "Freshwater",
-    "Horse",
-    "Rescuing",
-    "Taxidermy",
-    "Training",
-    "Volunteer",
-    "Whale",
-    "Zoo",
-    "Action",
-    "Amateur",
-    "Antiquing",
-    "Board",
-    "Chess",
-    "Con-worlding",
-    "Co-splaying",
-    "Crossword",
-    "Cryptography",
-    "Dolls",
-    "Dominoes",
-    "Electronics",
-    "Foreign",
-    "History",
-    "Home",
-    "Inventing",
-    "Jigsaw",
-    "Juggling",
-    "Laser",
-    "Lego",
-    "Lock-picking",
-    "Machining",
-    "Magic",
-    "Mahjong",
-    "Marbles",
-    "Meditation",
-    "Metalworking",
-    "Meteorology",
-    "Gymnastics",
-    "Hula",
-    "Puzzles",
-    "R/C",
-    "R/C",
-    "R/C",
-    "R/C",
-    "Reading",
-    "Reading",
-    "Reading",
-    "Robotics",
-    "Role-playing",
-    "Shortwave",
-    "Speed-cubing",
-    "Stand-up",
-    "Sudoku",
-    "Table",
-    "Tesla",
-    "Tetris",
-    "Tutoring",
-    "TV",
-    "Video",
-    "War-hammer",
-    "Watching",
-    "Watching",
-    "Woodcarving",
-    "Woodworking",
-    "World-building",
-    "Janggi",
-    "Xiangqi",
-    "Card",
-    "Apples",
-    "Asshole",
-    "B/RTR",
-    "Bang!",
-    "Bid",
-    "Blackjack",
-    "Bluff",
-    "Bridge",
-    "Bohnanza",
-    "Boss",
-    "Canasta",
-    "Cardfight!!Vanguard",
-    "Cards",
-    "Cassino",
-    "Citadels",
-    "Contract",
-    "Coup",
-    "Crazy",
-    "Cribbage",
-    "Dominion",
-    "Double",
-    "Dutch",
-    "Egyptian",
-    "Euchre",
-    "Exploding",
-    "Family",
-    "Famous",
-    "Fight",
-    "Fluxx",
-    "Gin",
-    "Gods’",
-    "GoFish",
-    "Golf",
-    "Guillotine",
-    "Hanabi",
-    "Hearts",
-    "Hearthstone",
-    "Jaipur",
-    "Kings",
-    "Legendary:",
-    "Legendary",
-    "Ligretto",
-    "LoveLetter",
-    "LuckandLogic",
-    "MageRage",
-    "Magic:",
-    "Memory",
-    "Mille",
-    "Monopoly",
-    "MONSTER",
-    "Munchkin",
-    "Nerts",
-    "Old",
-    "Phase",
-    "Pinochle",
-    "Pokémon",
-    "Poker",
-    "President",
-    "Presidential",
-    "Race",
-    "Ratuki",
-    "ROOK",
-    "Rummy",
-    "Scrabble",
-    "Screw",
-    "SentinelsoftheMultiverse",
-    "Skat",
-    "Skip",
-    "Solitaire",
-    "Speed",
-    "Spit",
-    "Splendor",
-    "Spoons",
-    "Star",
-    "Sushi",
-    "The",
-    "Twenty-two",
-    "UNO",
-    "Up",
-    "War",
-    "Werewolf",
-    "Whist",
-    "Wonders",
-    "You’re",
-    "Yu-Gi-Oh!",
-    "Acro",
-    "Ballet",
-    "Ballroom",
-    "Bassoon",
-    "Belly",
-    "Bernie",
-    "Bollywood",
-    "Break",
-    "Calypso",
-    "Cheer",
-    "Campos",
-    "Double",
-    "Fire",
-    "Flamenco",
-    "Flying",
-    "Foxtrot",
-    "Glockenspiel",
-    "Gongs",
-    "Greek",
-    "Hip",
-    "Kizomba",
-    "Line",
-    "Linya",
-    "Modern",
-    "Native",
-    "Quickstep",
-    "Soca",
-    "Tango",
-    "Viennese",
-    "Waltz",
-    "Zumba",
-    "Bagpipes",
-    "Banjo",
-    "Bass",
-    "Bassoon",
-    "Bell",
-    "Bongo",
-    "Castanets",
-    "Cello",
-    "Clarinet",
-    "Clavichord",
-    "Conga",
-    "Contrabassoon",
-    "Cornet",
-    "Cymbals",
-    "Drums",
-    "Dulcian",
-    "Dynamophone",
-    "Flute",
-    "Flutophone",
-    "Glockenspiel",
-    "Gongs",
-    "Guitar",
-    "Harmonica",
-    "Harp",
-    "Harpsichord",
-    "Lute",
-    "Mandolin",
-    "Maracas",
-    "Musical",
-    "Oboe",
-    "Piano",
-    "Recorder",
-    "Saxophone",
-    "Snare",
-    "Steel",
-    "Tambourine",
-    "Theremin",
-    "Triangle",
-    "Trombone",
-    "Trumpet",
-    "Tuba",
-    "Ukulele",
-    "Viola",
-    "Violin",
-    "Xylophone",
-    "Zither",
-    "Baking",
-    "Smoking",
-    "Grilling",
-    "Candy",
-    "Brewing",
-    "Bring",
-    "Cake",
-    "Coffee",
-    "Cooking",
-    "Home",
-    "Kitchen",
-    "Kombucha",
-    "Poi",
-    "Teach",
-    "Winemaking",
-    "Working",
-    "Canning",
-    "Computer",
-    "Couponing",
-    "Dowsing",
-    "Exercise",
-    "Fire",
-    "Gambling",
-    "Genealogy",
-    "Ghost",
-    "Glow-sticking",
-    "Gnoming",
-    "Gongoozling",
-    "Gyotaku",
-    "Home",
-    "Join",
-    "Jet",
-    "Microscopy",
-    "Parkour",
-    "People",
-    "Power-blocking",
-    "Protesting",
-    "Pyrotechnics",
-    "Renaissance",
-    "Shopping",
-    "Socializing",
-    "Survivalism",
-    "Traveling",
-    "Treasure",
-    "Urban",
-    "Vehicle",
-    "Video-philia",
-    "Vintage",
-    "Volunteering"
-  ];
-  var setOfRandWeekdays = [
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-    "Sunday"
-  ];
+    DaylioFileData = [];
+    var numToMake = 10000;
+    var setOfRandMoods = [
+        "Surprised",
+        "Stressed",
+        "Mad",
+        "Loved",
+        "Lonely",
+        "Weird",
+        "Uncomfortable",
+        "Touched",
+        "Tired",
+        "Thankful",
+        "Sympathetic",
+        "Smart",
+        "Sleepy",
+        "Silly",
+        "Pleased",
+        "Pessimistic",
+        "Sick",
+        "Shocked",
+        "Satisfied",
+        "Sad",
+        "Rushed",
+        "Restless",
+        "Relieved",
+        "Relaxed",
+        "Rejuvenated",
+        "Rejected",
+        "Refreshed",
+        "Recumbent",
+        "Quixotic",
+        "Predatory",
+        "Peaceful",
+        "Optimistic",
+        "Okay",
+        "Numb",
+        "Giggly",
+        "Giddy",
+        "Not specified",
+        "Nerdy",
+        "Infuriated",
+        "Indifferent",
+        "Indescribable",
+        "Naughty",
+        "Morose",
+        "Moody",
+        "Mischievous",
+        "Mellow",
+        "Melancholy",
+        "Listless",
+        "Lethargic",
+        "Lazy",
+        "Jubilant",
+        "Jealous",
+        "Irritated",
+        "Irate",
+        "Impressed",
+        "Hyper",
+        "Hungry",
+        "Hot",
+        "Hopeful",
+        "High",
+        "Happy",
+        "Guilty",
+        "Grumpy",
+        "Groggy",
+        "Grateful",
+        "Dorky",
+        "Ditzy",
+        "Discontent",
+        "Good",
+        "Gloomy",
+        "Geeky",
+        "Full",
+        "Frustrated",
+        "Flirty",
+        "Exhausted",
+        "Excited",
+        "Enraged",
+        "Energetic",
+        "Anxious",
+        "Annoyed",
+        "Angry",
+        "Ecstatic",
+        "Drunk",
+        "Drained",
+        "Disappointed",
+        "Dirty",
+        "Devious",
+        "Determined",
+        "Depressed",
+        "Dark",
+        "Cynical",
+        "Curious",
+        "Alone",
+        "Aggravated",
+        "Accomplished",
+        "Accepted",
+        "Crushed",
+        "Crazy",
+        "Crappy",
+        "Cranky",
+        "Content",
+        "Confused",
+        "Complacent",
+        "Cold",
+        "Chipper",
+        "Cheerful",
+        "Calm",
+        "Bouncy",
+        "Bored",
+        "Blissful",
+        "Blank",
+        "Blah",
+        "Bittersweet",
+        "Bewildered",
+        "Awake",
+        "Ashamed",
+        "Apathetic",
+        "Amused",
+        "Exanimate",
+        "Envious",
+        "Enthralled"
+    ];
+    var setOfRandActivities = [
+        "American",
+        "Archery",
+        "Australian",
+        "Badminton",
+        "Baton",
+        "Baseball",
+        "Basketball",
+        "Beach",
+        "Bicycling",
+        "Billiards",
+        "Bodybuilding",
+        "Bowling",
+        "Boxing",
+        "Cheer-leading",
+        "Chess",
+        "Cooking",
+        "Color",
+        "Cricket",
+        "Curling",
+        "Cycling",
+        "Dancing",
+        "Darts",
+        "Debate",
+        "Disc",
+        "Dodge-ball",
+        "Dog",
+        "Falconry",
+        "Fantasy",
+        "Fencing",
+        "Field",
+        "Figure",
+        "Fish",
+        "Flag",
+        "Floor-ball",
+        "Golfing",
+        "Handball",
+        "Horseback",
+        "Hot",
+        "Ice",
+        "Lacrosse",
+        "Longboarding",
+        "Marksmanship",
+        "Paintball",
+        "Racquetball",
+        "Roller",
+        "Roller",
+        "Rugby",
+        "Sailing",
+        "Skateboarding",
+        "Skeet",
+        "Skiing",
+        "Snowboarding",
+        "Soccer",
+        "Speed",
+        "Surfing",
+        "Swimming",
+        "Table",
+        "Tennis",
+        "Ultimate",
+        "Volleyball",
+        "Wrestling",
+        "Competitive",
+        "Fighting",
+        "Street",
+        "Super",
+        "Marvel",
+        "Tekken",
+        "Killer",
+        "First-person",
+        "Doom",
+        "Quake",
+        "Counter-Strike",
+        "Call",
+        "Unreal",
+        "Halo",
+        "Battlefield",
+        "CrossFire",
+        "Overwatch",
+        "Team",
+        "Rainbow",
+        "Alliance",
+        "Special",
+        "Real-time",
+        "StarCraft:",
+        "Warcraft",
+        "StarCraft",
+        "Age",
+        "Sports",
+        "FIFA",
+        "Madden",
+        "NBA",
+        "Pro",
+        "Rocket",
+        "Racing",
+        "Gran",
+        "iRacing",
+        "Project",
+        "TrackMania",
+        "Multiplayer",
+        "Dota",
+        "League",
+        "Smite",
+        "Heroes",
+        "Vainglory",
+        "Mobile",
+        "Other",
+        "Gears",
+        "War",
+        "World",
+        "World",
+        "Hearthstone",
+        "Pokémon",
+        "Puyo",
+        "Tetris",
+        "snowboard",
+        "Outdoor",
+        "Adventure",
+        "Cross",
+        "Fellrunning",
+        "Marathon",
+        "Road",
+        "Track",
+        "Trail",
+        "Tower",
+        "Bicycle",
+        "Track",
+        "Road",
+        "Mountain",
+        "BMX",
+        "Alpine",
+        "Cross-country",
+        "Kicksled",
+        "Speed",
+        "Roller",
+        "All-terrain",
+        "Board",
+        "Drag",
+        "Dirt",
+        "Open-wheel",
+        "Formula",
+        "Sprint",
+        "Offroad",
+        "Pickup",
+        "Production",
+        "Rallycross",
+        "Road",
+        "Sports",
+        "Stock",
+        "Touring",
+        "Truck",
+        "Kart",
+        "Lawnmower",
+        "Grand",
+        "Pocketbike",
+        "Superbike",
+        "Track",
+        "Flat",
+        "Speedway",
+        "Grasstrack",
+        "Motocross",
+        "Supercross",
+        "Beachcross",
+        "Supermoto",
+        "Snowmobile",
+        "Watercraft",
+        "Canoe",
+        "Drag",
+        "Dragon",
+        "Hydroplane",
+        "Jet",
+        "Offshore",
+        "Outrigger",
+        "Rowing",
+        "Sail",
+        "Yacht",
+        "Orienteering",
+        "Foot",
+        "Mountain",
+        "Ski",
+        "Trail",
+        "Radio",
+        "Canoe",
+        "Rogaining",
+        "Sport",
+        "Mountain",
+        "Car",
+        "Racewalking",
+        "Swimming",
+        "Animal",
+        "Ostrich",
+        "Bull",
+        "Buffalo",
+        "Bull",
+        "Camel",
+        "Greyhound",
+        "Sled",
+        "Horse-racing,",
+        "Chariot",
+        "Flat",
+        "Thoroughbred",
+        "Trotting",
+        "Steeplechase",
+        "Kambala",
+        "Karapan",
+        "Lobster",
+        "Pigeon",
+        "Pig",
+        "Ostrich",
+        "Snail",
+        "Skijoring",
+        "Turtle",
+        "Zebra",
+        "drone",
+        "Model",
+        "Drone",
+        "Radio-controlled",
+        "Slot",
+        "Adventure",
+        "Kinetic",
+        "Aikido",
+        "Boxing",
+        "Brazilian",
+        "Capoeira",
+        "Eskrima,",
+        "Hapkido",
+        "Jeet",
+        "Judo",
+        "Jiu-Jitsu",
+        "Karate",
+        "Kendo",
+        "Kenpo",
+        "Kickboxing",
+        "Krav",
+        "Kung",
+        "Military",
+        "Mixed",
+        "Muay",
+        "Ninjutsu",
+        "Sambo",
+        "Taekwondo",
+        "Tai",
+        "Tang",
+        "Wing",
+        "Wrestling",
+        "Aircraft",
+        "Astrology",
+        "Astronomy",
+        "Base",
+        "Beach/Sun",
+        "Beach-combing",
+        "Beekeeping",
+        "Bell",
+        "Bicycle",
+        "Bird",
+        "Building",
+        "Bus",
+        "Butterfly",
+        "Camping",
+        "Canoeing",
+        "Cave",
+        "Climbing",
+        "Cloud",
+        "Driving",
+        "Dumpster",
+        "Equestrianism",
+        "Fishing",
+        "Fish-keeping",
+        "Flower",
+        "Flower",
+        "Flying",
+        "Foraging",
+        "Fossil",
+        "Four",
+        "Frisbee",
+        "Gardening",
+        "Geocaching",
+        "Hiking",
+        "Hunting",
+        "Inline",
+        "Jogging",
+        "Jumping",
+        "Kayaking",
+        "Kite",
+        "Kite",
+        "Knapping",
+        "Knife-making",
+        "Knife",
+        "Lawn",
+        "Metal",
+        "Mountain",
+        "Mountain",
+        "Parachuting",
+        "Paragliding",
+        "Pinochle",
+        "Polo",
+        "Rafting",
+        "Rail",
+        "Rappelling",
+        "Rock",
+        "Rock",
+        "Rocket",
+        "Sand",
+        "Sand",
+        "Scuba",
+        "Sculling",
+        "Shooting",
+        "Skimboarding",
+        "Slacklining",
+        "Slingshots",
+        "Snorkeling",
+        "Spelunking",
+        "Squash",
+        "Stone",
+        "Storm",
+        "Surf",
+        "Survivalism",
+        "Weather",
+        "Windsurfing",
+        "Wingsuit",
+        "Boomeranging",
+        "collection",
+        "Antique",
+        "Artwork",
+        "Book",
+        "Button",
+        "Card",
+        "Coin",
+        "Comic",
+        "Deltiology",
+        "Diecast",
+        "Elements",
+        "Gun",
+        "Hat",
+        "Insect",
+        "Metal",
+        "Movie",
+        "Music",
+        "Sea",
+        "Seashell",
+        "Sports",
+        "Stamp",
+        "Stone",
+        "Sword",
+        "Tool",
+        "Toy",
+        "Train",
+        "Video",
+        "Mineral",
+        "Creative",
+        "Airbrushing",
+        "Blacksmithing",
+        "Book",
+        "Book-binding",
+        "Building",
+        "Calligraphy",
+        "Candle-making",
+        "Cartooning",
+        "Ceramics",
+        "Coloring",
+        "Crocheting",
+        "Cross-Stitch",
+        "Digital",
+        "Digital",
+        "Drawing",
+        "Embroidery",
+        "Fashion",
+        "Felting",
+        "Glassblowing",
+        "Graffiti",
+        "Gunsmith",
+        "Handwriting",
+        "Illusion",
+        "Impersonations",
+        "Jewelry",
+        "Knitting",
+        "Knotting",
+        "Lace-making",
+        "Lapidary",
+        "LARPing",
+        "Letter-boxing",
+        "Macramé",
+        "Nail",
+        "Needlepoint",
+        "Origami",
+        "Painting",
+        "Paper",
+        "Paper-making",
+        "Photography",
+        "Pole",
+        "Pottery",
+        "Puppetry",
+        "Quilting",
+        "Scrap-booking",
+        "Sewing",
+        "Singing",
+        "Sketching",
+        "Soap-making",
+        "Storytelling",
+        "String",
+        "Tatting",
+        "Taxidermy",
+        "Textiles",
+        "Topiary",
+        "Whittling",
+        "Model",
+        "Architectural",
+        "Cardboard",
+        "Firearm",
+        "Freelance",
+        "Gundam",
+        "Live",
+        "Locomotive",
+        "Matchstick",
+        "Military",
+        "Model",
+        "Rail",
+        "Scale",
+        "Guide:",
+        "Music",
+        "Creative",
+        "Blogging",
+        "Songs",
+        "Poetry",
+        "Novels",
+        "Articles",
+        "E-Books",
+        "Children’s",
+        "Books",
+        "Letters",
+        "Writing",
+        "Help",
+        "Can",
+        "Promotes",
+        "Assists",
+        "Fun",
+        "Increases",
+        "Great",
+        "Animal",
+        "Ant",
+        "Aquarium",
+        "Beekeeping",
+        "Bird",
+        "Dolphin",
+        "Falconry",
+        "Farming",
+        "Foster",
+        "Freshwater",
+        "Horse",
+        "Rescuing",
+        "Taxidermy",
+        "Training",
+        "Volunteer",
+        "Whale",
+        "Zoo",
+        "Action",
+        "Amateur",
+        "Antiquing",
+        "Board",
+        "Chess",
+        "Con-worlding",
+        "Co-splaying",
+        "Crossword",
+        "Cryptography",
+        "Dolls",
+        "Dominoes",
+        "Electronics",
+        "Foreign",
+        "History",
+        "Home",
+        "Inventing",
+        "Jigsaw",
+        "Juggling",
+        "Laser",
+        "Lego",
+        "Lock-picking",
+        "Machining",
+        "Magic",
+        "Mahjong",
+        "Marbles",
+        "Meditation",
+        "Metalworking",
+        "Meteorology",
+        "Gymnastics",
+        "Hula",
+        "Puzzles",
+        "R/C",
+        "R/C",
+        "R/C",
+        "R/C",
+        "Reading",
+        "Reading",
+        "Reading",
+        "Robotics",
+        "Role-playing",
+        "Shortwave",
+        "Speed-cubing",
+        "Stand-up",
+        "Sudoku",
+        "Table",
+        "Tesla",
+        "Tetris",
+        "Tutoring",
+        "TV",
+        "Video",
+        "War-hammer",
+        "Watching",
+        "Watching",
+        "Woodcarving",
+        "Woodworking",
+        "World-building",
+        "Janggi",
+        "Xiangqi",
+        "Card",
+        "Apples",
+        "Asshole",
+        "B/RTR",
+        "Bang!",
+        "Bid",
+        "Blackjack",
+        "Bluff",
+        "Bridge",
+        "Bohnanza",
+        "Boss",
+        "Canasta",
+        "Cardfight!!Vanguard",
+        "Cards",
+        "Cassino",
+        "Citadels",
+        "Contract",
+        "Coup",
+        "Crazy",
+        "Cribbage",
+        "Dominion",
+        "Double",
+        "Dutch",
+        "Egyptian",
+        "Euchre",
+        "Exploding",
+        "Family",
+        "Famous",
+        "Fight",
+        "Fluxx",
+        "Gin",
+        "Gods’",
+        "GoFish",
+        "Golf",
+        "Guillotine",
+        "Hanabi",
+        "Hearts",
+        "Hearthstone",
+        "Jaipur",
+        "Kings",
+        "Legendary:",
+        "Legendary",
+        "Ligretto",
+        "LoveLetter",
+        "LuckandLogic",
+        "MageRage",
+        "Magic:",
+        "Memory",
+        "Mille",
+        "Monopoly",
+        "MONSTER",
+        "Munchkin",
+        "Nerts",
+        "Old",
+        "Phase",
+        "Pinochle",
+        "Pokémon",
+        "Poker",
+        "President",
+        "Presidential",
+        "Race",
+        "Ratuki",
+        "ROOK",
+        "Rummy",
+        "Scrabble",
+        "Screw",
+        "SentinelsoftheMultiverse",
+        "Skat",
+        "Skip",
+        "Solitaire",
+        "Speed",
+        "Spit",
+        "Splendor",
+        "Spoons",
+        "Star",
+        "Sushi",
+        "The",
+        "Twenty-two",
+        "UNO",
+        "Up",
+        "War",
+        "Werewolf",
+        "Whist",
+        "Wonders",
+        "You’re",
+        "Yu-Gi-Oh!",
+        "Acro",
+        "Ballet",
+        "Ballroom",
+        "Bassoon",
+        "Belly",
+        "Bernie",
+        "Bollywood",
+        "Break",
+        "Calypso",
+        "Cheer",
+        "Campos",
+        "Double",
+        "Fire",
+        "Flamenco",
+        "Flying",
+        "Foxtrot",
+        "Glockenspiel",
+        "Gongs",
+        "Greek",
+        "Hip",
+        "Kizomba",
+        "Line",
+        "Linya",
+        "Modern",
+        "Native",
+        "Quickstep",
+        "Soca",
+        "Tango",
+        "Viennese",
+        "Waltz",
+        "Zumba",
+        "Bagpipes",
+        "Banjo",
+        "Bass",
+        "Bassoon",
+        "Bell",
+        "Bongo",
+        "Castanets",
+        "Cello",
+        "Clarinet",
+        "Clavichord",
+        "Conga",
+        "Contrabassoon",
+        "Cornet",
+        "Cymbals",
+        "Drums",
+        "Dulcian",
+        "Dynamophone",
+        "Flute",
+        "Flutophone",
+        "Glockenspiel",
+        "Gongs",
+        "Guitar",
+        "Harmonica",
+        "Harp",
+        "Harpsichord",
+        "Lute",
+        "Mandolin",
+        "Maracas",
+        "Musical",
+        "Oboe",
+        "Piano",
+        "Recorder",
+        "Saxophone",
+        "Snare",
+        "Steel",
+        "Tambourine",
+        "Theremin",
+        "Triangle",
+        "Trombone",
+        "Trumpet",
+        "Tuba",
+        "Ukulele",
+        "Viola",
+        "Violin",
+        "Xylophone",
+        "Zither",
+        "Baking",
+        "Smoking",
+        "Grilling",
+        "Candy",
+        "Brewing",
+        "Bring",
+        "Cake",
+        "Coffee",
+        "Cooking",
+        "Home",
+        "Kitchen",
+        "Kombucha",
+        "Poi",
+        "Teach",
+        "Winemaking",
+        "Working",
+        "Canning",
+        "Computer",
+        "Couponing",
+        "Dowsing",
+        "Exercise",
+        "Fire",
+        "Gambling",
+        "Genealogy",
+        "Ghost",
+        "Glow-sticking",
+        "Gnoming",
+        "Gongoozling",
+        "Gyotaku",
+        "Home",
+        "Join",
+        "Jet",
+        "Microscopy",
+        "Parkour",
+        "People",
+        "Power-blocking",
+        "Protesting",
+        "Pyrotechnics",
+        "Renaissance",
+        "Shopping",
+        "Socializing",
+        "Survivalism",
+        "Traveling",
+        "Treasure",
+        "Urban",
+        "Vehicle",
+        "Video-philia",
+        "Vintage",
+        "Volunteering"
+    ];
+    var setOfRandWeekdays = [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+    ];
 
-  //get random activity list
-  function getThoseActivities() {
     //get random activity list
-    for (var RandActs = 0; RandActs < 1; RandActs++) {
-        stringofRandActivities="";
-        numOfRandActivities =Math.floor(Math.random() * 11);
-      stringofRandActivities+=setOfRandActivities[ Math.floor(numOfRandActivities * setOfRandActivities.length)
-        ] + " | ";
-      return stringofRandActivities;
+    function getThoseActivities() {
+        //get random activity list
+        for (var RandActs = 0; RandActs < 1; RandActs++) {
+            stringofRandActivities = "";
+            numOfRandActivities = Math.floor(Math.random() * 11);
+            stringofRandActivities += setOfRandActivities[Math.floor(numOfRandActivities * setOfRandActivities.length)] + " | ";
+            return stringofRandActivities;
+        }
     }
-  }
 
-  for (var looping = 0; looping < numToMake; looping++) {
-      randHH=Math.floor(Math.random() * 24);
-      randmm=Math.floor(Math.random() * 60);
-    DaylioFileData.push([
-      "1900-01-01",
-      "October 31",
-      setOfRandWeekdays[Math.floor(Math.random() * setOfRandWeekdays.length)],
-      (randHH+":"+randmm),
-      setOfRandMoods[Math.floor(Math.random() * setOfRandMoods.length)],
-      "NOPE!BROKEN",
-      "hello " + looping,
-      ""
-    ]);
-  }
-  console.log(DaylioFileData);
-  alert("finished");
+    for (var looping = 0; looping < numToMake; looping++) {
+        randHH = Math.floor(Math.random() * 24);
+        randmm = Math.floor(Math.random() * 60);
+        DaylioFileData.push([
+            "1900-01-01",
+            "October 31",
+            setOfRandWeekdays[Math.floor(Math.random() * setOfRandWeekdays.length)],
+            (randHH + ":" + randmm),
+            setOfRandMoods[Math.floor(Math.random() * setOfRandMoods.length)],
+            "NOPE!BROKEN",
+            "hello " + looping,
+            ""
+        ]);
+    }
+    console.log(DaylioFileData);
+    alert("finished");
 }
 
 //create a user-defined function to download CSV file
 function DownloadDaylioFile() {
-  //define the heading for each row of the data
-  var csv = "full_date,  date,weekday,time,mood,activities, note_title, note\n";
-  //merge the data with CSV
-  DaylioFileData.forEach(function (row) {
-    csv += row.join(",");
-    csv += "\r\n";
-  });
-  csv = csv.trim();
-  //display the created CSV data on the web browser
-  //document.write(csv);
+    //define the heading for each row of the data
+    var csv = "full_date,  date,weekday,time,mood,activities, note_title, note\n";
+    //merge the data with CSV
+    DaylioFileData.forEach(function(row) {
+        csv += row.join(",");
+        csv += "\r\n";
+    });
+    csv = csv.trim();
+    //display the created CSV data on the web browser
+    //document.write(csv);
 
-  var hiddenElement = document.createElement("a");
-  hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
-  hiddenElement.target = "_blank";
+    var hiddenElement = document.createElement("a");
+    hiddenElement.href = "data:text/csv;charset=utf-8," + encodeURI(csv);
+    hiddenElement.target = "_blank";
 
-  //provide the name for the CSV file to be downloaded
-  hiddenElement.download = "DaylioTest.csv";
-  hiddenElement.click();
+    //provide the name for the CSV file to be downloaded
+    hiddenElement.download = "DaylioTest.csv";
+    hiddenElement.click();
 }
-/*
+
 function getRandomColor() {
     colorarray = [];
     var letters = "0123456789ABCDEF".split("");
@@ -934,29 +933,29 @@ function getRandomColor() {
     }
     return colorarray;
 }
-*/
-function getRandomColor() {
+
+function getRandomColour() {
     var o = Math.round,
-      r = Math.random,
-      s = 255;
+        r = Math.random,
+        s = 255;
     return (
-      "rgba(" +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      o(r() * s) +
-      "," +
-      .5 +
-      ")"
+        "rgba(" +
+        o(r() * s) +
+        "," +
+        o(r() * s) +
+        "," +
+        o(r() * s) +
+        "," +
+        .5 +
+        ")"
     );
-  
+
     ////colorarray = [];
     ////var letters = "0123456789ABCDEF".split("");
     ////var color = "#";
     // for (var cF = 0; cF < Object.keys(this).length; cF++)
     //{
-  
+
     ////for (var i = 0; i < 6; i++) {
     ////    color += letters[Math.floor(Math.random() * 16)];
     ////}
@@ -965,16 +964,16 @@ function getRandomColor() {
     // return color;
     // }
     //// return color;
-  }
+}
 
 // Event handlers
-$("#update-data-from-file").change(function (e) {
-    changeDataFromUpload(e, function (data) {
+$("#update-data-from-file").change(function(e) {
+    changeDataFromUpload(e, function(data) {
         console.log(data);
     });
 });
-$("#update-data-from-field").click(function () {
-    changeDataFromField(function (data) {
+$("#update-data-from-field").click(function() {
+    changeDataFromField(function(data) {
         console.log(data);
     });
 });
@@ -990,18 +989,16 @@ function TotalActs() {
     alert("you are here.");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: getRandomColor(),
-                borderColor: getRandomColor(),
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            data: []
+        }]
     };
 
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in ActivityCounter) {
                 if (ActivityCounter.hasOwnProperty(key)) {
@@ -1029,18 +1026,16 @@ function EPWD() {
     alert("you are here.");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: getRandomColor(),
-                borderColor: getRandomColor(),
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            data: []
+        }]
     };
-    
+
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in weekCounter) {
                 if (weekCounter.hasOwnProperty(key)) {
@@ -1068,18 +1063,17 @@ function EPHOD() {
     alert("you are here.");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: getRandomColor(),
-                borderColor: getRandomColor(),
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            //backgroundColor: 
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            data: []
+        }]
     };
 
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in hourCounter) {
                 if (hourCounter.hasOwnProperty(key)) {
@@ -1101,18 +1095,16 @@ function TotalMoods() {
     alert("you are here.");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: getRandomColor(),
-                borderColor: getRandomColor(),
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            data: []
+        }]
     };
 
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in moodCounter) {
                 if (moodCounter.hasOwnProperty(key)) {
@@ -1140,18 +1132,16 @@ function TotalMoodRatings() {
     alert("you are mooddrat.");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: getRandomColor(),
-                borderColor: getRandomColor(),
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            backgroundColor: getRandomColor(),
+            borderColor: getRandomColor(),
+            data: []
+        }]
     };
 
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in moodRatCounter) {
                 if (moodRatCounter.hasOwnProperty(key)) {
@@ -1175,7 +1165,7 @@ function changeDataFromField(cb) {
         .val()
         .replace(/\n/g, "^^^xyz")
         .split("^^^xyz")
-        .forEach(function (d) {
+        .forEach(function(d) {
             arr.push(d.replace(/\t/g, "^^^xyz").split("^^^xyz"));
         });
     cb(csvToJson(arr));
@@ -1194,12 +1184,12 @@ function changeDataFromUpload(evt, cb) {
         if (file !== "") {
             var reader = new FileReader();
 
-            reader.onload = function (event) {
+            reader.onload = function(event) {
                 var csvData = event.target.result;
                 var parsed = Papa.parse(csvData);
                 cb(csvToJson(parsed.data));
             };
-            reader.onerror = function () {
+            reader.onerror = function() {
                 console.error("Unable to read " + file.fileName);
             };
         }
@@ -1224,8 +1214,8 @@ var AllMoods = [];
 var AllActs = [];
 var AllMoodRate = [];
 var arr = [];
-var AllRoodRateofInts=[];
-var AllDays=[]
+var AllRoodRateofInts = [];
+var AllDays = []
 
 //var MoodLevel = "";
 // Parse the CSV input into JSON
@@ -1236,7 +1226,7 @@ function csvToJson(data) {
     var cols = data[1];
     out = [];
 
-    data.forEach(function (e) {
+    data.forEach(function(e) {
         //MoodLevel = prompt("Mood for " + data.Mood);
         e["MoodLabRate"] = "";
     });
@@ -1253,7 +1243,7 @@ function csvToJson(data) {
 
         //add mod ratse
 
-        cols.forEach(function (col, index) {
+        cols.forEach(function(col, index) {
             obj[col] = row[index];
             //  obj["new column"] = ""
 
@@ -1271,20 +1261,20 @@ function csvToJson(data) {
         //
         var daMood = data[i][4];
         //
-/* /////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-                    add in later
-     //////////////////////////////////////////////////////////////////////////////               
+        /////////////////////////////////////////////////////////////////////////////////////////
+        ///////////////////////////////////////////////////////////////////////////////////////////
+        //  add in later
+        //////////////////////////////////////////////////////////////////////////////               
         if (data[i].MoodLabRate == "") {
             data[i].MoodLabRate = prompt("Mood for " + daMood);
             var daMoodRate = data[i].MoodLabRate;
-            data.forEach(function (mr, m) {
+            data.forEach(function(mr, m) {
                 if (data[m][4] == daMood) data[m].MoodLabRate = daMoodRate;
             });
         }
-        */
-       /////////////////////////////////////////////////////////////////////////////////////
-       ////////////////////////////////////////////////////////////////////////////////////
+
+        /////////////////////////////////////////////////////////////////////////////////////
+        ////////////////////////////////////////////////////////////////////////////////////
         //data.forEach(function(item, i) { if (daMood == 3452) a[i] = 1010; });
 
         /*
@@ -1296,12 +1286,12 @@ function csvToJson(data) {
         }
     */
         var DOW = data[i][2];
-        
+
         //var HOD = data[i][3];
-        var HOD=moment((data[i][3]),'HH:mm').format('HH');
+        var HOD = moment((data[i][3]), 'HH:mm').format('HH');
         var Mood = data[i][4];
         var Activities = data[i][5];
-        var days=data[i][0]+ " " + data[i][3];
+        var days = data[i][0] + " " + data[i][3];
         var MoodRate = data[i].MoodLabRate;
         AllDOW[i] = DOW;
         // AllHOD=New Date
@@ -1309,9 +1299,9 @@ function csvToJson(data) {
         AllActs[i] = Activities;
         AllHOD[i] = HOD;
         AllMoodRate[i] = MoodRate;
-        AllDays[i]=days;
+        AllDays[i] = days;
         AllRoodRateofInts[i] = parseInt(MoodRate);
-       // AllRoodRateofInts.filter(Number) 
+        // AllRoodRateofInts.filter(Number) 
         //  console.log(data[i][3]);
         //console.log(data[i]);
         //
@@ -1354,6 +1344,7 @@ function countDOW(days) {
 //
 var MoodLevel;
 var w = 0;
+
 function countMoods(mooods) {
     moodCounter = {};
     MoodLevel = [];
@@ -1374,6 +1365,7 @@ function countMoods(mooods) {
 var BrActivityCounter;
 var ActivityCounter;
 var LoAct;
+
 function countActs(acts) {
     BrActivityCounter = {};
     ActivityCounter = {};
@@ -1381,7 +1373,7 @@ function countActs(acts) {
     var BActCount = 0;
     //loop  breaks pipes
     for (var i = 1; i < acts.length; i++) {
-        $.each(acts[i].split(" | "), function (i, al) {
+        $.each(acts[i].split(" | "), function(i, al) {
             LoAct[BActCount] = al;
             BActCount++;
         });
@@ -1398,9 +1390,10 @@ function countActs(acts) {
     }
 }
 var moodRatCounter;
+
 function countMoodRates(moodRatings) {
     moodRatCounter = {};
-   
+
     //MoodLevel = [];
     for (var mrc = 1; mrc < moodRatings.length; mrc++) {
         if (moodRatCounter[moodRatings[mrc]]) {
@@ -1411,33 +1404,29 @@ function countMoodRates(moodRatings) {
     }
 }
 
-var moodhold={};
-function countMoodsLineGr(moods4line)
-{
+var moodhold = {};
+
+function countMoodsLineGr(moods4line) {
     moods4line.reverse();
     AllDays.reverse();
-    for(var liner=0;liner<moods4line.length;liner++ )
-    {
-        var indMoodHold=moods4line[liner];
+    for (var liner = 0; liner < moods4line.length; liner++) {
+        var indMoodHold = moods4line[liner];
         //if(moodhold[indMoodHold[liner]]){}
-        if(moodhold[moods4line[liner]])
-        {
-            moodhold[moods4line[liner]][liner]=0;
-            moodhold[moods4line[liner]][liner] =moodhold[moods4line[liner]][liner-1]+1;
-        }
-
-        else{
-            moodhold[moods4line[liner]]=[];
-            moodhold[moods4line[liner]][liner]=1;
+        if (moodhold[moods4line[liner]]) {
+            moodhold[moods4line[liner]][liner] = 0;
+            moodhold[moods4line[liner]][liner] = moodhold[moods4line[liner]][liner - 1] + 1;
+        } else {
+            moodhold[moods4line[liner]] = [];
+            moodhold[moods4line[liner]][liner] = 1;
         }
 
         for (var nou in moodhold) {
             if (moodhold[nou][liner] === undefined) {
-              moodhold[nou][liner] = moodhold[nou][liner - 1];
+                moodhold[nou][liner] = moodhold[nou][liner - 1];
             }
-          }
         }
-    
+    }
+
 }
 
 
@@ -1445,11 +1434,12 @@ var currTime;
 //var date;
 var hour;
 var hourCounter;
+
 function countTime(hourz) {
-     //currTime = moment().format("HH:MM");
-        hourCounter = {};
+    //currTime = moment().format("HH:MM");
+    hourCounter = {};
     for (var h = 1; h < hourz.length; h++) {
-       // currTime =moment([hourz[h]]).format("HH");
+        // currTime =moment([hourz[h]]).format("HH");
         //currTime=moment((hourz[h]),'HH:mm').format('HH');
         if (hourCounter[hourz[h]]) {
             hourCounter[hourz[h]] += 1;
@@ -1471,18 +1461,16 @@ function MoodRateRollingAverage() {
     var ctx = document.getElementById("myChart");
     var data = {
         labels: [],
-        datasets: [
-            {
-                label: "My dataset",
-                backgroundColor: 'rgb(214, 113, 82)',
-                borderColor: 'rgb(113, 211, 1)',
-                data: []
-            }
-        ]
+        datasets: [{
+            label: "My dataset",
+            backgroundColor: 'rgb(214, 113, 82)',
+            borderColor: 'rgb(113, 211, 1)',
+            data: []
+        }]
     };
 
     Chart.pluginService.register({
-        beforeInit: function (chart) {
+        beforeInit: function(chart) {
             var data = chart.config.data;
             for (var key in mooRA) {
                 if (mooRA.hasOwnProperty(key)) {
@@ -1500,23 +1488,22 @@ function MoodRateRollingAverage() {
             fill: false,
             bezierCurve: true,
             scales: {
-                yAxes: [
-                    {
-                        ticks: {
-                            beginAtZero: false
-                        }
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: false
                     }
-                ]
+                }]
             },
             elements: {
                 hidden: true,
                 point: {
-                  radius: 0
+                    radius: 0
                 }
-              }
+            }
         }
     });
 }
+
 function MoodAvg() {
     var totalMoodLev = 0;
     for (var tml = 1; tml < AllMoodRate.length; tml++) {
@@ -1577,6 +1564,7 @@ function MoodRollingAvvg() {
 */
 
 var mooRA;
+
 function GetMoodRollingAvg(arr, range, format) {
     if (!Array.isArray(arr)) {
         throw TypeError('expected first argument to be an array');
@@ -1592,118 +1580,119 @@ function GetMoodRollingAvg(arr, range, format) {
     }
     return res;
 }
+
 function MoodRollingAvg() {
-    
-    mooRA=(sma(AllRoodRateofInts , 2,2));
-    
+
+    mooRA = (sma(AllRoodRateofInts, 2, 2));
+
 }
 
 function TotalMoodsLG() {
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: AllDays,
-        //labels: "",
-        
-        // backgroundColor:,
-        responsive: true,
-        bezierCurve: false,
-        animation: true,
-        spanGaps: true, // enable for all datasets
-  
-        tension: 0,
-  
-        datasets: []
-      },
-      options: {
-        spanGaps: true,
-        maintainAspectRatio: false,
-        //responsive: false,
-        bezierCurve: true,
-       
-        plugins: {
-           legend: {
-          display: true,
-          labels: {
-            usePointStyle: true
-          },
-          position: 'top'
-         
-       },
-          zoom: {
-            limits: {
-              y: { min: 0 }
+        type: "line",
+        data: {
+            labels: AllDays,
+            //labels: "",
+
+            // backgroundColor:,
+            responsive: true,
+            bezierCurve: false,
+            animation: true,
+            spanGaps: true, // enable for all datasets
+
+            tension: 0,
+
+            datasets: []
+        },
+        options: {
+            spanGaps: true,
+            maintainAspectRatio: false,
+            //responsive: false,
+            bezierCurve: true,
+
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        usePointStyle: true
+                    },
+                    position: 'top'
+
+                },
+                zoom: {
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                    zoom: {
+                        wheel: {
+                            // enabled: true
+                        },
+                        pinch: {
+                            ////enabled: true
+                        }
+                    }
+                }
             },
-            zoom: {
-              wheel: {
-               // enabled: true
-              },
-              pinch: {
-                ////enabled: true
-              }
+            elements: {
+
+                point: {
+                    radius: 0
+                }
+            },
+            //fill: true,
+            animation: false,
+            spanGaps: true, // enable for all datasets
+
+            tension: 0,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                        //reverse: true
+                    }
+                }]
             }
-          }
-        },
-        elements: {
-          
-          point: {
-            radius: 0
-          }
-        },
-        //fill: true,
-        animation: false,
-        spanGaps: true, // enable for all datasets
-  
-        tension: 0,
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true
-                //reverse: true
-              }
-            }
-          ]
         }
-      }
     });
-  
+
     var model = {
-      2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
-      2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
-      2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
+        2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
+        2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
+        2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
     };
-  
+
     for (en in moodhold) {
-      //hold[c].reverse();
-      coloor = getRandomColor();
-      var newDataset = {
-        label: en,
-        data: [],
-        borderColor: coloor,
-        backgroundColor: coloor,
-        //backgroundColor:
-        hidden:true
-      
-      };
-      // var c = 0;
-      for (var c = 0; c < moodhold[en].length; c++) {
-        ////console.log(c);
-        newDataset.data.splice(c, 0, moodhold[en][c]);
-      }
-      for (value in moodhold[en]) {
-        //newDataset.data[c] = 0;
-        //  newDataset.data[c].push(hold[en][value]);
-        //////  newDataset.data.splice(value, 0, hold[en][value]);
-        // c++;
-      }
-      // newDataset.data.shift();
-      myChart.data.datasets.push(newDataset);
-      //myChart.getDatasetMeta(hold[c]).hidden = true;
-      //  myChart.update();
+        //hold[c].reverse();
+        coloor = getRandomColour();
+        var newDataset = {
+            label: en,
+            data: [],
+            borderColor: coloor,
+            backgroundColor: coloor,
+            //backgroundColor:
+            hidden: true
+
+        };
+        // var c = 0;
+        for (var c = 0; c < moodhold[en].length; c++) {
+            ////console.log(c);
+            newDataset.data.splice(c, 0, moodhold[en][c]);
+        }
+        for (value in moodhold[en]) {
+            //newDataset.data[c] = 0;
+            //  newDataset.data[c].push(hold[en][value]);
+            //////  newDataset.data.splice(value, 0, hold[en][value]);
+            // c++;
+        }
+        // newDataset.data.shift();
+        myChart.data.datasets.push(newDataset);
+        //myChart.getDatasetMeta(hold[c]).hidden = true;
+        //  myChart.update();
     }
     //myChart.getDatasetMeta(hold[c]).hidden = true;
-  
+
     myChart.update();
-  }
+}
