@@ -8,7 +8,7 @@ var randmm;
 //var sma;
 function makeCSV() {
     DaylioFileData = [];
-    var numToMake = 10000;
+    var numToMake = 3650;
     var setOfRandMoods = [
         "Surprised",
         "Stressed",
@@ -900,7 +900,7 @@ function makeCSV() {
 //create a user-defined function to download CSV file
 function DownloadDaylioFile() {
     //define the heading for each row of the data
-    var csv = "full_date,  date,weekday,time,mood,activities, note_title, note\n";
+    var csv = "full_date,  date,weekday,time,mood,activities, note_title, note";
     //merge the data with CSV
     DaylioFileData.forEach(function(row) {
         csv += row.join(",");
@@ -985,6 +985,7 @@ function TotalActs() {
         too: 1,
         mother: 2
     };
+    countActs(AllActs);
     var ctx = document.getElementById("myChart");
     alert("you are here.");
     var data = {
@@ -1022,6 +1023,7 @@ function EPWD() {
         too: 1,
         mother: 2
     };
+    countDOW(AllDOW);
     var ctx = document.getElementById("myChart");
     alert("you are here.");
     var data = {
@@ -1059,6 +1061,7 @@ function EPHOD() {
         too: 1,
         mother: 2
     };
+    countTime(AllHOD);
     var ctx = document.getElementById("myChart");
     alert("you are here.");
     var data = {
@@ -1091,6 +1094,7 @@ function EPHOD() {
 }
 
 function TotalMoods() {
+    countMoods(AllMoods);
     var ctx = document.getElementById("myChart");
     alert("you are here.");
     var data = {
@@ -1216,7 +1220,7 @@ var AllMoodRate = [];
 var arr = [];
 var AllRoodRateofInts = [];
 var AllDays = []
-
+var AllLineActs=[];
 //var MoodLevel = "";
 // Parse the CSV input into JSON
 var data;
@@ -1234,15 +1238,8 @@ function csvToJson(data) {
     for (var i = 1; i < data.length; i++) {
         var obj = {};
         var row = data[i];
-        // arr = data[i].map((x) =>
-        //  Object.assign({}, data[i], { "Mood Level": MoodLevel })
-        // );
-
-        //  const arr = data.map(x => Object.assign({}, data, { "new column": "" }))
-        // // arr[i] = data.map((x) => Object.assign({}, data, { "new column": "" }));
-
-        //add mod ratse
-
+       
+        
         cols.forEach(function(col, index) {
             obj[col] = row[index];
             //  obj["new column"] = ""
@@ -1260,11 +1257,8 @@ function csvToJson(data) {
         });
         //
         var daMood = data[i][4];
-        //
-        /////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //  add in later
-        //////////////////////////////////////////////////////////////////////////////               
+           
+    /*
         if (data[i].MoodLabRate == "") {
             data[i].MoodLabRate = prompt("Mood for " + daMood);
             var daMoodRate = data[i].MoodLabRate;
@@ -1272,31 +1266,23 @@ function csvToJson(data) {
                 if (data[m][4] == daMood) data[m].MoodLabRate = daMoodRate;
             });
         }
-
-        /////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////
-        //data.forEach(function(item, i) { if (daMood == 3452) a[i] = 1010; });
-
-        /*
-        if (data[i].MoodLabRate != "") {
-         var index = data.indexOf(data[i].MoodLabRate); data[i].MoodLabRate = prompt("Mood for " + data[i][4]).replace(
-            data[i][4].value,
-            data[i].MoodLabRate.value
-          );
-        }
-    */
+     */
+      
         var DOW = data[i][2];
 
         //var HOD = data[i][3];
         var HOD = moment((data[i][3]), 'HH:mm').format('HH');
         var Mood = data[i][4];
         var Activities = data[i][5];
+       
+ 
         var days = data[i][0] + " " + data[i][3];
         var MoodRate = data[i].MoodLabRate;
         AllDOW[i] = DOW;
         // AllHOD=New Date
         AllMoods[i] = Mood;
         AllActs[i] = Activities;
+        AllLineActs[i]=Activities.split("|").map(item => item.trim());
         AllHOD[i] = HOD;
         AllMoodRate[i] = MoodRate;
         AllDays[i] = days;
@@ -1310,12 +1296,13 @@ function csvToJson(data) {
         out.push(obj);
     }
     console.log(AllMoodRate);
-    countDOW(AllDOW);
-    countMoods(AllMoods);
-    countActs(AllActs);
-    countTime(AllHOD);
-    countMoodRates(AllMoodRate);
-    countMoodsLineGr(AllMoods);
+    //countDOW(AllDOW);
+    //countMoods(AllMoods);
+    //countActs(AllActs);
+    //countTime(AllHOD);
+   // countMoodRates(AllMoodRate);//re-enable later
+    //countMoodsLineGr(AllMoods);
+    //countActsLineGr(AllLineActs);
     return out;
 }
 
@@ -1426,9 +1413,66 @@ function countMoodsLineGr(moods4line) {
             }
         }
     }
+    alert("DONE ! " + Object.keys(moodhold).length + " different moods logged");
 
 }
 
+var actshold={};
+function countActsLineGr(acts4line)
+{
+    acts4line.reverse();
+   // AllDays.reverse();
+    for (var z = 0; z < acts4line.length-1; z++) {
+      
+        var arr = acts4line[z];
+        //hold.arr = [];
+  
+        if (arr.length == 0) {
+          for (var emp in actshold) {
+            actshold[emp][z] = actshold[emp][z - 1];
+          }
+        }
+  
+        for (var i = 0, j = arr.length; i < j; i++) {
+          currtag = arr[i];
+          // hold[arr[i]][z]=0;
+          //  hold[arr[i]][z] = "" ;
+  
+          //      hold.arr[i] = [];
+          if (actshold[arr[i]]) {
+          //  TagCounter[arr[i]]++;
+            //hold[z[arr[i]]]++;
+            //  hold[arr[i]][z] = hold[arr[i]][z - 1];
+            actshold[arr[i]][z] = 0;
+            actshold[arr[i]][z] = actshold[arr[i]][z - 1] + 1;
+            //document.getElementById("RDRID").innerHTML+=("You have had " +   hold[arr[i]][z] + "  dreams about " + hold[arr][i] )  ;
+          }
+          if (!actshold[arr[i]]) {
+           // counter++;
+           // TagCounter[arr[z]] = 1;
+            //hold[z].currtag = 1;
+            actshold[arr[i]] = [];
+            actshold[arr[i]][z] = 1;
+  
+            // hold.z[arr[i]] = 1;
+          }
+  
+          for (var nou in actshold) {
+            if (actshold[nou][z] === undefined) {
+                actshold[nou][z] = actshold[nou][z - 1];
+            }
+          }
+  
+          //      console.log(hold["Amarai"][z]);
+          //Totalacts4line();
+          /// BrTagCounter[times[z]]= TagCounter[LoTag[z]]
+          //add function to graph all acts4line at ind ex z
+          // console.log(hold["Emily"]);
+          //Totalacts4line();
+        }
+      }
+      alert("DONE ! " + Object.keys(actshold).length + " different activities logged");
+}
 
 var currTime;
 //var date;
@@ -1588,6 +1632,7 @@ function MoodRollingAvg() {
 }
 
 function TotalMoodsLG() {
+    countMoodsLineGr(AllMoods);
     var ctx = document.getElementById("myChart");
     var myChart = new Chart(ctx, {
         type: "line",
@@ -1598,7 +1643,7 @@ function TotalMoodsLG() {
             // backgroundColor:,
             responsive: true,
             bezierCurve: false,
-            animation: true,
+            animation: false,
             spanGaps: true, // enable for all datasets
 
             tension: 0,
@@ -1682,6 +1727,117 @@ function TotalMoodsLG() {
             newDataset.data.splice(c, 0, moodhold[en][c]);
         }
         for (value in moodhold[en]) {
+            //newDataset.data[c] = 0;
+            //  newDataset.data[c].push(hold[en][value]);
+            //////  newDataset.data.splice(value, 0, hold[en][value]);
+            // c++;
+        }
+        // newDataset.data.shift();
+        myChart.data.datasets.push(newDataset);
+        //myChart.getDatasetMeta(hold[c]).hidden = true;
+        //  myChart.update();
+    }
+    //myChart.getDatasetMeta(hold[c]).hidden = true;
+
+    myChart.update();
+}
+
+function TotalActsLG() {
+    countActsLineGr(AllLineActs);
+    var ctx = document.getElementById("myChart");
+    var myChart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels: AllDays,
+            //labels: "",
+
+            // backgroundColor:,
+            responsive: true,
+            bezierCurve: false,
+            animation: false,
+            spanGaps: true, // enable for all datasets
+
+            tension: 0,
+
+            datasets: []
+        },
+        options: {
+            spanGaps: true,
+            maintainAspectRatio: false,
+            //responsive: false,
+            bezierCurve: true,
+
+            plugins: {
+                legend: {
+                    display: true,
+                    labels: {
+                        usePointStyle: true
+                    },
+                    position: 'top'
+
+                },
+                zoom: {
+                    limits: {
+                        y: {
+                            min: 0
+                        }
+                    },
+                    zoom: {
+                        wheel: {
+                            // enabled: true
+                        },
+                        pinch: {
+                            ////enabled: true
+                        }
+                    }
+                }
+            },
+            elements: {
+
+                point: {
+                    radius: 0
+                }
+            },
+            //fill: true,
+            animation: false,
+            spanGaps: true, // enable for all datasets
+
+            tension: 0,
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                        //reverse: true
+                    }
+                }]
+            }
+        }
+    });
+
+    var model = {
+        2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
+        2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
+        2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
+    };
+
+    for (en in actshold) {
+        //hold[c].reverse();
+        coloor = getRandomColour();
+        var newDataset = {
+            label: en,
+            data: [],
+            borderColor: coloor,
+            backgroundColor: coloor,
+            //backgroundColor:
+            hidden: true
+
+        };
+        // var c = 0;
+        for (var c = 0; c < actshold[en].length; c++) {
+            ////console.log(c);
+            newDataset.data.splice(c, 0, actshold[en][c]);
+        }
+        for (value in actshold[en]) {
             //newDataset.data[c] = 0;
             //  newDataset.data[c].push(hold[en][value]);
             //////  newDataset.data.splice(value, 0, hold[en][value]);

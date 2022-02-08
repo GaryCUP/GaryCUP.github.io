@@ -55,19 +55,23 @@
             Total Moods
             </label>
             <label class="button" id="moodLG" onclick="TotalMoodsLG()">
-              Total Moods, but for line graph
+              Total Moods, but line graph
               </label>
+              <label class="button" id="actsLG" onclick="TotalActsLG()">
+                Total Activities, but line graph
+                </label>
             <label class="button" id="acts" onclick="TotalActs()">
             Total Activities
             </label>
             <label class="button" id="hourofday" onclick="EPHOD()">
                Entries per Hour
                </label>
-            
+               
+             <!-- 
             <label class="button" id="MRat" onclick="TotalMoodRatings()">
             Mood Ratings
             </label>
-           <!-- <label class="button" id="MRatRollAvg" onclick="MoodRateRollingAverage()">
+          <label class="button" id="MRatRollAvg" onclick="MoodRateRollingAverage()">
             Mood Rolling Avg
             </label>
             <button onclick="MoodAvg()">Click me</button>
@@ -82,7 +86,7 @@
          
          <div class="file-upload-name" id="filename">No file chosen</div>
       </div>
-      <div id="body" class="body"> <canvas id="myChart" height="700"></canvas> </div>
+      <div id="body" class="body" height="auto"> <canvas id="myChart" height="700"></canvas> </div>
 
       
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

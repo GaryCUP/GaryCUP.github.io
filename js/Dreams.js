@@ -455,13 +455,7 @@ function countTags(tags, times) {
     // var time = "";
     //loop  breaks tags
     //tagNtime.length = tagsNtimes.length;
-    for (var i = 0; i < tags.length; i++) {
-      //tagNtime.push
-      //tagNtime.push("k");
-      //tagNtime.time[i] = tagsNtimes[i][1];
-      //console.log(tagNtime.time);
-      //tagNtime.time = tagsNtimes[i][1];
-    }
+   
 
     for (var z = 0; z < tags.length; z++) {
       //for (let ent in tagsNtimes[z]) //{
