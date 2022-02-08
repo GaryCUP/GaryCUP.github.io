@@ -1260,31 +1260,15 @@ function csvToJson(data) {
         });
         //
         var daMood = data[i][4];
-        //
-        /////////////////////////////////////////////////////////////////////////////////////////
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        //  add in later
-        //////////////////////////////////////////////////////////////////////////////               
-        if (data[i].MoodLabRate == "") {
-            data[i].MoodLabRate = prompt("Mood for " + daMood);
-            var daMoodRate = data[i].MoodLabRate;
-            data.forEach(function(mr, m) {
-                if (data[m][4] == daMood) data[m].MoodLabRate = daMoodRate;
-            });
-        }
-
-        /////////////////////////////////////////////////////////////////////////////////////
-        ////////////////////////////////////////////////////////////////////////////////////
-        //data.forEach(function(item, i) { if (daMood == 3452) a[i] = 1010; });
-
-        /*
+      
+        
         if (data[i].MoodLabRate != "") {
          var index = data.indexOf(data[i].MoodLabRate); data[i].MoodLabRate = prompt("Mood for " + data[i][4]).replace(
             data[i][4].value,
             data[i].MoodLabRate.value
           );
         }
-    */
+    
         var DOW = data[i][2];
 
         //var HOD = data[i][3];
