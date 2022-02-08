@@ -1395,7 +1395,7 @@ var moodhold = {};
 
 function countMoodsLineGr(moods4line) {
     moods4line.reverse();
-    AllDays.reverse();
+    //AllDays.reverse();
     for (var liner = 0; liner < moods4line.length; liner++) {
         var indMoodHold = moods4line[liner];
         //if(moodhold[indMoodHold[liner]]){}
