@@ -1421,7 +1421,7 @@ var actshold={};
 function countActsLineGr(acts4line)
 {
     acts4line.reverse();
-   // AllDays.reverse();
+    AllDays.reverse();
     for (var z = 0; z < acts4line.length-1; z++) {
       
         var arr = acts4line[z];
