@@ -1,0 +1,35 @@
+#body {
+  padding: 100px 0;
+  background: #c9dbe9;
+  background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+}
+
+#body.night {
+  background: #010010;
+  background: -linear-gradient(top, #010010 0%, #0c1a37 100%);
+  background: -moz-linear-gradient(top, #010010 0%, #0c1a37 100%);
+  background: -webkit-linear-gradient(top, #010010 0%, #0c1a37 100%);
+}
+
+#body.dawn {
+  background: #2c449d;
+  background: -linear-gradient(top, #2c449d 0%, #ce98af 100%);
+  background: -moz-linear-gradient(top, #2c449d 0%, #ce98af 100%);
+  background: -webkit-linear-gradient(top, #2c449d 0%, #ce98af 100%);
+}
+
+#body.day {
+  background: #1f4e82;
+  background: -linear-gradient(top, #1f4e82 0%, #9ea0ac 100%);
+  background: -moz-linear-gradient(top, #1f4e82 0%, #9ea0ac 100%);
+  background: -webkit-linear-gradient(top, #1f4e82 0%, #9ea0ac 100%);
+}
+
+#body.dusk {
+  background: #00285c;
+  background: -linear-gradient(top, #00285c 0%, #ef8d5c 100%);
+  background: -moz-linear-gradient(top, #00285c 0%, #ef8d5c 100%);
+  background: -webkit-linear-gradient(top, #00285c 0%, #ef8d5c 100%);
+}
