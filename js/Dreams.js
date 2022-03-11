@@ -18,6 +18,7 @@ var indNumOfDream;
 var indStartDreamDate;
 var indEndDreamDate;
 var junkcount=2147483647;
+var theOneSelected;
 /////////////////////////////
 var ctx = document.getElementById("myChart");
 var holder=[];
@@ -513,6 +514,10 @@ function countTags(tags, times) {
     //TotalTags();
 
     for (var logs in hold) {
+      for(var barium in logs)
+      {
+
+      }
       //hold[logs].reverse();
       indNumOfDream=(hold[logs]).at(-1);
       console.log(logs + " has " + indNumOfDream + " dream logs.");// + " starting at " + AllTimes[hold[logs]]);

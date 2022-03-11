@@ -5,6 +5,7 @@ var numOfRandActivities; // =Math.floor(Math.random() * 11);
 var stringofRandActivities = "";
 var randHH;
 var randmm;
+var theOneSelected;
 //var sma;
 function makeCSV() {
     DaylioFileData = [];

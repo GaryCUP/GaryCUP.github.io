@@ -4,6 +4,11 @@
 
 //const SunCalc = require("../js/suncalc");
 
+//const SunCalc = require("../js/suncalc");
+
+var yourLat=0;
+var yourLong=0;
+
 // Get the current hour; JS runs on the 24-hour clock
 var hour = new Date().getHours();
 
@@ -19,31 +24,37 @@ var sky  = document.querySelector("#body");
  */
 
 //note:eventually, make times of sun position based on user location
+navigator.geolocation.getCurrentPosition(function(position) {
+   yourLat = position.coords.latitude;
+   yourLong = position.coords.longitude;
+});
+
+var yourLocalSunTimes=SunCalc.getTimes(new Date(),yourLat,yourLong);
 var timeBlocks = [
   { // Night starts at 9pm/21:00 and ends at 11pm/24:00
-    start: 19,
-    //start:SunCalc.getTimes(new Date(),0,0) ,
-    end:   23,
-    class: "night",
-  },
-  { // Night starts again at 12am/00:00 and ends at 5am/5:00
-    start: 0,
-    end:   5,
+    //start: SunCalc.getTimes(),
+   // start: suncalc.getTimes(new Date(),41,-80) ,
+    //start: SunCalc.getTimes(new Date(),41,-80).night,
+    start: yourLocalSunTimes.night,
+    
+    //start: SunCalc.getTimes() ,
+    end:   yourLocalSunTimes.nightEnd,
+    
     class: "night",
   },
   { // Dawn starts at 6am/6:00 and ends at 10am/10:00
-    start: 6,
-    end:   7,
+    start: yourLocalSunTimes.dawn,
+    end:   yourLocalSunTimes.sunriseEnd,
     class: "dawn",
   },
   { // Day starts at 11am/11:00 and ends at 4pm/16:00
-    start: 8,
-    end:   17,
+    start: yourLocalSunTimes.sunriseEnd,
+    end:   yourLocalSunTimes.dusk,
     class: "day",
   },
   { // Dusk starts at 5pm/17:00 and ends at 8pm/20:00
-    start: 18,
-    end:   19,
+    start: yourLocalSunTimes.dusk,
+    end:   yourLocalSunTimes.nauticalDusk,
     class: "dusk",
   }
 ]

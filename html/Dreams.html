@@ -54,6 +54,13 @@
             <input type='button' id='btnDreamDownload' value='Download Dream File' onclick='DownloadJSON();'>
             <a id="downloadAnchorElem" style="display:none"></a>
             <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
+            <p> Enter date1   </p>   
+              <input type="date" id="dateInput1">   
+              <br> <br>   
+                
+              <p> Enter date2    </p>
+              <input type="date" id="dateInput2">   
+              <br> <br>   
          </fieldset>
       </form>
       <div id="DRD"> 
@@ -62,11 +69,14 @@
       
       </div>
       <div id="chartHolder">   <canvas id="myChart"   ></canvas>   </div>
-
       </div>
-      <script src="../DayNight/cycle.js"></script>
+
+      
       <link rel="stylesheet" href="../css/Dreams.css" />
+      
+      <script src="../js/suncalc.js"></script>
       <script src="../js/Dreams.js"></script>
+      <script src="../DayNight/cycle.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js" integrity="sha512-TW5s0IT/IppJtu76UbysrBH9Hy/5X41OTAbQuffZFU6lQ1rdcLHzpU5BzVvr/YFykoiMYZVWlr/PX1mDcfM9Qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
       <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" integrity="sha512-UXumZrZNiOwnTcZSHLOfcTs0aos2MzBWHXOHOuB0J/R44QB0dwY5JgfbvljXcklVf65Gc4El6RjZ+lnwd2az2g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
