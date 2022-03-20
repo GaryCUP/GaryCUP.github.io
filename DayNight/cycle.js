@@ -59,19 +59,3 @@ var timeBlocks = [
   }
 ]
 
-
-/**
- * 1. Start by looping through the objects in the timeBlocks array
- * 2. Select the current timeBlock
- * 3. Check if the current hour is within each timeBlock
- * 4. If it is, add the relevant class to #sky
- */
- 
-for ( var i = 0; i < timeBlocks.length; i++ ) { /* 1 */
-  var timeOfDay = timeBlocks[i]; /* 2 */
-  
-  if ( timeOfDay.start <= hour && hour <= timeOfDay.end ) { /* 3 */
-   // sky.addClass(timeOfDay.class); /* 4 */
-    sky.classList.add(timeOfDay.class);
-  }
-}
