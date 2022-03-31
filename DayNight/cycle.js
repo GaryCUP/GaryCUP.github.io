@@ -30,6 +30,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 });
 
 var yourLocalSunTimes=SunCalc.getTimes(new Date(),yourLat,yourLong);
+/*
 var timeBlocks = [
   { // Night starts at 9pm/21:00 and ends at 11pm/24:00
     //start: SunCalc.getTimes(),
@@ -58,4 +59,4 @@ var timeBlocks = [
     class: "dusk",
   }
 ]
-
+*/
