@@ -1,4 +1,4 @@
-﻿import { theArrayThatHolds } from './TheMoods.js';
+﻿
 var colorarray;
 var myBarChart;
 var DaylioFileData;
@@ -20,7 +20,6 @@ function makeCSV() {
         "Saturday",
         "Sunday"
     ];
-
     //get random activity list
     function getThoseActivities() {
         //get random activity list
