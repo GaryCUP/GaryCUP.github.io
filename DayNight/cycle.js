@@ -23,11 +23,13 @@ var sky  = document.querySelector("#body");
  * for with some math, but I don't feel like it.
  */
 
+/*
 //note:eventually, make times of sun position based on user location
 navigator.geolocation.getCurrentPosition(function(position) {
    yourLat = position.coords.latitude;
    yourLong = position.coords.longitude;
 });
+*/
 
 var yourLocalSunTimes=SunCalc.getTimes(new Date(),yourLat,yourLong);
 /*

@@ -616,6 +616,7 @@ function countActsLineGr(acts4line)
             }
           }
   
+           
           //      console.log(hold["Amarai"][z]);
           //Totalacts4line();
           /// BrTagCounter[times[z]]= TagCounter[LoTag[z]]
@@ -871,8 +872,8 @@ function TotalMoodsLG() {
             borderColor: coloor,
             backgroundColor: coloor,
             //backgroundColor:
-            hidden: true
-
+            hidden: true,
+            fill:false
         };
         // var c = 0;
         for (var c = 0; c < moodhold[en].length; c++) {
@@ -908,7 +909,7 @@ function TotalActsLG() {
             responsive: true,
             bezierCurve: false,
             animation: false,
-            spanGaps: true, // enable for all datasets
+            spanGaps: true, 
 
             tension: 0,
 
@@ -951,7 +952,7 @@ function TotalActsLG() {
                     radius: 0
                 }
             },
-            //fill: true,
+            //fill: false,
             animation: false,
             spanGaps: true, // enable for all datasets
 
@@ -982,7 +983,8 @@ function TotalActsLG() {
             borderColor: coloor,
             backgroundColor: coloor,
             //backgroundColor:
-            hidden: true
+            hidden: true,
+            fill:false
 
         };
         // var c = 0;
