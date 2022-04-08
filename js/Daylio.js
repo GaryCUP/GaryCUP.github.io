@@ -1,5 +1,4 @@
-﻿
-var colorarray;
+﻿var colorarray;
 var myBarChart;
 var DaylioFileData;
 var numOfRandActivities; // =Math.floor(Math.random() * 11);
