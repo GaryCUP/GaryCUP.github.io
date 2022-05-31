@@ -5,6 +5,7 @@
       
       <title>Dreams</title>
       <link rel="stylesheet" href="../DayNight/stylesheet.css">
+      <link href="../dist/css/datepicker.min.css" rel="stylesheet" />
 
      
    </head>
@@ -35,8 +36,7 @@
                <li><a href="#">Page 3</a></li>
              </ul>
              <ul class="nav navbar-nav navbar-right">
-               <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-               <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+              
              </ul>
            </div>
          </div>
@@ -53,15 +53,23 @@
             <input type='button' id='btnDreamMake' value='Make Dream File' onclick='makeADreams();'>
             <input type='button' id='btnDreamDownload' value='Download Dream File' onclick='DownloadJSON();'>
             <a id="downloadAnchorElem" style="display:none"></a>
-            <input type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
-            <p> Enter date1   </p>   
-              <input type="date" id="dateInput1">   
-              <br> <br>   
-                
-              <p> Enter date2    </p>
-              <input type="date" id="dateInput2">   
-              <br> <br>   
-         </fieldset>
+            <div id="range">
+              <input type="text" name="start" id="startDream" >
+              <span>To</span>
+              <input type="text" name="end" id="endDream" >
+            </div>   
+            <div id="radiodreams" >
+<input type="radio" id="useRangedDreamDates"
+            name="DreamDates" value="useRangedDreamDates">
+           <label for="useRangedDreamDates">Use Ranged Dates </label>
+       
+           <input type="radio" id="useFulldDreamDates"
+            name="DreamDates" value="useFulldDreamDates">
+           <label for="useFulldDreamDates">Use Full Dates</label>
+
+            </div>
+            
+             </fieldset>
       </form>
       <div id="DRD"> 
          
@@ -72,6 +80,9 @@
       </div>
 
       
+      <script src="../dist/js/datepicker-full.min.js"></script>
+
+
       <link rel="stylesheet" href="../css/Dreams.css" />
       
       <script src="../js/suncalc.js"></script>
@@ -83,9 +94,8 @@
       <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/1.2.0/chartjs-plugin-zoom.min.js" integrity="sha512-TT0wAMqqtjXVzpc48sI0G84rBP+oTkBZPgeRYIOVRGUdwJsyS3WPipsNh///ay2LJ+onCM23tipnz6EvEy2/UA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
       <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
-           <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 
    </body>
 </html>

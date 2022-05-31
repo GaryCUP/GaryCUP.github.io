@@ -414,7 +414,7 @@ function csvToJson(data) {
             data[i].MoodLabRate = prompt("Mood for " + daMood);
             var daMoodRate = data[i].MoodLabRate;
             data.forEach(function(mr, m) {
-                if (data[m][4] == daMood) data[m].MoodLabRate = daMoodRate;
+                if (data[m][4] == daMood) {data[m].MoodLabRate = daMoodRate;}
             });
         }
      
@@ -442,11 +442,12 @@ function csvToJson(data) {
         //  console.log(data[i][3]);
         //console.log(data[i]);
         //
-
+//////console.log(data[i].MoodLabRate);
         //   arr = data[i].map(x => Object.assign({}, data[i], { "new column": "" }))
         out.push(obj);
     }
-    console.log(AllMoodRate);
+    console.log(data.MoodLabRate);
+    
     //countDOW(AllDOW);
     //countMoods(AllMoods);
     //countActs(AllActs);
@@ -460,6 +461,8 @@ function csvToJson(data) {
 
 function actsInMoodLevel()
 {
+countMoodVActs(AllMoodRate,  AllLineActs)
+   
 
 }
 
@@ -896,6 +899,67 @@ function TotalMoodsLG() {
     myChart.update();
 }
 
+var ActVMood={};
+function countMoodVActs(AllMoods2Rate, AllActs2Rate)
+{
+ //console.log(AllMoodRate);
+ AllMoods2Rate.reverse();
+ AllActs2Rate.reverse();
+ AllDays.reverse();
+ console.log("LOL " + AllMoods2Rate);
+ console.log("LOL " + AllActs2Rate);
+ console.log("LOL " + AllDays);
+ for (var z = 0; z < AllActs2Rate.length-1; z++) {
+   
+    var arrOActs = AllActs2Rate[z];
+    //hold.arrOActs = [];
+
+    if (arrOActs.length == 0) {
+      for (var emp in actshold) {
+        actshold[emp][z] = actshold[emp][z - 1];
+      }
+    }
+
+    for (var i = 0, j = arrOActs.length; i < j; i++) {
+      currtag = arrOActs[i];
+      // hold[arrOActs[i]][z]=0;
+      //  hold[arrOActs[i]][z] = "" ;
+
+      //      hold.arrOActs[i] = [];
+      if (ActVMood[arrOActs[i]]) {
+      //  TagCounter[arrOActs[i]]++;
+        //hold[z[arrOActs[i]]]++;
+        //  hold[arrOActs[i]][z] = hold[arrOActs[i]][z - 1];
+        actshold[arrOActs[i]][z] = 0;
+        actshold[arrOActs[i]][z] = actshold[arrOActs[i]][z - 1] + 1;
+        //document.getElementById("RDRID").innerHTML+=("You have had " +   hold[arrOActs[i]][z] + "  dreams about " + hold[arrOActs][i] )  ;
+      }
+      if (!actshold[arrOActs[i]]) {
+       // counter++;
+       // TagCounter[arrOActs[z]] = 1;
+        //hold[z].currtag = 1;
+        actshold[arrOActs[i]] = [];
+        actshold[arrOActs[i]][z] = 1;
+
+        // hold.z[arrOActs[i]] = 1;
+      }
+
+      for (var nou in actshold) {
+        if (actshold[nou][z] === undefined) {
+            actshold[nou][z] = actshold[nou][z - 1];
+        }
+      }
+
+       
+      //      console.log(hold["Amarai"][z]);
+      //Totalacts4line();
+      /// BrTagCounter[times[z]]= TagCounter[LoTag[z]]
+      //add function to graph all acts4line at ind ex z
+      // console.log(hold["Emily"]);
+      //Totalacts4line();
+    }
+  }
+}
 function TotalActsLG() {
     countActsLineGr(AllLineActs);
     var ctx = document.getElementById("myChart");

@@ -1,4 +1,11 @@
-﻿//document.getElementById("btnGraph").disabled = true;
+﻿const elem = document.getElementById('range');
+const dateRangePicker = new DateRangePicker(elem, {
+format:'mm-dd-yyyy'    
+});
+
+
+
+//document.getElementById("btnGraph").disabled = true;
 //document.getElementById("btnLoad").disabled = true;
 var coloor;
 var colorarray;
@@ -249,7 +256,10 @@ function TotalTags() {
   var myChart = new Chart(ctx, {
     type: "line",
     data: {
-      labels: AllTimes,
+      
+      labels: document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes,
+      
+      
       //labels: "",
       
       // backgroundColor:,
@@ -307,7 +317,6 @@ function TotalTags() {
           {
             ticks: {
               beginAtZero: true
-              //reverse: true
             }
           }
         ]
@@ -322,7 +331,6 @@ function TotalTags() {
   };
 
   for (en in hold) {
-    //hold[c].reverse();
     coloor = getRandomColor();
     var newDataset = {
       label: en,
@@ -355,9 +363,16 @@ function TotalTags() {
 }
 var AllTimes = [];
 var AllTags = [];
+var AllTimesR = [];
+var AllTagsR = [];
 var alltagstimes = [,];
+var u=0;
+
 
 function loadFile() {
+  const dreamStartRanged=new Date(document.getElementById("startDream").value);
+const dreamEndRanged=new Date(document.getElementById("endDream").value);
+
   var input, file, fr;
 
   if (typeof window.FileReader !== "function") {
@@ -382,6 +397,7 @@ function loadFile() {
   }
   document.getElementById("btnLoad").disabled = false;
   var newArr = [];
+  var newArrR=[];
   // var AllTags = [];
   // var AllTimes = [];
   var strOtxt,
@@ -395,21 +411,23 @@ function loadFile() {
     //var AllTimes = [];
     //var alltagstimes = [,];
 
-    /*
-    var startDate = new Date("2013-07-10");
-var endDate = new Date("2013-07-10");
+  
 
-for(i = 0; i < arrayDates.length; i++){
-if(arrayDates[i] >= startDate &&   arrayDates[i] <= endDate) {
-   alert('Yes');
- }
-}
-    */
+
     for (var i = 0; i < newArr.length; i++) {
       AllTags[i] = newArr[i].tags;
       AllTimes[i] = convertTime(newArr[i].timestamp);
       alltagstimes[(i, i)] = [newArr[i].tags, newArr[i].timestamp];
+      if(Date.parse(AllTimes[i])>=dreamStartRanged && Date.parse(AllTimes[i])<=dreamEndRanged)
+      {
+          AllTagsR[u]=newArr[i].tags;
+          AllTimesR[u] = convertTime(newArr[i].timestamp);
+          u++;
+
     }
+
+
+  }
     //return alltagstimes;
     ////////////////////////////////////countTags(alltagstimes);
     startDreamDate=AllTimes[AllTimes.length-1];
@@ -425,8 +443,18 @@ if(arrayDates[i] >= startDate &&   arrayDates[i] <= endDate) {
     rateOfRememberence=(Math.round(((numOfDreams/totalDaysInDreamRange)+Number.EPSILON)*100)/1000)*100;
   //rateOfRememberence*=100;
     document.getElementById("DreamRemRate").innerHTML=("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
-    countTags(AllTags, AllTimes);
-  }
+    if(document.getElementById("useRangedDreamDates").checked)
+    {
+      countTags(AllTagsR, AllTimesR);
+    }
+    else
+    {
+      countTags(AllTags, AllTimes);
+    }
+    
+}  
+
+
 }
 var BrTagCounter;
 var TagCounter;
@@ -449,7 +477,7 @@ function countTags(tags, times) {
   };
   */
     tags.reverse();
-    AllTimes.reverse();
+    times.reverse();
 
     //tagsNtime[""] = {};
     var BTagCount = 0;
@@ -518,7 +546,6 @@ function countTags(tags, times) {
       {
 
       }
-      //hold[logs].reverse();
       indNumOfDream=(hold[logs]).at(-1);
       console.log(logs + " has " + indNumOfDream + " dream logs.");// + " starting at " + AllTimes[hold[logs]]);
       for (var entr in logs) {
@@ -531,7 +558,7 @@ function countTags(tags, times) {
 
    
     alert("Done " + bug);
-    
+    alert(document.getElementById("startDream").value);
   }
 
   document.getElementById("btnGraph").disabled = false;
