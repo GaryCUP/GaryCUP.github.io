@@ -1,4 +1,11 @@
-﻿var colorarray;
+﻿const elem = document.getElementById('range');
+const dateRangePicker = new DateRangePicker(elem, {
+format:'yyyy-mm-dd'    
+});
+
+
+
+var colorarray;
 var myBarChart;
 var DaylioFileData;
 var numOfRandActivities; // =Math.floor(Math.random() * 11);
@@ -44,7 +51,7 @@ function makeCSV() {
             ""
         ]);
     }
-    console.log(DaylioFileData);
+    //console.log(DaylioFileData);
     alert("finished");
 }
 
@@ -120,12 +127,12 @@ function getRandomColour() {
 // Event handlers
 $("#update-data-from-file").change(function(e) {
     changeDataFromUpload(e, function(data) {
-        console.log(data);
+        //console.log(data);
     });
 });
 $("#update-data-from-field").click(function() {
     changeDataFromField(function(data) {
-        console.log(data);
+      //  console.log(data);
     });
 });
 
@@ -372,20 +379,34 @@ var arr = [];
 var AllRoodRateofInts = [];
 var AllDays = []
 var AllLineActs=[];
+
+var RaDOW = [];
+var RaHOD = [];
+var RaMoods = [];
+var RaActs = [];
+var RaMoodRate = [];
+var Rarr = [];
+var RaRoodRateofInts = [];
+var RaDays = []
+var RaLineActs=[];
+
 //var MoodLevel = "";
 // Parse the CSV input into JSON
 var data;
 var out = [];
+var u=0;
 
 function csvToJson(data) {
+    const daylioStartRanged=new Date(document.getElementById("startDaylio").value);
+const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
     var cols = data[1];
     out = [];
-
+/*
     data.forEach(function(e) {
         //MoodLevel = prompt("Mood for " + data.Mood);
         e["MoodLabRate"] = "";
     });
-
+*/
     for (var i = 1; i < data.length; i++) {
         var obj = {};
         var row = data[i];
@@ -407,9 +428,47 @@ function csvToJson(data) {
             cc++;
         });
         //
-        var daMood = data[i][4];
+        if(document.getElementById("useRangedLogDates").checked)
+        {
+        if(Date.parse(data[i][0])>=daylioStartRanged && Date.parse(data[i][0])<=daylioEndRanged)
+        {
+            var DOW = data[i][2];
+
+            //var HOD = data[i][3];
+            var HOD = formatHour(moment((data[i][3]), 'HH:mm').format('HH'));
+            var Mood = data[i][4];
+            var Activities = data[i][5];
            
-    
+     
+            var days = data[i][0] + " " + data[i][3];
+            var MoodRate = data[i].MoodLabRate;
+            AllDOW[u] = DOW;
+            AllMoods[u] = Mood;
+            AllActs[u] = Activities;
+            AllLineActs[u]=Activities.split("|").map(item => item.trim());
+            AllHOD[u] = HOD;
+            AllMoodRate[u] = MoodRate;
+            AllDays[u] = days;
+            AllRoodRateofInts[u] = parseInt(MoodRate);
+            //RaMoods[u] = Mood;
+            /*
+            RaActs[u] = Activities;
+            RaLineActs[u]=Activities.split("|").map(item => item.trim());
+            RaHOD[u] = HOD;
+            RaMoodRate[u] = MoodRate;
+            RaDays[u] = days;
+            RaRoodRateofInts[u] = parseInt(MoodRate);
+            */
+            u++;
+        }
+        out.push(obj);
+
+    }
+        
+           
+
+        /*///////////////////////////////////////////UNBLOCK SOON/////////////////////////////////
+    var daMood = data[i][4];
         if (data[i].MoodLabRate == "") {
             data[i].MoodLabRate = prompt("Mood for " + daMood);
             var daMoodRate = data[i].MoodLabRate;
@@ -417,9 +476,9 @@ function csvToJson(data) {
                 if (data[m][4] == daMood) {data[m].MoodLabRate = daMoodRate;}
             });
         }
-     
-      
-        var DOW = data[i][2];
+     *///////////////////////////////////////UNBLOCK SOON//////////////////////////////////
+      else{
+          var DOW = data[i][2];
 
         //var HOD = data[i][3];
         var HOD = formatHour(moment((data[i][3]), 'HH:mm').format('HH'));
@@ -438,15 +497,15 @@ function csvToJson(data) {
         AllMoodRate[i] = MoodRate;
         AllDays[i] = days;
         AllRoodRateofInts[i] = parseInt(MoodRate);
-        // AllRoodRateofInts.filter(Number) 
-        //  console.log(data[i][3]);
-        //console.log(data[i]);
-        //
-//////console.log(data[i].MoodLabRate);
-        //   arr = data[i].map(x => Object.assign({}, data[i], { "new column": "" }))
         out.push(obj);
+
+      }
+        
+     
+        //   arr = data[i].map(x => Object.assign({}, data[i], { "new column": "" }))
+       
     }
-    console.log(data.MoodLabRate);
+    
     
     //countDOW(AllDOW);
     //countMoods(AllMoods);

@@ -8,6 +8,7 @@
       
       <link rel="stylesheet" href="../css/Daylio.css">
       <link rel="stylesheet" href="../DayNight/stylesheet.css">
+      <link href="../dist/css/datepicker.min.css" rel="stylesheet" />
 
       
    </head>
@@ -76,6 +77,23 @@
                Entries per Hour
                </label>
 
+               <a id="downloadAnchorElem" style="display:none"></a>
+            <div id="range">
+              <input type="text" name="start" id="startDaylio" >
+              <span>To</span>
+              <input type="text" name="end" id="endDaylio" >
+            </div>   
+            <div id="radioLogs" >
+              <input type="radio" id="useRangedLogDates"
+            name="LogDates" value="useRangedLogDates">
+           <label for="useRangedLogDates">Use Ranged Dates </label>
+       
+           <input type="radio" id="useFullLogDates"
+            name="LogDates" value="useFulldLogDates">
+           <label for="useFulldLogDates">Use Full Dates</label>
+
+            </div>
+
              <!-- 
             <label class="button" id="MRat" onclick="TotalMoodRatings()">
             Mood Ratings
@@ -99,6 +117,7 @@
       <div  class="body" height="auto"> <canvas id="myChart" height="1500"></canvas> </div>
     </div>
 
+    <script src="../dist/js/datepicker-full.min.js"></script>
 
     <script src="../js/suncalc.js"></script>
     <script src="../DayNight/cycle.js"></script>
