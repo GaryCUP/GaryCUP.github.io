@@ -459,6 +459,8 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     totalDaysInDreamRange=Math.round(diffTimes/aDayIs);
     console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
     rateOfRememberence=numOfDreams/totalDaysInDreamRange;
+    document.getElementById("DreamRemRate").innerHTML=("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
+
 
 }  
 
