@@ -431,23 +431,16 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     //return alltagstimes;
     ////////////////////////////////////countTags(alltagstimes);
     
-    rateOfRememberence=numOfDreams/totalDaysInDreamRange;
+    
    //// rateOfRememberence=(Math.round(((numOfDreams/totalDaysInDreamRange)+Number.EPSILON)*100)/1000)*100;
   //rateOfRememberence*=100;
    
     if(document.getElementById("useRangedDreamDates").checked)
     {
-      startDreamDate=document.getElementById("startDream").value;
-    endDreamDate=document.getElementById("endDream").value;
+      startDreamDate=AllTimes[AllTimesR.length-1];
+    endDreamDate=AllTimesR[0];
     numOfDreams=AllTimesR.length;
-    const realStartDreamTime=new Date(startDreamDate);
-    const realEndDreamTime=new Date(endDreamDate);
-    const aDayIs=1000*60*60*24;
-    const diffTimes=realEndDreamTime-realStartDreamTime;
-    totalDaysInDreamRange=Math.round(diffTimes/aDayIs);
-    console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
-    rateOfRememberence=numOfDreams/totalDaysInDreamRange;
-
+    
       countTags(AllTagsR, AllTimesR);
     }
     else
@@ -455,6 +448,10 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
       startDreamDate=AllTimes[AllTimes.length-1];
     endDreamDate=AllTimes[0];
     numOfDreams=AllTimes.length;
+   
+
+      countTags(AllTags, AllTimes);
+    }
     const realStartDreamTime=new Date(startDreamDate);
     const realEndDreamTime=new Date(endDreamDate);
     const aDayIs=1000*60*60*24;
@@ -463,8 +460,6 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
     rateOfRememberence=numOfDreams/totalDaysInDreamRange;
 
-      countTags(AllTags, AllTimes);
-    }
 }  
 
 
