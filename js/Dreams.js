@@ -439,7 +439,7 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
   
     if(document.getElementById("useRangedDreamDates").checked)
     {
-      startDreamDate=AllTimes[AllTimesR.length-1];
+      startDreamDate=AllTimesR[AllTimesR.length-1];
     endDreamDate=AllTimesR[0];
     numOfDreams=AllTimesR.length;
     const realStartDreamTime=new Date(startDreamDate);
