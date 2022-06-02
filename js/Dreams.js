@@ -448,7 +448,7 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     const diffTimes=realEndDreamTime-realStartDreamTime;
     totalDaysInDreamRange=Math.round(diffTimes/aDayIs);
     console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
-    rateOfRememberence=numOfDreams/totalDaysInDreamRange;
+    rateOfRememberence=(numOfDreams/totalDaysInDreamRange)*100;
     document.getElementById("DreamRemRate").innerHTML=("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
 
       countTags(AllTagsR, AllTimesR);
@@ -464,7 +464,7 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     const diffTimes=realEndDreamTime-realStartDreamTime;
     totalDaysInDreamRange=Math.round(diffTimes/aDayIs);
     console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
-    rateOfRememberence=numOfDreams/totalDaysInDreamRange;
+    rateOfRememberence=(numOfDreams/totalDaysInDreamRange)*100;
     document.getElementById("DreamRemRate").innerHTML=("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
 
 
