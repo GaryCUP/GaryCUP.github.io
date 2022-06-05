@@ -24,7 +24,7 @@ var indRateOfOcc;
 var indNumOfDream;
 var indStartDreamDate;
 var indEndDreamDate;
-var junkcount=Math.floor(Date.now() / 1000);//current time in miliseconds
+var junkcount=Math.floor(Date.now() / 1000);//current time in seconds
 var theOneSelected;
 /////////////////////////////
 var ctx = document.getElementById("myChart");
@@ -36,13 +36,13 @@ function DownloadJSON(){
   var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(holder));
   var dlAnchorElem = document.getElementById('downloadAnchorElem');
   dlAnchorElem.setAttribute("href",     dataStr     );
-  dlAnchorElem.setAttribute("download", "scene.json");
+  dlAnchorElem.setAttribute("download", "dreamit.json");
   dlAnchorElem.click();}
   
 function makeADreams(){
-  for(var x=0;x<5000;x++)
+  for(var x=0;x<1000;x++)
   {
-    junkcount-=Math.floor(Math.random() * (50000 - 500 + 1) ) + 500; //60000;
+    junkcount-=Math.floor(Math.random() * (432000 - 86400 + 1) ) + 86400; //60000;
       shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
      selectedTags=shuffledTags.slice(0,numTagsToMake-1);
      const TnadT = Object.create(DreamFile);
@@ -578,8 +578,8 @@ function countTags(tags, times) {
     }
 
    
-    alert("Done " + bug);
-    alert(document.getElementById("startDream").value);
+    alert("Done! " + numOfDreams +" Dreams logged across " + totalDaysInDreamRange + " days." );
+    //alert(document.getElementById("startDream").value);
   }
 
   document.getElementById("btnGraph").disabled = false;
