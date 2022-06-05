@@ -24,7 +24,7 @@ var indRateOfOcc;
 var indNumOfDream;
 var indStartDreamDate;
 var indEndDreamDate;
-var junkcount=2147483647;
+var junkcount=Math.floor(Date.now() / 1000);//current time in miliseconds
 var theOneSelected;
 /////////////////////////////
 var ctx = document.getElementById("myChart");
@@ -42,7 +42,7 @@ function DownloadJSON(){
 function makeADreams(){
   for(var x=0;x<5000;x++)
   {
-    junkcount-=Math.floor(Math.random() * (5000000 - 50000 + 1) ) + 50000; //60000;
+    junkcount-=Math.floor(Math.random() * (50000 - 500 + 1) ) + 500; //60000;
       shuffledTags = listoffauxtags.sort(function(){return .5 - Math.random()});
      selectedTags=shuffledTags.slice(0,numTagsToMake-1);
      const TnadT = Object.create(DreamFile);
