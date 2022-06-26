@@ -6,7 +6,8 @@ format:'mm-dd-yyyy'
 
 
 //document.getElementById("btnGraph").disabled = true;
-//document.getElementById("btnLoad").disabled = true;
+document.getElementById("btnDreamFreq").disabled = true;
+
 var coloor;
 var colorarray;
 var myBarChart;
@@ -372,6 +373,12 @@ var u=0;
 function loadFile() {
   const dreamStartRanged=new Date(document.getElementById("startDream").value);
 const dreamEndRanged=new Date(document.getElementById("endDream").value);
+document.getElementById("startDream").disabled=true;
+document.getElementById("endDream").disabled=true;
+document.getElementById("useRangedDreamDates").disabled=true;
+document.getElementById("useFulldDreamDates").disabled=true;
+
+
 
   var input, file, fr;
 
@@ -440,7 +447,8 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     if(document.getElementById("useRangedDreamDates").checked)
     {
       startDreamDate=AllTimesR[AllTimesR.length-1];
-    endDreamDate=AllTimesR[0];
+    //endDreamDate=AllTimesR[0];
+    endDreamDate=dreamEndRanged;
     numOfDreams=AllTimesR.length;
     const realStartDreamTime=new Date(startDreamDate);
     const realEndDreamTime=new Date(endDreamDate);
@@ -456,7 +464,8 @@ const dreamEndRanged=new Date(document.getElementById("endDream").value);
     else
     {
       startDreamDate=AllTimes[AllTimes.length-1];
-    endDreamDate=AllTimes[0];
+    //endDreamDate=AllTimes[0]; 
+     endDreamDate=new Date();
     numOfDreams=AllTimes.length;
     const realStartDreamTime=new Date(startDreamDate);
     const realEndDreamTime=new Date(endDreamDate);
@@ -561,14 +570,24 @@ function countTags(tags, times) {
     //console.log(hold["CLSV"]);
     //console.log(AllTimes);
     //TotalTags();
-
+var localDreamStart;
+  var myWindow = window.open("", "MsgWindow", "width=300,height=300");
     for (var logs in hold) {
       for(var barium in logs)
       {
-
+          //relative dream occurence rate=#dreams/number of days betreen first dream and end of log
+          //86400000 is number of miliseconds in a day
       }
       indNumOfDream=(hold[logs]).at(-1);
-      console.log(logs + " has " + indNumOfDream + " dream logs.");// + " starting at " + AllTimes[hold[logs]]);
+      localDreamStart= document.getElementById("useRangedDreamDates").checked ? AllTimesR[hold[logs].findIndex((element) => element > 0)] : AllTimes[hold[logs].findIndex((element) => element > 0)] ;
+     // console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + localDreamStart+  " and ending at " +  AllTimes[hold[logs].length-1]);
+      var distanceBetweenTheDates=Math.round(((document.getElementById("useRangedDreamDates").checked ? new Date(AllTimesR[hold[logs].length-1]): new Date(AllTimes[hold[logs].length-1]))-new Date(localDreamStart))/86400000);      
+    ///console.log( logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + "\r\n") ;
+      //document.getElementById("RDRID").innerHTML+=logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>' ;
+    
+      myWindow.document.write(logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>');
+      
+
       for (var entr in logs) {
         //console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + AllTimes[hold[logs][entr]]);
         if (!hold[logs][entr]) {

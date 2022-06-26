@@ -52,6 +52,7 @@
             <input type='button' id='btnGraph' value='Graph It' onclick='TotalTags();' disabled='true'>
             <input type='button' id='btnDreamMake' value='Make Dream File' onclick='makeADreams();'>
             <input type='button' id='btnDreamDownload' value='Download Dream File' onclick='DownloadJSON();'>
+            <input type='button' id='btnDreamFreq' value='View Dream Frequencies' onclick='ViewDreamFreqs()'>
             <a id="downloadAnchorElem" style="display:none"></a>
             <div id="range">
               <input type="text" name="start" id="startDream" >
@@ -71,15 +72,16 @@
             
              </fieldset>
       </form>
-      <div id="DRD"> 
-         
-         <p id="RDRID">Relative Dream Rate</p> </p>
       
-      </div>
       <div id="chartHolder">   <canvas id="myChart"   ></canvas>   </div>
       </div>
 
+      <div id="DRD"> 
+         
+         <h3 >Relative Dream Rate</h3> 
+         <p id="RDRID"></p> 
       
+      </div>
       <script src="../dist/js/datepicker-full.min.js"></script>
 
 
