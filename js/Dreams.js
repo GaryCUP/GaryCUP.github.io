@@ -582,10 +582,10 @@ var localDreamStart;
       localDreamStart= document.getElementById("useRangedDreamDates").checked ? AllTimesR[hold[logs].findIndex((element) => element > 0)] : AllTimes[hold[logs].findIndex((element) => element > 0)] ;
      // console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + localDreamStart+  " and ending at " +  AllTimes[hold[logs].length-1]);
       var distanceBetweenTheDates=Math.round(((document.getElementById("useRangedDreamDates").checked ? new Date(AllTimesR[hold[logs].length-1]): new Date(AllTimes[hold[logs].length-1]))-new Date(localDreamStart))/86400000);      
-    ///console.log( logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + "\r\n") ;
+    console.log( logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + "\r\n") ;
       //document.getElementById("RDRID").innerHTML+=logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>' ;
     
-      myWindow.document.write(logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>');
+      //myWindow.document.write(logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>');
       
 
       for (var entr in logs) {
