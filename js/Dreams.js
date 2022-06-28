@@ -571,7 +571,7 @@ function countTags(tags, times) {
     //console.log(AllTimes);
     //TotalTags();
 var localDreamStart;
-  var myWindow = window.open("", "MsgWindow", "width=300,height=300");
+  ////var myWindow = window.open("", "MsgWindow", "width=300,height=300");
     for (var logs in hold) {
       for(var barium in logs)
       {
