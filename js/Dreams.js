@@ -253,6 +253,7 @@ function getRandomColor() {
 var x = 0;
 
 function TotalTags() {
+  document.getElementById("rangedgraph").disabled=true;
   var ctx = document.getElementById("myChart");
   var myChart = new Chart(ctx, {
     type: "line",
@@ -305,7 +306,7 @@ function TotalTags() {
       elements: {
         
         point: {
-          radius: 0
+          radius: 3
         }
       },
       //fill: true,
@@ -314,14 +315,14 @@ function TotalTags() {
 
       tension: 0,
       scales: {
-        yAxes: [
+        y: 
           {
        
              
-              reverse:true
+              reverse:document.getElementById("rangedgraph").checked ? true : false
             
           }
-        ]
+        
       }
     }
   });
@@ -332,7 +333,7 @@ function TotalTags() {
     2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
   };
 
-  for (en in holdR) {
+  for (en in document.getElementById("rangedgraph").checked ? holdR : hold) {
     coloor = getRandomColor();
     var newDataset = {
       label: en,
@@ -344,11 +345,11 @@ function TotalTags() {
     
     };
     // var c = 0;
-    for (var c = 0; c < holdR[en].length; c++) {
+    for (var c = 0; c < (document.getElementById("rangedgraph").checked ? holdR : hold)[en].length; c++) {
       ////console.log(c);
-      newDataset.data.splice(c, 0, holdR[en][c]);
+      newDataset.data.splice(c, 0, (document.getElementById("rangedgraph").checked ? holdR : hold)[en][c]);
     }
-    for (value in holdR[en]) {
+    for (value in document.getElementById("rangedgraph").checked ? holdR : hold[en]) {
       //newDataset.data[c] = 0;
       //  newDataset.data[c].push(hold[en][value]);
       //////  newDataset.data.splice(value, 0, hold[en][value]);
@@ -585,7 +586,11 @@ function countTags(tags, times) {
     }
     for (var key in hold) {
       ///holdings.push(hold[key]);
-      holdings.push((hold[key]));
+      if(hold[key])
+      {
+ holdings.push((hold[key]));
+      }
+     
       
     }
     
@@ -628,9 +633,16 @@ var n=0;
     {
      
         res = holdings.map(r => r[n]);
+        res = res.filter(function( element ) {
+          return element !== undefined;
+       });
         //console.log(res);
         const sorted = res.slice().sort((a, b) => b - a)
- ranks = res.map(v => sorted.indexOf(v) + 1);
+       
+       
+           ranks = res.map(v => sorted.indexOf(v) + 1);
+        
+
 console.log(ranks);
 ///resR[n].push(ranks);
 resR[n]=ranks;
