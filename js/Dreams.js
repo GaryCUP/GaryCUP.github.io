@@ -316,9 +316,10 @@ function TotalTags() {
       scales: {
         yAxes: [
           {
-            ticks: {
-              beginAtZero: true
-            }
+       
+             
+              reverse:true
+            
           }
         ]
       }
@@ -331,7 +332,7 @@ function TotalTags() {
     2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
   };
 
-  for (en in hold) {
+  for (en in holdR) {
     coloor = getRandomColor();
     var newDataset = {
       label: en,
@@ -343,11 +344,11 @@ function TotalTags() {
     
     };
     // var c = 0;
-    for (var c = 0; c < hold[en].length; c++) {
+    for (var c = 0; c < holdR[en].length; c++) {
       ////console.log(c);
-      newDataset.data.splice(c, 0, hold[en][c]);
+      newDataset.data.splice(c, 0, holdR[en][c]);
     }
-    for (value in hold[en]) {
+    for (value in holdR[en]) {
       //newDataset.data[c] = 0;
       //  newDataset.data[c].push(hold[en][value]);
       //////  newDataset.data.splice(value, 0, hold[en][value]);
@@ -494,7 +495,8 @@ var currtag = "";
 var test = [,];
 var hold = {};
 var counter = 0;
-
+var holdings=[];
+var holdR={};
 function countTags(tags, times) {
   for (var bug = 0; bug < 1; bug++) {
     BrTagCounter = {};
@@ -565,12 +567,37 @@ function countTags(tags, times) {
         //add function to graph all tags at ind ex z
         // console.log(hold["Emily"]);
         //TotalTags();
+           
       }
+  // console.log(hold);
+
+
+   /*
+   for (var key in hold) {
+    holdings.push(hold[key]);
+    
+  }
+  
+  holdings.sort(function(a, b){
+      return b[0] - a[0];
+  });
+*/
     }
+    for (var key in hold) {
+      ///holdings.push(hold[key]);
+      holdings.push((hold[key]));
+      
+    }
+    
+    holdings.sort(function(a, b){
+        return b[0] - a[0];
+    });
+  
     //console.log(hold["CLSV"]);
     //console.log(AllTimes);
     //TotalTags();
 var localDreamStart;
+var n=0;
   ////var myWindow = window.open("", "MsgWindow", "width=300,height=300");
     for (var logs in hold) {
       for(var barium in logs)
@@ -595,14 +622,38 @@ var localDreamStart;
         }
       }
     }
-
+    var res; var ranks; var resR=[];
+    var q=holdings[0].length;
+    for(var n=0;n<holdings[0].length;n++)
+    {
+     
+        res = holdings.map(r => r[n]);
+        //console.log(res);
+        const sorted = res.slice().sort((a, b) => b - a)
+ ranks = res.map(v => sorted.indexOf(v) + 1);
+console.log(ranks);
+///resR[n].push(ranks);
+resR[n]=ranks;
+        //holdR[hold[n]]=res
+    }
    
+   // console.log(res);
+   var p=0;
+  for(var oo in hold)
+  {
+    holdR[oo]=resR.map(r => r[p]);
+    p++;
+  }
+
     alert("Done! " + numOfDreams +" Dreams logged across " + totalDaysInDreamRange + " days." );
     //alert(document.getElementById("startDream").value);
   }
 
   document.getElementById("btnGraph").disabled = false;
 }
+
+
+
 
 function convertTime(epoch) {
   //getting milliseconds from epoch
