@@ -270,7 +270,7 @@ function TotalTags() {
       animation: true,
       spanGaps: true, // enable for all datasets
 
-      tension: 0,
+      tension: .25,
 
       datasets: []
     },
@@ -327,11 +327,7 @@ function TotalTags() {
     }
   });
 
-  var model = {
-    2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
-    2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
-    2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
-  };
+
 
   for (en in document.getElementById("rangedgraph").checked ? holdR : hold) {
     coloor = getRandomColor();
@@ -341,7 +337,7 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-      hidden:false
+      hidden:true
     
     };
     // var c = 0;
