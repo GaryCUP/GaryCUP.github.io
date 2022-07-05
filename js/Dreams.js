@@ -266,7 +266,7 @@ function TotalTags() {
       
       // backgroundColor:,
       responsive: true,
-      bezierCurve: false,
+      bezierCurve: true,
       animation: true,
       spanGaps: true, // enable for all datasets
 
@@ -341,7 +341,7 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-      hidden:true
+      hidden:false
     
     };
     // var c = 0;
@@ -627,7 +627,7 @@ var n=0;
         }
       }
     }
-    var res; var ranks; var resR=[];
+    var res; var ranks; var resR=[]; var rank;
     var q=holdings[0].length;
     for(var n=0;n<holdings[0].length;n++)
     {
@@ -637,13 +637,20 @@ var n=0;
           return element !== undefined;
        });
         //console.log(res);
-        const sorted = res.slice().sort((a, b) => b - a)
+        var ranks=rankDuplicate(res);
+      ///  const sorted = res.slice().sort((a, b) => b - a)
        
        
-           ranks = res.map(v => sorted.indexOf(v) + 1);
+     //rank = res.map(v => sorted.indexOf(v) + 1);
+     // ranks = sorted.map(function (sorted) {
+      //  return function (a, i, aa) {
+     //       return a, aa[i - 1] === a ? sorted : ++sorted;
+    //    };
+ //   }(0));
         
-
-console.log(ranks);
+ //const ranks = new Map(sorted.map((x, i) => [x, i + 1]));
+//var rank= arr.map((x) => rank.get(x));
+console.log(rankDuplicate(res));
 ///resR[n].push(ranks);
 resR[n]=ranks;
         //holdR[hold[n]]=res
@@ -664,6 +671,11 @@ resR[n]=ranks;
   document.getElementById("btnGraph").disabled = false;
 }
 
+function rankDuplicate(arr) {
+  const sorted = [...new Set(arr)].slice().sort((a, b) => b - a);
+  const rank = new Map(sorted.map((x, i) => [x, i + 1]));
+  return arr.map((x) => rank.get(x));
+}
 
 
 
