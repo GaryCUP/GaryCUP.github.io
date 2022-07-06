@@ -1,30 +1,10 @@
 ﻿body
 {
-     margin: 0;
+     margin: 5px;
 }
  
 #chartHolder
 {
-     position: relative;
-     height:500vh; 
-     
+    height: 1000px;
+    
 }
-.chart-legend li span{
-     display: inline-block;
-     width: 12px;
-     height: 12px;
-     margin-right: 5px;
- }
- 
- .chart-legend{
-   height:250px;
-   overflow:auto;
- }
- 
- .chart-legend li{
-   cursor:pointer;
- }
- 
- .strike{
-      text-decoration: line-through !important;
- }

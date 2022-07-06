@@ -270,7 +270,7 @@ function TotalTags() {
       animation: true,
       spanGaps: true, // enable for all datasets
 
-      tension: .25,
+      tension: 0.5,
 
       datasets: []
     },
@@ -289,9 +289,18 @@ function TotalTags() {
         position: 'top'
        
      },
+     
+     layout: {
+      padding: {
+          left: 50,
+          right: 50,
+          top: 50,
+          bottom: 50
+      }
+  },
         zoom: {
           limits: {
-            y: { min: 0 }
+            y: { min: 1 }
           },
           zoom: {
             wheel: {
@@ -313,7 +322,7 @@ function TotalTags() {
       animation: false,
       spanGaps: true, // enable for all datasets
 
-    
+      tension: 0.5,
       scales: {
         y: 
           {
@@ -327,7 +336,11 @@ function TotalTags() {
     }
   });
 
-
+  var model = {
+    2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
+    2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
+    2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
+  };
 
   for (en in document.getElementById("rangedgraph").checked ? holdR : hold) {
     coloor = getRandomColor();
@@ -337,7 +350,8 @@ function TotalTags() {
       borderColor: coloor,
       backgroundColor: coloor,
       //backgroundColor:
-      hidden:true
+      hidden:true,
+      tension:0.5
     
     };
     // var c = 0;
