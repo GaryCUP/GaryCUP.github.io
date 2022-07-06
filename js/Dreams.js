@@ -306,14 +306,14 @@ function TotalTags() {
       elements: {
         
         point: {
-          radius: 3
+          radius: 1
         }
       },
       //fill: true,
       animation: false,
       spanGaps: true, // enable for all datasets
 
-      tension: 0,
+    
       scales: {
         y: 
           {
