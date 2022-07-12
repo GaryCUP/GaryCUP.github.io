@@ -1,5 +1,3 @@
-
-export function theArrayThatHolds(){
 var setOfRandMoods = [
     "Surprised",
     "Stressed",
@@ -849,4 +847,3 @@ var setOfRandActivities = [
     "Vintage",
     "Volunteering"
 ];
-}
