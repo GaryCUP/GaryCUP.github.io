@@ -13,10 +13,11 @@ var stringofRandActivities = "";
 var randHH;
 var randmm;
 var theOneSelected;
+var AC;
 //var sma;
 function makeCSV() {
     DaylioFileData = [];
-    var numToMake = 3650;
+    var numToMake = 2000;
     var setOfRandWeekdays = [
         "Monday",
         "Tuesday",
@@ -27,14 +28,17 @@ function makeCSV() {
         "Sunday"
     ];
     //get random activity list
+   
     function getThoseActivities() {
-        //get random activity list
-        for (var RandActs = 0; RandActs < 1; RandActs++) {
-            stringofRandActivities = "";
-            numOfRandActivities = Math.floor(Math.random() * 11);
-            stringofRandActivities +=setOfRandActivities[Math.floor(numOfRandActivities * setOfRandActivities.length)] + " | ";
-            return stringofRandActivities;
+        
+          stringofRandActivities = '"';
+    numOfRandActivities = Math.floor(Math.random() * 11);
+        for (var RandActs = 0; RandActs < numOfRandActivities-1; RandActs++) {    
+            stringofRandActivities +=setOfRandActivities[Math.floor(Math.random() * setOfRandActivities.length)] + "|";
+      
         }
+        stringofRandActivities +=setOfRandActivities[Math.floor(Math.random() * setOfRandActivities.length)] + '"';
+         return stringofRandActivities;
     }
 
     for (var looping = 0; looping < numToMake; looping++) {
@@ -46,7 +50,7 @@ function makeCSV() {
             setOfRandWeekdays[Math.floor(Math.random() * setOfRandWeekdays.length)],
             (randHH + ":" + randmm),
             setOfRandMoods[Math.floor(Math.random() * setOfRandMoods.length)],
-            "NOPE!BROKEN",
+            getThoseActivities(),
             "hello " + looping,
             ""
         ]);
@@ -444,6 +448,7 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
             var MoodRate = data[i].MoodLabRate;
             AllDOW[u] = DOW;
             AllMoods[u] = Mood;
+            //AllActs[u] = Activities;
             AllActs[u] = Activities;
             AllLineActs[u]=Activities.split("|").map(item => item.trim());
             AllHOD[u] = HOD;

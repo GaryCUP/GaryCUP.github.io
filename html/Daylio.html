@@ -12,9 +12,11 @@
 
       
    </head>
-   <body> 
-
-   <div id="body">
+   <body > 
+    <div id="weather" class= "marquee"> 
+      <p id="weathertxt"></p>
+    </div>
+   <div id="body" >
       <nav class="navbar navbar-inverse">
          <div class="container-fluid">
            <div class="navbar-header">
@@ -102,19 +104,19 @@
             Mood Rolling Avg
             </label>
             <button onclick="MoodAvg()">Click me</button>
-            <button onclick="MoodRollingAvg()">Rolling</button> 
+            <button onclick="MoodRollingAvg()">Rolling</button>  -->
             <label class="button" id="DaylioFileMaker" onclick=" makeCSV()">
                Make Mock File
              </label>
              <label class="button" id="DaylioFileDownload" onclick=" DownloadDaylioFile()">
                Download Mock File
              </label>
-             -->
+            
          </div>
          
          <div class="file-upload-name" id="filename">No file chosen</div>
       </div>
-      <div  class="body" height="auto"> <canvas id="myChart" height="1500"></canvas> </div>
+      <div  class="body" height="auto"> <canvas id="myChart" height="150"></canvas> </div>
     </div>
 
     <script src="../dist/js/datepicker-full.min.js"></script>
@@ -131,6 +133,7 @@
       <script  src="../js/TheMoods.js"></script>
       <script src="../SMA/index.js"></script>
       <script src="../js/Daylio.js"></script>
+      <script src="../js/weather.js"></script>
 
      
    </body>
