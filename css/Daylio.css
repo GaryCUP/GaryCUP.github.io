@@ -36,7 +36,7 @@
     .marquee {
         width: auto;
         line-height: 50px;
-        background-color: red;
+        background-color: white;
         color: white;
         white-space: nowrap;
         overflow: hidden;
