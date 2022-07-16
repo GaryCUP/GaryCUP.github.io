@@ -60,9 +60,13 @@ function whatAlert(alert)
     break;
     case "Excessive Heat Watch":
       document.getElementsByClassName("marquee")[0].style.backgroundColor="Maroon";
+      document.getElementsByClassName("container-fluid")[0].style.backgroundColor="Maroon";
+
     break;
     case "Heat Advisory":
       document.getElementsByClassName("marquee")[0].style.backgroundColor="Coral";
+      document.getElementsByClassName("container-fluid")[0].style.backgroundColor="Coral";
+
     break;
     case "Hard Freeze Warning":
       document.getElementsByClassName("marquee")[0].style.backgroundColor="Darkviolet";
@@ -90,6 +94,8 @@ function whatAlert(alert)
   break;
   case "Dust Advisory":
     document.getElementsByClassName("marquee")[0].style.backgroundColor="Darkkhaki";
+    document.getElementsByClassName("container-fluid")[0].style.backgroundColor="Darkkhaki";
+
   break;
   case "Air Stagnation Advisory":
     document.getElementsByClassName("marquee")[0].style.backgroundColor="Gray";

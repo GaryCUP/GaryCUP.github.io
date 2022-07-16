@@ -3,7 +3,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     weather2();
 });
 
-const lat=37.6;const lon=-114.5;
+const lat=19.66;const lon=-156;
 var {headline,description,instruction}="";
 const loc='https://api.weather.gov/alerts/active?point=' + lat + ',' + lon ;
 

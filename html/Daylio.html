@@ -4,8 +4,12 @@
       <title>Moods</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     
       <meta name="viewport" content="width=device-width, initial-scale=1">
-      
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <script src="../js/nav.js"></script>
+      <script src="../js/weather.js"></script>
+      <script src="../js/alerts.js"></script>
       <link rel="stylesheet" href="../css/Daylio.css">
       <link rel="stylesheet" href="../DayNight/stylesheet.css">
       <link href="../dist/css/datepicker.min.css" rel="stylesheet" />
@@ -13,42 +17,9 @@
       
    </head>
    <body > 
-    <div id="weather" class= "marquee"> 
-      <p id="weathertxt"></p>
-    </div>
+    <div id="navbar-frame"></div>
    <div id="body" >
-      <nav class="navbar navbar-inverse">
-         <div class="container-fluid">
-           <div class="navbar-header">
-             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>
-               <span class="icon-bar"></span>                        
-             </button>
-             <a class="navbar-brand" href="home.html">Home</a>
-           </div>
-           <div class="collapse navbar-collapse" id="myNavbar">
-             <ul class="nav navbar-nav">
-               <li class="active"><a href="home.html">Gary</a></li>
-               <li class="dropdown">
-                 <a class="dropdown-toggle" data-toggle="dropdown">Random Projects <span class="caret"></span></a>
-                 <ul class="dropdown-menu">
-                   <li><a href="Dreams.html">Dreams</a></li>
-                   <li><a href="Daylio.html">Daylio</a></li>
-                   <li><a href="x.html">x</a></li>
-                 </ul>
-               </li>
-               <li><a href="">Page 2</a></li>
-               <li><a href="">Page 3</a></li>
-             </ul>
-             <ul class="nav navbar-nav navbar-right">
-               <li><a href=""><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-               <li><a href=""><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-             </ul>
-           </div>
-         </div>
-       </nav>
-     
+      
       <div class="file-upload">
          <div class="file-upload-button">
             <input type="file" name="File Upload" id="update-data-from-file" accept=".csv" />
@@ -116,14 +87,16 @@
          
          <div class="file-upload-name" id="filename">No file chosen</div>
       </div>
-      <div  class="body" height="auto"> <canvas id="myChart" height="150"></canvas> </div>
+       <div id="chartHolder">   <canvas id="myChart"   ></canvas>   </div>
+      </div>
+
     </div>
-
+    <div id="weather" class= "marquee"> 
+      <p id="weathertxt"></p>
+    </div>
     <script src="../dist/js/datepicker-full.min.js"></script>
-
     <script src="../js/suncalc.js"></script>
     <script src="../DayNight/cycle.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/4.1.2/papaparse.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment-with-locales.js" integrity="sha512-STI3jX2gEOm2Z4JLWBX1XqsXzHLXmK9H+c94IBv3AfM/w2w3zQfP05EZ/Zi4P/uBajPi2SAmdFxQ1UWQtt7gsA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>   
@@ -133,8 +106,7 @@
       <script  src="../js/TheMoods.js"></script>
       <script src="../SMA/index.js"></script>
       <script src="../js/Daylio.js"></script>
-      <script src="../js/weather.js"></script>
-      <script src="../js/alerts.js"></script>
+     
      
    </body>
 </html>
