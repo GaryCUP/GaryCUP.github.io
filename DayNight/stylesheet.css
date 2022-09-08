@@ -1,6 +1,15 @@
-#body {
+/*#body {
   padding: 100px 0;
   background: #c9dbe9;
+  background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+  background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
+}
+*/
+
+#body {
+  padding: 100px 0;
+  background: #0f0c0f;
   background: -linear-gradient(top, #c9dbe9 0%, #fff 100%);
   background: -moz-linear-gradient(top, #c9dbe9 0%, #fff 100%);
   background: -webkit-linear-gradient(top, #c9dbe9 0%, #fff 100%);
