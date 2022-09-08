@@ -104,7 +104,7 @@ function TotalTags() {
       //labels: "",
 
       // backgroundColor:,
-      responsive: false,
+      responsive: true,
       bezierCurve: true,
       animation: true,
       spanGaps: true, // enable for all datasets
