@@ -62,7 +62,7 @@ function makeCSV() {
 //create a user-defined function to download CSV file
 function DownloadDaylioFile() {
     //define the heading for each row of the data
-    var csv = "full_date,  date,weekday,time,mood,activities, note_title, note";
+    var csv = "full_date,date,weekday,time,mood,activities,note_title, note";
     //merge the data with CSV
     DaylioFileData.forEach(function(row) {
         csv += row.join(",");
@@ -421,7 +421,7 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
             //  obj["new column"] = ""
 
             /* 
-           //add mod ratse
+           //add mod rate
          obj.forEach(function(e){
         if (typeof e === "object" ){
           e["new column"] = ""
@@ -472,7 +472,7 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
         
            
 
-        /*///////////////////////////////////////////UNBLOCK SOON/////////////////////////////////
+        ////////////////////////////////////////////UNBLOCK SOON/////////////////////////////////
     var daMood = data[i][4];
         if (data[i].MoodLabRate == "") {
             data[i].MoodLabRate = prompt("Mood for " + daMood);
@@ -481,7 +481,7 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
                 if (data[m][4] == daMood) {data[m].MoodLabRate = daMoodRate;}
             });
         }
-     *///////////////////////////////////////UNBLOCK SOON//////////////////////////////////
+     ///////////////////////////////////////UNBLOCK SOON//////////////////////////////////
       else{
           var DOW = data[i][2];
 
@@ -848,7 +848,7 @@ function GetMoodRollingAvg(arr, range, format) {
 
 function MoodRollingAvg() {
 
-    mooRA = (sma(AllRoodRateofInts, 2, 2));
+    mooRA = (sma(AllRoodRateofInts, 5, 5));
 
 }
 

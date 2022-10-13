@@ -197,6 +197,7 @@ function TotalTags() {
     for (var c = 0; c < (document.getElementById("rangedgraph").checked ? holdR : hold)[en].length; c++) {
       ////console.log(c);
       newDataset.data.splice(c, 0, (document.getElementById("rangedgraph").checked ? holdR : hold)[en][c]);
+      
     }
     for (value in document.getElementById("rangedgraph").checked ? holdR : hold[en]) {
       //newDataset.data[c] = 0;
