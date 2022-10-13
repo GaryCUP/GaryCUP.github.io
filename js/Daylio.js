@@ -420,15 +420,15 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
             obj[col] = row[index];
             //  obj["new column"] = ""
 
-            /* 
+            ////////////////////
            //add mod rate
          obj.forEach(function(e){
         if (typeof e === "object" ){
-          e["new column"] = ""
+          e["MoodLabRate"] = ""
         }
       });
             
-            */
+            ////////
             cc++;
         });
         //
