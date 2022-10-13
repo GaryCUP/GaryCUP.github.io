@@ -418,17 +418,9 @@ const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
         
         cols.forEach(function(col, index) {
             obj[col] = row[index];
-            //  obj["new column"] = ""
+            obj["MoodLabRate"] = ""
 
-            ////////////////////
-           //add mod rate
-         obj.forEach(function(e){
-        if (typeof e === "object" ){
-          e["MoodLabRate"] = ""
-        }
-      });
-            
-            ////////
+           
             cc++;
         });
         //
