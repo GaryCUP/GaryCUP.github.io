@@ -405,12 +405,12 @@ function csvToJson(data) {
 const daylioEndRanged=new Date(document.getElementById("endDaylio").value);
     var cols = data[1];
     out = [];
-/*
+
     data.forEach(function(e) {
         //MoodLevel = prompt("Mood for " + data.Mood);
         e["MoodLabRate"] = "";
     });
-*/
+
     for (var i = 1; i < data.length; i++) {
         var obj = {};
         var row = data[i];
