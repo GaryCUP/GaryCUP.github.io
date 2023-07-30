@@ -22,10 +22,14 @@
             
             <input type='file' id='fileinput'>
             <input type='button' id='btnLoad' value='Load' onclick='loadFile();'>
-            <input type='button' id='btnGraph' value='Graph It' onclick='TotalTags();' disabled='true'>
+            <input type='button' id='btnGraphNormal' value='Graph It' onclick='TotalTags();' disabled='true'>
+            <input type='button' id='btnGraphPercentOfTotal' value='Graph Percentage of Total' onclick='TotalTagsPercentOfTotal();' disabled='true'>
+            <input type='button' id='btnGraphSMA' value='Graph Averages' onclick='TotalTagsSMA();' disabled='true'>
+
             <input type='button' id='btnDreamMake' value='Make Dream File' onclick='makeADreams();'>
             <input type='button' id='btnDreamDownload' value='Download Dream File' onclick='DownloadJSON();'>
             <input type='button' id='btnDreamFreq' value='View Dream Frequencies' onclick='ViewDreamFreqs();'>
+            <input type='button' id='btnTurnToCSV' value='Turn To CSV' onclick='TurnToCSV();'>
             <a id="downloadAnchorElem" style="display:none"></a>
             <div id="range">
               <input type="text" name="start" id="startDream" >
@@ -42,19 +46,19 @@
            <label for="useFulldDreamDates">Use Full Dates</label>
 
             </div>
-            <input type="checkbox" id="rangedgraph" name="rangedgraph" value="VRG">
-            <label for="rangedgraph"> View Ranged Graph Instead</label><br>
+            <input type="checkbox" id="rankedgraph" name="rankedgraph" value="VRG">
+            <label for="rankedgraph"> View Ranked Graph Instead</label><br>
              </fieldset>
       </form>
       
        <canvas id="myChart"   width="2000" height="1000"></canvas>  
      
 
-<!-- 
-         <div id="weather" class= "marquee"> 
-          <p id="weathertxt"></p>
+
+         <div id="x" class= "marquee"> 
+          <p id="marquee"></p>
         </div>
-      -->
+     
         <script src="../js/nav.js"></script>
       <script src="../dist/js/datepicker-full.min.js"></script>
       <link rel="stylesheet" href="../css/Dreams.css" />

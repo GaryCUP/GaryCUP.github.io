@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Game of Life</title>
+  <style>
+    canvas {
+      display: block;
+      margin: 0 auto;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <label for="birthRules">Birth Rules (comma-separated numbers):</label>
+    <input type="text" id="birthRules" value="3" />
+  </div>
+  <div>
+    <label for="survivalRules">Survival Rules (comma-separated numbers):</label>
+    <input type="text" id="survivalRules" value="2,3" />
+  </div>
+  <canvas id="gameCanvas" width="600" height="600"></canvas>
+  <div>
+    <button id="startBtn">Start</button>
+    <button id="pauseBtn">Pause</button>
+    <button id="stopBtn">Stop</button>
+    <button id="stepBtn">Step</button>
+    <button id="clearBtn">clear</button>
+  </div>
+  <div id="stats" style="margin-left: 20px;">
+    <p>Generations: <span id="generationsCounter">0</span></p>
+    <p>Alive: <span id="aliveCounter">0</span></p>
+    <p>Ever Lived: <span id="everLivedCounter">0</span></p>
+    <p>Died: <span id="diedCounter">0</span></p>
+    <p>Infected: <span id="infectedCounter">0</span></p>
+    <p>Recovered: <span id="recoveredCounter">0</span></p>
+    <p>Perma-Dead: <span id="permadeadCounter">0</span></p>
+  </div>
+  <script src="../js/GOL.js"></script>
+</body>
+
+</html>
