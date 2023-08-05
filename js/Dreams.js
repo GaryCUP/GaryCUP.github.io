@@ -804,7 +804,8 @@ function countTags(tags, times) {
       const arr = hold[oo];
     const result = [];
     
-    let sum=0,count=0; currTime=0; nextTime=0; curVal=1;nxtVal=2;
+    let sum=0,count=0; currTime=0; nextTime=0; curVal=1;nxtVal=2; 
+    var init=(hold[oo]).findIndex((element) => typeof element !== 'undefined');
     for(let i=0;i<arr.length;i++)
     {
       if(arr[i]===undefined)
@@ -814,21 +815,26 @@ function countTags(tags, times) {
 
       else
       {
-        if(arr[i].value==curVal)
-        {
-          var o=new Date(times[i]);
-          var nw=new Date(times[i+1]);
+         
+               
+          var o=new Date(times[init]);
+          var nw=new Date(times[i]);
           //timebetweendates(convertToEpoch(times[i]),convertToEpoch(times[i-1]));
-          timebetweendates(o.getTime(), nw.getTime());
-        }
-        curVal=arr[i].value;
-        sum+=arr[i];
-        count++;
-        //result[i]=sum/count;
+          result[i]=((timebetweendates(o.getTime(), nw.getTime())/arr[i]));
+          //const timeElapsed = times[i] - times[i - 1]; 
+          //nxtVal=curVal;
+        
+      
+
+      // 
+       // sum+=arr[i];
+        //count++;
+       // result[i]=timeElapsed;
       }
+      
+   matharray[oo]=result
     }
     
-   matharray[oo]=result
     
      
 console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
