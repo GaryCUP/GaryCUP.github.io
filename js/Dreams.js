@@ -910,7 +910,7 @@ function timebetweendates(oldT,newT)
   //var newTime=new Date(newT*1000);
   var timeElapsed=newT-oldT;
   console.log(timeElapsed/(1000*60*60*24));
-  return (timeElapsed/(1000*60*60*24)).toLocaleString();
+  return (timeElapsed/(1000*60*60*24));
 }
 /*
 var arrayDates = [];
