@@ -607,6 +607,8 @@ var hold = {};
 var counter = 0;
 var holdings = [];
 var holdR = {};
+var matharrayR = {};
+var percentHeldR = {};
 var bloop={};
 var bloopMain={};
 var bloopArray=[];
@@ -760,7 +762,10 @@ function countTags(tags, times) {
       
     }
     var res; var ranks; var resR = []; 
+    //avg rank 
+    var ranksAvg;var reaRAvg=[];
     var q = holdings[0].length;
+    
     for (var n = 0; n < holdings[0].length; n++) {
 
       res = holdings.map(r => r[n]);
@@ -791,13 +796,15 @@ function countTags(tags, times) {
     var p = 0;
     for (var oo in hold) {
       holdR[oo] = resR.map(r => r[p]);
+      //matharrayR[oo] = resR.map(r => r[p]);
+      //percentHeldR[oo] = resR.map(r => r[p]);
       p++;
 
 
       const arr = hold[oo];
     const result = [];
     
-    let sum=0,count=0;
+    let sum=0,count=0; currTime=0; nextTime=0; curVal=1;nxtVal=2;
     for(let i=0;i<arr.length;i++)
     {
       if(arr[i]===undefined)
@@ -807,9 +814,17 @@ function countTags(tags, times) {
 
       else
       {
+        if(arr[i].value==curVal)
+        {
+          var o=new Date(times[i]);
+          var nw=new Date(times[i+1]);
+          //timebetweendates(convertToEpoch(times[i]),convertToEpoch(times[i-1]));
+          timebetweendates(o.getTime(), nw.getTime());
+        }
+        curVal=arr[i].value;
         sum+=arr[i];
         count++;
-        result[i]=sum/count;
+        //result[i]=sum/count;
       }
     }
     
@@ -820,6 +835,7 @@ console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
 
 ///
     const percentArr=hold[oo];
+    //const percentHeldR=holdR[oo];
     const percent=[];
     let persum=0,percount=0;
     for(let i=0;i<percentArr.length;i++)
@@ -844,6 +860,8 @@ console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
       }
 
     }
+
+    
   percentHeld[oo]=percent;
   console.log("////////////////////////////////////////////////////////////////////////////////////////////////////");
   console.log(percentHeld); // 
@@ -853,6 +871,7 @@ console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
     alert("Done! " + numOfDreams + " Dreams logged across " + totalDaysInDreamRange + " days.");
     console.log("RANK? ");
     console.log(holdR);
+    console.log(matharrayR);
     //alert(document.getElementById("startDream").value);
   }
 
@@ -873,6 +892,19 @@ function convertTime(epoch) {
   //getting milliseconds from epoch
   var time = new Date(epoch * 1000);
   return time.toLocaleString();
+}
+function convertToEpoch(dT)
+{
+  const theDT=new Date(dT);
+  const toEpoch=theDT.getTime();
+}
+function timebetweendates(oldT,newT)
+{
+  //var oldTime=new Date(oldT*1000);
+  //var newTime=new Date(newT*1000);
+  var timeElapsed=newT-oldT;
+  console.log(timeElapsed/(1000*60*60*24));
+  return (timeElapsed/(1000*60*60*24)).toLocaleString();
 }
 /*
 var arrayDates = [];
