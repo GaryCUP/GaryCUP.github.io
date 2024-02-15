@@ -92,26 +92,18 @@ function getRandomColor() {
 var x = 0;
 
 //normal 
-function TotalTags() {
+function createChart(dataSelection, datasetSelection) {
   document.getElementById("rankedgraph").disabled = true;
   var ctx = document.getElementById("myChart");
   var myChart = new Chart(ctx, {
     type: "line",
     data: {
-
-      labels: document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes,
-
-
-      //labels: "",
-
-      // backgroundColor:,
+      labels: dataSelection,
       responsive: false,
       bezierCurve: true,
       animation: true,
-      spanGaps: true, // enable for all datasets
-
+      spanGaps: true,
       tension: 0.5,
-
       datasets: []
     },
     options: {
@@ -119,7 +111,6 @@ function TotalTags() {
       maintainAspectRatio: false,
       responsive: false,
       bezierCurve: true,
-
       plugins: {
         legend: {
           display: true,
@@ -127,9 +118,7 @@ function TotalTags() {
             usePointStyle: true
           },
           position: 'top'
-
         },
-
         layout: {
           padding: {
             left: 50,
@@ -141,333 +130,57 @@ function TotalTags() {
         zoom: {
           limits: {
             y: { min: 1 }
-          },
-          zoom: {
-            wheel: {
-              // enabled: true
-            },
-            pinch: {
-              ////enabled: true
-            }
           }
         }
       },
       elements: {
-
         point: {
           radius: 1
         }
       },
-      //fill: true,
       animation: false,
-      spanGaps: true, // enable for all datasets
-
+      spanGaps: true,
       tension: 0.5,
       scales: {
-        y:
-        {
-
-
-          reverse: document.getElementById("rankedgraph").checked ? true : false
-
+        y: {
+          reverse: document.getElementById("rankedgraph").checked
         }
-
       }
     }
   });
 
-  var model = {
-    2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
-    2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
-    2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
-  };
-
-  for (en in document.getElementById("rankedgraph").checked ? holdR : hold) {
-    coloor = getRandomColor();
+  for (var en in datasetSelection) {
+    var color = getRandomColor();
     var newDataset = {
       label: en,
-      data: [],
-      borderColor: coloor,
-      backgroundColor: coloor,
-      //backgroundColor:
+      data: datasetSelection[en],
+      borderColor: color,
+      backgroundColor: color,
       hidden: true,
       tension: 0.5
-
     };
-    // var c = 0;
-    for (var c = 0; c < (document.getElementById("rankedgraph").checked ? holdR : hold)[en].length; c++) {
-      ////console.log(c);
-      newDataset.data.splice(c, 0, (document.getElementById("rankedgraph").checked ? holdR : hold)[en][c]);
-      
-    }
-    for (value in document.getElementById("rankedgraph").checked ? holdR : hold[en]) {
-      //newDataset.data[c] = 0;
-      //  newDataset.data[c].push(hold[en][value]);
-      //////  newDataset.data.splice(value, 0, hold[en][value]);
-      // c++;
-    }
-    // newDataset.data.shift();
     myChart.data.datasets.push(newDataset);
-    //myChart.getDatasetMeta(hold[c]).hidden = true;
-    //  myChart.update();
   }
-  //myChart.getDatasetMeta(hold[c]).hidden = true;
 
   myChart.update();
 }
 
-
-
-
-//SMAVG
+function TotalTags() {
+  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
+  var datasetSelection = document.getElementById("rankedgraph").checked ? holdR : hold;
+  createChart(dataSelection, datasetSelection);
+}
 
 function TotalTagsSMA() {
-  document.getElementById("rankedgraph").disabled = true;
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-
-      labels: document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes,
-
-
-      //labels: "",
-
-      // backgroundColor:,
-      responsive: false,
-      bezierCurve: true,
-      animation: true,
-      spanGaps: true, // enable for all datasets
-
-      tension: 0.5,
-
-      datasets: []
-    },
-    options: {
-      spanGaps: true,
-      maintainAspectRatio: false,
-      responsive: false,
-      bezierCurve: true,
-
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            usePointStyle: true
-          },
-          position: 'top'
-
-        },
-
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
-        zoom: {
-          limits: {
-            y: { min: 1 }
-          },
-          zoom: {
-            wheel: {
-              // enabled: true
-            },
-            pinch: {
-              ////enabled: true
-            }
-          }
-        }
-      },
-      elements: {
-
-        point: {
-          radius: 1
-        }
-      },
-      //fill: true,
-      animation: false,
-      spanGaps: true, // enable for all datasets
-
-      tension: 0.5,
-      scales: {
-        y:
-        {
-
-
-          reverse: document.getElementById("rankedgraph").checked ? true : false
-
-        }
-
-      }
-    }
-  });
-
-  var model = {
-    2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
-    2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
-    2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
-  };
-
-  for (en in document.getElementById("rankedgraph").checked ? matharrayR : matharray) {
-    coloor = getRandomColor();
-    var newDataset = {
-      label: en,
-      data: [],
-      borderColor: coloor,
-      backgroundColor: coloor,
-      //backgroundColor:
-      hidden: true,
-      tension: 0.5
-
-    };
-    // var c = 0;
-    for (var c = 0; c < (document.getElementById("rankedgraph").checked ? matharrayR : matharray)[en].length; c++) {
-      ////console.log(c);
-      newDataset.data.splice(c, 0, (document.getElementById("rankedgraph").checked ? matharrayR : matharray)[en][c]);
-      
-    }
-    for (value in document.getElementById("rankedgraph").checked ? matharrayR : matharray[en]) {
-      //newDataset.data[c] = 0;
-      //  newDataset.data[c].push(matharray[en][value]);
-      //////  newDataset.data.splice(value, 0, matharray[en][value]);
-      // c++;
-    }
-    // newDataset.data.shift();
-    myChart.data.datasets.push(newDataset);
-    //myChart.getDatasetMeta(matharray[c]).hidden = true;
-    //  myChart.update();
-  }
-  //myChart.getDatasetMeta(matharray[c]).hidden = true;
-
-  myChart.update();
+  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
+  var datasetSelection = document.getElementById("rankedgraph").checked ? matharrayR : matharray;
+  createChart(dataSelection, datasetSelection);
 }
 
-//% of total Held
 function TotalTagsPercentOfTotal() {
-  document.getElementById("rankedgraph").disabled = true;
-  var ctx = document.getElementById("myChart");
-  var myChart = new Chart(ctx, {
-    type: "line",
-    data: {
-
-      labels: document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes,
-
-
-      //labels: "",
-
-      // backgroundColor:,
-      responsive: false,
-      bezierCurve: true,
-      animation: true,
-      spanGaps: true, // enable for all datasets
-
-      tension: 0.5,
-
-      datasets: []
-    },
-    options: {
-      spanGaps: true,
-      maintainAspectRatio: false,
-      responsive: false,
-      bezierCurve: true,
-
-      plugins: {
-        legend: {
-          display: true,
-          labels: {
-            usePointStyle: true
-          },
-          position: 'top'
-
-        },
-
-        layout: {
-          padding: {
-            left: 50,
-            right: 50,
-            top: 50,
-            bottom: 50
-          }
-        },
-        zoom: {
-          limits: {
-            y: { min: 1 }
-          },
-          zoom: {
-            wheel: {
-              // enabled: true
-            },
-            pinch: {
-              ////enabled: true
-            }
-          }
-        }
-      },
-      elements: {
-
-        point: {
-          radius: 1
-        }
-      },
-      //fill: true,
-      animation: false,
-      spanGaps: true, // enable for all datasets
-
-      tension: 0.5,
-      scales: {
-        y:
-        {
-
-
-          reverse: document.getElementById("rankedgraph").checked ? true : false
-
-        }
-
-      }
-    }
-  });
-
-  var model = {
-    2015: [20, 12, 32, 8, 25, 14, 20, 12, 32, 8, 25, 14],
-    2016: [17, 26, 21, 41, 8, 23, 17, 26, 21, 41, 8, 23],
-    2017: [23, 15, 8, 24, 38, 20, 23, 15, 8, 24, 38, 20]
-  };
-
-  for (en in document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld) {
-    coloor = getRandomColor();
-    var newDataset = {
-      label: en,
-      data: [],
-      borderColor: coloor,
-      backgroundColor: coloor,
-      //backgroundColor:
-      hidden: true,
-      tension: 0.5
-
-    };
-    // var c = 0;
-    for (var c = 0; c < (document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld)[en].length; c++) {
-      ////console.log(c);
-      newDataset.data.splice(c, 0, (document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld)[en][c]);
-      
-    }
-    for (value in document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld[en]) {
-      //newDataset.data[c] = 0;
-      //  newDataset.data[c].push(percentHeld[en][value]);
-      //////  newDataset.data.splice(value, 0, percentHeld[en][value]);
-      // c++;
-    }
-    // newDataset.data.shift();
-    myChart.data.datasets.push(newDataset);
-    //myChart.getDatasetMeta(percentHeld[c]).hidden = true;
-    //  myChart.update();
-  }
-  //myChart.getDatasetMeta(percentHeld[c]).hidden = true;
-
-  myChart.update();
+  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
+  var datasetSelection = document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld;
+  createChart(dataSelection, datasetSelection);
 }
 
 
@@ -555,7 +268,7 @@ function loadFile() {
 
     if (document.getElementById("useRangedDreamDates").checked) {
       startDreamDate = AllTimesR[AllTimesR.length - 1];
-      endDreamDate=AllTimesR[0];
+      endDreamDate = AllTimesR[0];
       numOfDreams = AllTimesR.length;
       const realStartDreamTime = new Date(startDreamDate);
       const realEndDreamTime = new Date(endDreamDate);
@@ -592,11 +305,7 @@ function loadFile() {
 
 
 }
-var barDream={}; var indBarDream=[];
-function barRaceDreams()
-{
-
-}
+var barDream = {}; var indBarDream = [];
 var BrTagCounter;
 var TagCounter;
 var LoTag;
@@ -609,11 +318,11 @@ var holdings = [];
 var holdR = {};
 var matharrayR = {};
 var percentHeldR = {};
-var bloop={};
-var bloopMain={};
-var bloopArray=[];
-var matharray={};
-var percentHeld={};
+var bloop = {};
+var bloopMain = {};
+var bloopArray = [];
+var matharray = {};
+var percentHeld = {};
 function countTags(tags, times) {
   for (var bug = 0; bug < 1; bug++) {
     BrTagCounter = {};
@@ -634,26 +343,25 @@ function countTags(tags, times) {
     //loop  breaks tags
     //tagNtime.length = tagsNtimes.length;
     for (var v = 0; v < tags.length; v++) {
-      var aa = tags[v]; var tt=times[v];
-       aa.forEach(function(w) {
+      var aa = tags[v]; var tt = times[v];
+      aa.forEach(function (w) {
         if (!bloopMain[w]) {
-            bloopMain[w] = 0;
-         
-         
+          bloopMain[w] = 0;
+
+
         }
         bloopMain[w] += 1;
-          var newBloop = jQuery.extend(true, {}, bloopMain);
-         bloopArray.push(newBloop);
+        var newBloop = jQuery.extend(true, {}, bloopMain);
+        bloopArray.push(newBloop);
         // bloop[tt] = bloopMain;
-        
-          bloop[tt] = newBloop;
-    });
+
+        bloop[tt] = newBloop;
+      });
     }
-        for (var hope in bloop)
-        {
-          console.log(bloop[hope])
-        }
-       
+    for (var hope in bloop) {
+      console.log(bloop[hope])
+    }
+
 
     for (var z = 0; z < tags.length; z++) {
       //for (let ent in tagsNtimes[z]) //{
@@ -740,9 +448,9 @@ function countTags(tags, times) {
     var n = 0;
     ////var myWindow = window.open("", "MsgWindow", "width=300,height=300");
     for (var logs in hold) {
-      
-        
-      
+
+
+
       indNumOfDream = (hold[logs]).at(-1);
       localDreamStart = document.getElementById("useRangedDreamDates").checked ? AllTimesR[hold[logs].findIndex((element) => element > 0)] : AllTimes[hold[logs].findIndex((element) => element > 0)];
       // console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + localDreamStart+  " and ending at " +  AllTimes[hold[logs].length-1]);
@@ -759,13 +467,15 @@ function countTags(tags, times) {
           //hold[logs][entr] = 0;
         }
       }
-      
+
     }
-    var res; var ranks; var resR = []; 
+
+    var res; var ranks; var resR = [];
     //avg rank 
-    var ranksAvg;var reaRAvg=[];
+    var ranksAvg; var reaRAvg = [];
     var q = holdings[0].length;
-    
+
+
     for (var n = 0; n < holdings[0].length; n++) {
 
       res = holdings.map(r => r[n]);
@@ -802,76 +512,70 @@ function countTags(tags, times) {
 
 
       const arr = hold[oo];
-    const result = [];
-    
-    let sum=0,count=0; currTime=0; nextTime=0; curVal=1;nxtVal=2; 
-    var init=(hold[oo]).findIndex((element) => typeof element !== 'undefined');
-    for(let i=0;i<arr.length;i++)
-    {
-      if(arr[i]===undefined)
-      {
-        result[i]=undefined
-      }
+      const result = [];
 
-      else
-      {
-         
-               
-          var o=new Date(times[init]);
-          var nw=new Date(times[i]);
+      let sum = 0, count = 0; currTime = 0; nextTime = 0; curVal = 1; nxtVal = 2;
+      var init = (hold[oo]).findIndex((element) => typeof element !== 'undefined');
+      for (let i = 0; i < arr.length; i++) {
+        if (arr[i] === undefined) {
+          result[i] = undefined
+        }
+
+        else {
+
+
+          var o = new Date(times[init]);
+          var nw = new Date(times[i]);
           //timebetweendates(convertToEpoch(times[i]),convertToEpoch(times[i-1]));
-          result[i]=((timebetweendates(o.getTime(), nw.getTime())/arr[i]));
+          result[i] = ((timebetweendates(o.getTime(), nw.getTime()) / arr[i]));
           //const timeElapsed = times[i] - times[i - 1]; 
           //nxtVal=curVal;
-        
-      
 
-      // 
-       // sum+=arr[i];
-        //count++;
-       // result[i]=timeElapsed;
-      }
-      
-   matharray[oo]=result
-    }
-    
-    
-     
-console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
 
-///
-    const percentArr=hold[oo];
-    //const percentHeldR=holdR[oo];
-    const percent=[];
-    let persum=0,percount=0;
-    for(let i=0;i<percentArr.length;i++)
-    {
-      
 
-      if(percentArr[i]===undefined)
-      {
-        percent[i]=undefined
-      }
-     
-      if(percentArr[i]!==undefined && i!==0) 
-      {
-      //  persum+=percentArr[i];
-        //percount++;
-       // percent[i]=persum/percount;
-        percent.push((percentArr[i] / (i+1))*100);
+          // 
+          // sum+=arr[i];
+          //count++;
+          // result[i]=timeElapsed;
+        }
+
+        matharray[oo] = result
       }
 
-      else{
-        percent.push(percentArr[(i)]*100); // Prevent division by zero      
+
+
+      console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
+
+      ///
+      const percentArr = hold[oo];
+      //const percentHeldR=holdR[oo];
+      const percent = [];
+      let persum = 0, percount = 0;
+      for (let i = 0; i < percentArr.length; i++) {
+
+
+        if (percentArr[i] === undefined) {
+          percent[i] = undefined
+        }
+
+        if (percentArr[i] !== undefined && i !== 0) {
+          //  persum+=percentArr[i];
+          //percount++;
+          // percent[i]=persum/percount;
+          percent.push((percentArr[i] / (i + 1)) * 100);
+        }
+
+        else {
+          percent.push(percentArr[(i)] * 100); // Prevent division by zero      
+        }
+
       }
 
-    }
 
-    
-  percentHeld[oo]=percent;
-  console.log("////////////////////////////////////////////////////////////////////////////////////////////////////");
-  console.log(percentHeld); // 
-///
+      percentHeld[oo] = percent;
+      console.log("////////////////////////////////////////////////////////////////////////////////////////////////////");
+      console.log(percentHeld); // 
+      ///
     }
 
     alert("Done! " + numOfDreams + " Dreams logged across " + totalDaysInDreamRange + " days.");
@@ -899,18 +603,16 @@ function convertTime(epoch) {
   var time = new Date(epoch * 1000);
   return time.toLocaleString();
 }
-function convertToEpoch(dT)
-{
-  const theDT=new Date(dT);
-  const toEpoch=theDT.getTime();
+function convertToEpoch(dT) {
+  const theDT = new Date(dT);
+  const toEpoch = theDT.getTime();
 }
-function timebetweendates(oldT,newT)
-{
+function timebetweendates(oldT, newT) {
   //var oldTime=new Date(oldT*1000);
   //var newTime=new Date(newT*1000);
-  var timeElapsed=newT-oldT;
-  console.log(timeElapsed/(1000*60*60*24));
-  return (timeElapsed/(1000*60*60*24));
+  var timeElapsed = newT - oldT;
+  console.log(timeElapsed / (1000 * 60 * 60 * 24));
+  return (timeElapsed / (1000 * 60 * 60 * 24));
 }
 /*
 var arrayDates = [];
@@ -920,8 +622,15 @@ arrayDates.push(new Date(2013, 7, 27));
 */
 
 
-function TurnToCSV()
-{
-  var sendToCSV=document.getElementById("useRangedDreamDates").checked ? hold : hold;
+function TurnToCSV() {
+  //const fs = require('fs');
+  var sendToCSV = document.getElementById("useRangedDreamDates").checked ? hold : hold;
   console.log(sendToCSV);
+  //fs.writeFile('dreamcsv.csv', sendToCSV);
+  const makecsv = sendToCSV.map(row => row.join(",")).join("\n");
+
+  var csvelem = document.getElementById('downloadAnchorElem');
+  csvelem.setAttribute("href", makecsv);
+  csvelem.setAttribute("download", "dreamcsv.csv");
+  csvelem.click();
 }
