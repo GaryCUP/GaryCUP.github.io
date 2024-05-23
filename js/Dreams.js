@@ -92,7 +92,7 @@ function getRandomColor() {
 var x = 0;
 
 //normal 
-function createChart(dataSelection, datasetSelection) {
+function createChart(dataSelection, datasetSelection, ranked) {
   document.getElementById("rankedgraph").disabled = true;
   var ctx = document.getElementById("myChart");
   var myChart = new Chart(ctx, {
@@ -111,6 +111,11 @@ function createChart(dataSelection, datasetSelection) {
       maintainAspectRatio: false,
       responsive: false,
       bezierCurve: true,
+      scales: {
+        y: {
+          reverse: ranked
+        }
+      },
       plugins: {
         legend: {
           display: true,
@@ -165,22 +170,36 @@ function createChart(dataSelection, datasetSelection) {
   myChart.update();
 }
 
+
+function getDataSelection() {
+  return document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
+}
+
+function getDataset(datasetName, ranked) {
+  var datasetMap = {
+    "TotalTags": ranked ? holdR : hold,
+    "TotalTagsSMA": ranked ? matharrayR : matharray,
+    "TotalTagsPercentOfTotal": ranked ? percentHeldR : percentHeld
+  };
+  return datasetMap[datasetName];
+}
+
+function displayGraph(datasetName) {
+  var dataSelection = getDataSelection();
+  var ranked = document.getElementById("rankedgraph").checked;
+  var datasetSelection = getDataset(datasetName, ranked);
+  createChart(dataSelection, datasetSelection, ranked);
+}
 function TotalTags() {
-  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
-  var datasetSelection = document.getElementById("rankedgraph").checked ? holdR : hold;
-  createChart(dataSelection, datasetSelection);
+  displayGraph("TotalTags");
 }
 
 function TotalTagsSMA() {
-  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
-  var datasetSelection = document.getElementById("rankedgraph").checked ? matharrayR : matharray;
-  createChart(dataSelection, datasetSelection);
+  displayGraph("TotalTagsSMA");
 }
 
 function TotalTagsPercentOfTotal() {
-  var dataSelection = document.getElementById("useRangedDreamDates").checked ? AllTimesR : AllTimes;
-  var datasetSelection = document.getElementById("rankedgraph").checked ? percentHeldR : percentHeld;
-  createChart(dataSelection, datasetSelection);
+  displayGraph("TotalTagsPercentOfTotal");
 }
 
 
@@ -266,38 +285,27 @@ function loadFile() {
 
 
 
-    if (document.getElementById("useRangedDreamDates").checked) {
-      startDreamDate = AllTimesR[AllTimesR.length - 1];
-      endDreamDate = AllTimesR[0];
-      numOfDreams = AllTimesR.length;
-      const realStartDreamTime = new Date(startDreamDate);
-      const realEndDreamTime = new Date(endDreamDate);
-      const aDayIs = 1000 * 60 * 60 * 24;
-      const diffTimes = realEndDreamTime - realStartDreamTime;
-      totalDaysInDreamRange = Math.round(diffTimes / aDayIs);
-      console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
-      rateOfRememberence = (numOfDreams / totalDaysInDreamRange) * 100;
-      document.getElementById("DreamRemRate").innerHTML = ("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
+    function calculateDreamData(AllTimes, AllTags) {
+  const startDreamDate = AllTimes[AllTimes.length - 1];
+  const endDreamDate = AllTimes[0] || new Date();
+  const numOfDreams = AllTimes.length;
+  const realStartDreamTime = new Date(startDreamDate);
+  const realEndDreamTime = new Date(endDreamDate);
+  const aDayIs = 1000 * 60 * 60 * 24;
+  const diffTimes = realEndDreamTime - realStartDreamTime;
+  let totalDaysInDreamRange = Math.round(diffTimes / aDayIs);
+  console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
+  let rateOfRememberence = (numOfDreams / totalDaysInDreamRange) * 100;
+  document.getElementById("DreamRemRate").innerHTML = ("Dream Rememberance Rate is ≈ " + rateOfRememberence + "%");
 
-      countTags(AllTagsR, AllTimesR);
-    }
-    else {
-      startDreamDate = AllTimes[AllTimes.length - 1];
-      //endDreamDate=AllTimes[0]; 
-      endDreamDate = new Date();
-      numOfDreams = AllTimes.length;
-      const realStartDreamTime = new Date(startDreamDate);
-      const realEndDreamTime = new Date(endDreamDate);
-      const aDayIs = 1000 * 60 * 60 * 24;
-      const diffTimes = realEndDreamTime - realStartDreamTime;
-      totalDaysInDreamRange = Math.round(diffTimes / aDayIs);
-      console.log("There are " + totalDaysInDreamRange + " days between the beginning and end of logs");
-      rateOfRememberence = (numOfDreams / totalDaysInDreamRange) * 100;
-      document.getElementById("DreamRemRate").innerHTML = ("Dream Rememberance Rate is ≈ " + (rateOfRememberence) + "%");
+  countTags(AllTags, AllTimes);
+}
 
-
-      countTags(AllTags, AllTimes);
-    }
+if (document.getElementById("useRangedDreamDates").checked) {
+  calculateDreamData(AllTimesR, AllTagsR);
+} else {
+  calculateDreamData(AllTimes, AllTags);
+}
 
 
 
@@ -406,27 +414,10 @@ function countTags(tags, times) {
           }
         }
 
-        //      console.log(hold["Amarai"][z]);
-        //TotalTags();
-        /// BrTagCounter[times[z]]= TagCounter[LoTag[z]]
-        //add function to graph all tags at ind ex z
-        // console.log(hold["Emily"]);
-        //TotalTags();
+      
 
       }
-      // console.log(hold);
-
-
-      /*
-      for (var key in hold) {
-       holdings.push(hold[key]);
-       
-     }
-     
-     holdings.sort(function(a, b){
-         return b[0] - a[0];
-     });
-   */
+    
     }
     for (var key in hold) {
       ///holdings.push(hold[key]);
@@ -447,136 +438,49 @@ function countTags(tags, times) {
     var localDreamStart;
     var n = 0;
     ////var myWindow = window.open("", "MsgWindow", "width=300,height=300");
-    for (var logs in hold) {
-
-
-
-      indNumOfDream = (hold[logs]).at(-1);
-      localDreamStart = document.getElementById("useRangedDreamDates").checked ? AllTimesR[hold[logs].findIndex((element) => element > 0)] : AllTimes[hold[logs].findIndex((element) => element > 0)];
-      // console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + localDreamStart+  " and ending at " +  AllTimes[hold[logs].length-1]);
-      var distanceBetweenTheDates = Math.round(((document.getElementById("useRangedDreamDates").checked ? new Date(AllTimesR[hold[logs].length - 1]) : new Date(AllTimes[hold[logs].length - 1])) - new Date(localDreamStart)) / 86400000);
-      console.log(logs + " has a relative dream frequency of " + indNumOfDream / distanceBetweenTheDates + "\r\n");
-      //document.getElementById("RDRID").innerHTML+=logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>' ;
-
-      //myWindow.document.write(logs + " has a relative dream frequency of " + indNumOfDream/distanceBetweenTheDates + '<br>');
-
-
-      for (var entr in logs) {
-        //console.log(logs + " has " + indNumOfDream + " dream logs." + " starting at " + AllTimes[hold[logs][entr]]);
-        if (!hold[logs][entr]) {
-          //hold[logs][entr] = 0;
-        }
-      }
-
-    }
-
+   
+    //res=result of dreams
+    //resR=ranked result of dreams
     var res; var ranks; var resR = [];
     //avg rank 
     var ranksAvg; var reaRAvg = [];
     var q = holdings[0].length;
 
-
-    for (var n = 0; n < holdings[0].length; n++) {
-
-      res = holdings.map(r => r[n]);
-      res = res.filter(function (element) {
-        return element !== undefined;
-      });
-      //console.log(res);
-      var ranks = rankDuplicate(res);
-      ///  const sorted = res.slice().sort((a, b) => b - a)
-
-
-      //rank = res.map(v => sorted.indexOf(v) + 1);
-      // ranks = sorted.map(function (sorted) {
-      //  return function (a, i, aa) {
-      //       return a, aa[i - 1] === a ? sorted : ++sorted;
-      //    };
-      //   }(0));
-
-      //const ranks = new Map(sorted.map((x, i) => [x, i + 1]));
-      //var rank= arr.map((x) => rank.get(x));
-      console.log(rankDuplicate(res));
-      ///resR[n].push(ranks);
-      resR[n] = ranks;
-      //holdR[hold[n]]=res
-    }
+for (let n = 0; n < holdings[0].length; n++) {
+  let res = holdings.map(r => r[n]);
+  res = res.filter(element => element !== undefined);
+  const ranks = rankDuplicate(res);
+  console.log(ranks);
+  resR[n] = ranks;
+}
 
     // console.log(res);
     var p = 0;
-    for (var oo in hold) {
-      holdR[oo] = resR.map(r => r[p]);
-      //matharrayR[oo] = resR.map(r => r[p]);
-      //percentHeldR[oo] = resR.map(r => r[p]);
-      p++;
+    for (const oo in hold) {
+  holdR[oo] = resR.map(r => r[p]);
+  p++;
 
+  const arr = hold[oo];
+  const initIndex = arr.findIndex(element => element !== undefined);
+  const result = arr.map((value, i) => {
+    if (value === undefined) return undefined;
+    const o = new Date(times[initIndex]).getTime();
+    const nw = new Date(times[i]).getTime();
+    return timebetweendates(o, nw) / value;
+  });
 
-      const arr = hold[oo];
-      const result = [];
+  matharray[oo] = result;
+  console.log(matharray);
 
-      let sum = 0, count = 0; currTime = 0; nextTime = 0; curVal = 1; nxtVal = 2;
-      var init = (hold[oo]).findIndex((element) => typeof element !== 'undefined');
-      for (let i = 0; i < arr.length; i++) {
-        if (arr[i] === undefined) {
-          result[i] = undefined
-        }
+  const percent = arr.map((value, i) => {
+    if (value === undefined) return undefined;
+    return (value / (i + 1)) * 100;
+  });
 
-        else {
+  percentHeld[oo] = percent;
+  
+}
 
-
-          var o = new Date(times[init]);
-          var nw = new Date(times[i]);
-          //timebetweendates(convertToEpoch(times[i]),convertToEpoch(times[i-1]));
-          result[i] = ((timebetweendates(o.getTime(), nw.getTime()) / arr[i]));
-          //const timeElapsed = times[i] - times[i - 1]; 
-          //nxtVal=curVal;
-
-
-
-          // 
-          // sum+=arr[i];
-          //count++;
-          // result[i]=timeElapsed;
-        }
-
-        matharray[oo] = result
-      }
-
-
-
-      console.log(matharray); // [1, 1, 1.33, 1.75, 2, 2.17, 2.43, 2.86, 3.11]
-
-      ///
-      const percentArr = hold[oo];
-      //const percentHeldR=holdR[oo];
-      const percent = [];
-      let persum = 0, percount = 0;
-      for (let i = 0; i < percentArr.length; i++) {
-
-
-        if (percentArr[i] === undefined) {
-          percent[i] = undefined
-        }
-
-        if (percentArr[i] !== undefined && i !== 0) {
-          //  persum+=percentArr[i];
-          //percount++;
-          // percent[i]=persum/percount;
-          percent.push((percentArr[i] / (i + 1)) * 100);
-        }
-
-        else {
-          percent.push(percentArr[(i)] * 100); // Prevent division by zero      
-        }
-
-      }
-
-
-      percentHeld[oo] = percent;
-      console.log("////////////////////////////////////////////////////////////////////////////////////////////////////");
-      console.log(percentHeld); // 
-      ///
-    }
 
     alert("Done! " + numOfDreams + " Dreams logged across " + totalDaysInDreamRange + " days.");
     console.log("RANK? ");
@@ -589,6 +493,19 @@ function countTags(tags, times) {
   document.getElementById("btnGraphPercentOfTotal").disabled = false;
   document.getElementById("btnGraphSMA").disabled = false;
 }
+
+function TotalTagsDreamList() {
+  
+}
+
+function TotalTagsSMADreamList() {
+  
+}
+
+function TotalTagsPercentOfTotalDreamList() {
+  
+}
+
 
 function rankDuplicate(arr) {
   const sorted = [...new Set(arr)].slice().sort((a, b) => b - a);
