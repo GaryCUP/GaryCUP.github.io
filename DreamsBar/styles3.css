@@ -1,0 +1,41 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  #graph {
+    margin-top: 20px;
+  }
+  
+  .arc text {
+    font-size: 12px;
+    text-anchor: middle;
+    pointer-events: none;
+  }
+  
+  .arc path {
+    stroke: #fff;
+    stroke-width: 1px;
+  }
+  
+  .title {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #controls {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    margin: 0 10px;
+    cursor: pointer;
+  }
