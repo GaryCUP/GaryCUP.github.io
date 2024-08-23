@@ -7,24 +7,28 @@
 </head>
 <body>
     <h1>Dream Statistics Results</h1>
-    <h2>Tag Statistics</h2>
-    <ul>
-        {% for tag, count in tag_stats.items() %}
-            <li>{{ tag }}: {{ count }}</li>
-        {% endfor %}
-    </ul>
 
-    <h2>Co-occurrence Statistics</h2>
-    <ul>
-        {% for tag, co_tags in co_occurrence.items() %}
-            <li>{{ tag }}:</li>
+    {% for tag_type, tags in tag_stats.items() %}
+        <div class="tag-type-section">
+            <h2>{{ tag_type }}</h2>
+            <h3>Tag Statistics</h3>
             <ul>
-                {% for co_tag, count in co_tags.items() %}
-                    <li>{{ co_tag }}: {{ count }}</li>
+                {% for tag, count in tags.items() %}
+                    <li>{{ tag }}: {{ count }}</li>
                 {% endfor %}
             </ul>
-        {% endfor %}
-    </ul>
+
+            <h3>Co-occurrence Statistics</h3>
+            {% for tag, co_occurs in co_occurrence[tag_type].items() %}
+                <h4>{{ tag }}</h4>
+                <ul>
+                    {% for co_tag, count in co_occurs.items() %}
+                        <li>{{ co_tag }}: {{ count }}</li>
+                    {% endfor %}
+                </ul>
+            {% endfor %}
+        </div>
+    {% endfor %}
 
     <a href="/">Back to Form</a>
 </body>

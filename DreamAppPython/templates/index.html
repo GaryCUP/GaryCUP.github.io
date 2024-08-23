@@ -20,7 +20,11 @@
         <label for="days_90">Last 90 days</label><br>
         <input type="radio" id="year" name="option" value="year">
         <label for="year">Specific year:</label>
-        <input type="text" name="option" placeholder="Enter year"><br><br>
+        <input type="text" name="year" placeholder="Enter year"><br><br>
+
+        <label for="custom_date">Or select a custom date range:</label><br>
+        <input type="date" id="start_date" name="start_date">
+        <input type="date" id="end_date" name="end_date"><br><br>
 
         <button type="submit">Get Statistics</button>
     </form>
