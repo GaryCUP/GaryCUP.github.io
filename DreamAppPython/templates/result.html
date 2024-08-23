@@ -19,13 +19,16 @@
             </ul>
 
             <h3>Co-occurrence Statistics</h3>
-            {% for tag, co_occurs in co_occurrence[tag_type].items() %}
+            {% for tag, co_types in co_occurrence[tag_type].items() %}
                 <h4>{{ tag }}</h4>
-                <ul>
-                    {% for co_tag, count in co_occurs.items() %}
-                        <li>{{ co_tag }}: {{ count }}</li>
-                    {% endfor %}
-                </ul>
+                {% for co_tag_type, co_tags in co_types.items() %}
+                    <h5>{{ co_tag_type }}</h5>
+                    <ul>
+                        {% for co_tag, count in co_tags.items() %}
+                            <li>{{ co_tag }}: {{ count }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endfor %}
             {% endfor %}
         </div>
     {% endfor %}

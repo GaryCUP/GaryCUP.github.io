@@ -31,18 +31,20 @@ def filter_dreams_by_date(dreams, days=None, year=None, start_date=None, end_dat
 # Function to calculate tag statistics by type
 def calculate_tag_stats(dreams, selected_tags=None):
     tag_counts = defaultdict(lambda: defaultdict(int))
-    co_occurrence = defaultdict(lambda: defaultdict(lambda: defaultdict(int)))
+    co_occurrence = defaultdict(lambda: defaultdict(lambda: defaultdict(lambda: defaultdict(int))))
 
     for dream in dreams:
-        for tag in dream['tags']:
+        tags = dream['tags']
+        for tag in tags:
             tag_name = tag['name']
             tag_type = tag['type']
             if not selected_tags or tag_name in selected_tags:
                 tag_counts[tag_type][tag_name] += 1
-                for co_tag in dream['tags']:
+                for co_tag in tags:
                     co_tag_name = co_tag['name']
+                    co_tag_type = co_tag['type']
                     if co_tag_name != tag_name:
-                        co_occurrence[tag_type][tag_name][co_tag_name] += 1
+                        co_occurrence[tag_type][tag_name][co_tag_type][co_tag_name] += 1
 
     # Sort tag counts and co-occurrences by type and tag name
     sorted_tag_counts = OrderedDict(
@@ -50,16 +52,15 @@ def calculate_tag_stats(dreams, selected_tags=None):
         for tag_type, tags in sorted(tag_counts.items())
     )
     sorted_co_occurrence = OrderedDict(
-        (tag_type, OrderedDict(sorted(co_tags.items())))
+        (tag_type, OrderedDict(
+            (tag_name, OrderedDict(
+                (co_tag_type, dict(sorted(co_tags.items(), key=lambda item: item[1], reverse=True)))
+                for co_tag_type, co_tags in sorted(co_types.items())
+            ))
+            for tag_name, co_types in sorted(co_tags.items())
+        ))
         for tag_type, co_tags in sorted(co_occurrence.items())
     )
-
-    # Sort co-occurrence by descending order within each type
-    for tag_type in sorted_co_occurrence:
-        for tag_name in sorted_co_occurrence[tag_type]:
-            sorted_co_occurrence[tag_type][tag_name] = dict(
-                sorted(sorted_co_occurrence[tag_type][tag_name].items(), key=lambda item: item[1], reverse=True)
-            )
 
     return sorted_tag_counts, sorted_co_occurrence
 
@@ -74,11 +75,10 @@ def index():
         end_date = request.form.get('end_date')
         days = None
 
-        # Only check for 'days' if option is not None
         if option:
             if 'days' in option:
                 days = int(option.split(' ')[1])
-            elif option.isdigit():  # Check if option is a year
+            elif option.isdigit():
                 year = int(option)
 
         with open('dreams.json', 'r') as file:
