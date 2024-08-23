@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Analyze Dreams</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        input[type="file"], input[type="submit"] { margin-top: 10px; }
+        .hidden { display: none; }
+        .result { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload Your Dreams File</h1>
+        <form id="uploadForm">
+            <label for="file">Choose JSON file:</label>
+            <input type="file" id="file" accept=".json" required>
+            <br><br>
+            <label for="tags">Tags (comma-separated):</label>
+            <input type="text" id="tags">
+            <br><br>
+            <label>Date Range Option:</label>
+            <input type="radio" id="last30" name="option" value="last 30 days">
+            <label for="last30">Last 30 Days</label>
+            <input type="radio" id="last60" name="option" value="last 60 days">
+            <label for="last60">Last 60 Days</label>
+            <input type="radio" id="last90" name="option" value="last 90 days">
+            <label for="last90">Last 90 Days</label>
+            <input type="radio" id="year" name="option" value="year">
+            <label for="year">Year</label>
+            <input type="text" id="yearInput" placeholder="Enter year">
+            <br><br>
+            <label for="start_date">Start Date (YYYY-MM-DD):</label>
+            <input type="date" id="start_date">
+            <br><br>
+            <label for="end_date">End Date (YYYY-MM-DD):</label>
+            <input type="date" id="end_date">
+            <br><br>
+            <input type="submit" value="Upload and Analyze">
+        </form>
+        <div id="result" class="result hidden"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
