@@ -2,8 +2,15 @@ from flask import Flask, request, render_template
 import json
 from datetime import datetime, timedelta
 from collections import defaultdict, OrderedDict
+import os
 
 app = Flask(__name__)
+app.config['UPLOAD_FOLDER'] = 'uploads'  # Directory to store uploaded files
+app.config['ALLOWED_EXTENSIONS'] = {'json'}
+
+# Function to check allowed file extensions
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 # Function to parse dates
 def parse_date(date_str):
@@ -64,32 +71,47 @@ def calculate_tag_stats(dreams, selected_tags=None):
 
     return sorted_tag_counts, sorted_co_occurrence
 
-# Main route to handle form submission
+# Route to handle file upload
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        tags = request.form.get('tags').split(',')
-        option = request.form.get('option')
-        year = request.form.get('year')
-        start_date = request.form.get('start_date')
-        end_date = request.form.get('end_date')
-        days = None
+        if 'file' not in request.files:
+            return render_template('index.html', message="No file part")
+        
+        file = request.files['file']
+        if file.filename == '':
+            return render_template('index.html', message="No selected file")
+        
+        if file and allowed_file(file.filename):
+            filename = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
+            file.save(filename)
 
-        if option:
-            if 'days' in option:
-                days = int(option.split(' ')[1])
-            elif option.isdigit():
-                year = int(option)
+            # Load the uploaded file
+            with open(filename, 'r') as f:
+                dreams = json.load(f)
+            
+            tags = request.form.get('tags', '').split(',')
+            option = request.form.get('option')
+            year = request.form.get('year')
+            start_date = request.form.get('start_date')
+            end_date = request.form.get('end_date')
+            days = None
 
-        with open('dreams.json', 'r') as file:
-            dreams = json.load(file)
+            if option:
+                if 'days' in option:
+                    days = int(option.split(' ')[1])
+                elif option.isdigit():
+                    year = int(option)
 
-        filtered_dreams = filter_dreams_by_date(dreams, days=days, year=int(year) if year else None, start_date=start_date, end_date=end_date)
-        tag_stats, co_occurrence = calculate_tag_stats(filtered_dreams, tags)
+            filtered_dreams = filter_dreams_by_date(dreams, days=days, year=int(year) if year else None, start_date=start_date, end_date=end_date)
+            tag_stats, co_occurrence = calculate_tag_stats(filtered_dreams, tags)
 
-        return render_template('result.html', tag_stats=tag_stats, co_occurrence=co_occurrence)
+            return render_template('result.html', tag_stats=tag_stats, co_occurrence=co_occurrence)
 
     return render_template('index.html')
 
 if __name__ == '__main__':
+    # Create the upload folder if it does not exist
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(app.config['UPLOAD_FOLDER'])
     app.run(debug=True)
