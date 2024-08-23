@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Statistics Results</title>
+</head>
+<body>
+    <h1>Dream Statistics Results</h1>
+    <h2>Tag Statistics</h2>
+    <ul>
+        {% for tag, count in tag_stats.items() %}
+            <li>{{ tag }}: {{ count }}</li>
+        {% endfor %}
+    </ul>
+
+    <h2>Co-occurrence Statistics</h2>
+    <ul>
+        {% for tag, co_tags in co_occurrence.items() %}
+            <li>{{ tag }}:</li>
+            <ul>
+                {% for co_tag, count in co_tags.items() %}
+                    <li>{{ co_tag }}: {{ count }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Back to Form</a>
+</body>
+</html>

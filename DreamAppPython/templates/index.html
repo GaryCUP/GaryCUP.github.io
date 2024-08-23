@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Statistics</title>
+</head>
+<body>
+    <h1>Dream Statistics</h1>
+    <form action="/" method="POST">
+        <label for="tags">Enter tags (comma separated):</label><br>
+        <input type="text" id="tags" name="tags" required><br><br>
+
+        <label for="option">Select a timeframe or year:</label><br>
+        <input type="radio" id="days_30" name="option" value="days 30">
+        <label for="days_30">Last 30 days</label><br>
+        <input type="radio" id="days_60" name="option" value="days 60">
+        <label for="days_60">Last 60 days</label><br>
+        <input type="radio" id="days_90" name="option" value="days 90">
+        <label for="days_90">Last 90 days</label><br>
+        <input type="radio" id="year" name="option" value="year">
+        <label for="year">Specific year:</label>
+        <input type="text" name="option" placeholder="Enter year"><br><br>
+
+        <button type="submit">Get Statistics</button>
+    </form>
+</body>
+</html>
