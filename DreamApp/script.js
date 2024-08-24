@@ -186,85 +186,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     let chartInstance = null;
 
-    function createTimeSeriesChart(dreams, selectedTags) {
-        const ctx = document.getElementById('timeSeriesChart').getContext('2d');
+   function createTimeSeriesChart(dreams, selectedTags) {
+    const ctx = document.getElementById('timeSeriesChart').getContext('2d');
+
+    if (chartInstance) {
+        chartInstance.destroy();
+    }
     
-        if (chartInstance) {
-            chartInstance.destroy();
+    const tagData = {};
+    selectedTags.forEach(tag => {
+        tagData[tag] = {};
+    });
+
+    dreams.sort((a, b) => new Date(a.date) - new Date(b.date));
+    const cumulativeCounts = {};
+    selectedTags.forEach(tag => {
+        cumulativeCounts[tag] = 0;
+    });
+
+    dreams.forEach(dream => {
+        const dreamDate = new Date(dream.date).toISOString().split('T')[0];
+        selectedTags.forEach(tag => {
+            if (dream.tags.some(t => t.name === tag)) {
+                cumulativeCounts[tag]++;
+            }
+            if (!tagData[tag][dreamDate] && cumulativeCounts[tag] > 0) {
+                tagData[tag][dreamDate] = cumulativeCounts[tag];
+            }
+        });
+    });
+
+    const datasets = selectedTags.map(tag => {
+        const dataPoints = [];
+        for (const [date, count] of Object.entries(tagData[tag])) {
+            dataPoints.push({ x: date, y: count });
         }
-        
-        const tagData = {};
-        selectedTags.forEach(tag => {
-            tagData[tag] = [];
-        });
-    
-        dreams.sort((a, b) => new Date(a.date) - new Date(b.date));
-        const cumulativeCounts = {};
-        selectedTags.forEach(tag => {
-            cumulativeCounts[tag] = 0;
-        });
-    
-        dreams.forEach(dream => {
-            const dreamDate = new Date(dream.date).toISOString().split('T')[0];
-            selectedTags.forEach(tag => {
-                if (dream.tags.some(t => t.name === tag)) {
-                    cumulativeCounts[tag]++;
-                }
-                tagData[tag].push({ x: dreamDate, y: cumulativeCounts[tag] });
-            });
-        });
-    
-        const datasets = selectedTags.map(tag => ({
+        return {
             label: tag,
-            data: tagData[tag],
+            data: dataPoints,
             fill: false,
             borderColor: getRandomColor(),
             tension: 0.1,
             pointRadius: 2,  // Smaller point size
             pointHoverRadius: 4 // Hover size
-        }));
-    
-        chartInstance = new Chart(ctx, {
-            type: 'line',
-            data: {
-                datasets: datasets
-            },
-            options: {
-                scales: {
-                    x: {
-                        type: 'time',
-                        time: {
-                            unit: 'day'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Date'
-                        }
+        };
+    });
+
+    chartInstance = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: datasets
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
                     },
-                    y: {
-                        beginAtZero: true,
-                        title: {
-                            display: true,
-                            text: 'Cumulative Count'
-                        }
-                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
                 },
-                plugins: {
-                    tooltip: {
-                        callbacks: {
-                            // Ensure each label is unique or process them to avoid duplication
-                            label: function(tooltipItem) {
-                                const label = tooltipItem.dataset.label || '';
-                                const value = tooltipItem.parsed.y;
-                                return `${label}: ${value}`;
-                            }
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cumulative Count'
+                    }
+                },
+            },
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            const label = tooltipItem.dataset.label || '';
+                            const value = tooltipItem.parsed.y;
+                            return `${label}: ${value}`;
                         }
                     }
                 }
             }
-        });
-    }
-    
+        }
+    });
+}
+
     
     function createNetworkGraph(coOccurrence) {
         const container = document.getElementById('networkGraph');
@@ -309,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const options = {
             autoResize: false,  // Dynamically resize the graph,
             nodes: {
-                shape: 'hexagon',
+                shape: 'circle',
                 size: 10,
                 font: {
                     size: 14,
@@ -319,22 +326,36 @@ document.addEventListener('DOMContentLoaded', function() {
             edges: {
                 width: 2,
                 smooth: {
-                    type: 'continuous'
+                    type: 'dynamic'
                 }
             },
             physics: {
-                stabilization: false,
+                enabled:true,
+                stabilization: true,
                 barnesHut: {
                     gravitationalConstant: -30000,
-                    centralGravity: 0.3,
-                    springLength: 95,
-                    springConstant: 0.04,
-                    damping: 0.09
+                    centralGravity: 0.4,
+                   // springLength: 100,
+                  //  springConstant: 0.06,
+                    damping: 0.6,
+                    avoidOverlap: .95
                 }
+            },
+            layout:{
+                improvedLayout: true,
+                
+                hierarchical: 
+                {
+                enabled: false,
+                sortMethod: 'hubsize'
+                }   
             }
+			
+			
         };
     
         new vis.Network(container, data, options);
+         
     }
     
     function getRandomColor() {

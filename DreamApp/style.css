@@ -3,10 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 20px;
 }
-.container {
-    max-width: 800px;
-    margin: 0 auto;
-}
+
 h2 {
     text-align: center;
 }
@@ -17,3 +14,8 @@ canvas {
     display: none;
 }
 
+
+input[type="file"], input[type="submit"], .add-tag-btn { margin-top: 10px; }      
+.result { margin-top: 20px; }
+.selected-tags { margin-top: 10px; }
+.dropdown { margin-top: 10px; }
