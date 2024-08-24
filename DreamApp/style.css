@@ -1,0 +1,19 @@
+/* Add any additional styling here */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+h2 {
+    text-align: center;
+}
+canvas {
+    margin: 20px 0;
+}
+.hidden {
+    display: none;
+}
+
