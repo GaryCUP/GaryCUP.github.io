@@ -19,3 +19,13 @@ input[type="file"], input[type="submit"], .add-tag-btn { margin-top: 10px; }
 .result { margin-top: 20px; }
 .selected-tags { margin-top: 10px; }
 .dropdown { margin-top: 10px; }
+
+.form-container { 
+    display: flex; 
+    justify-content: flex-end; /* Aligns items to the right */ 
+    gap: 10px; /* Optional: Adds space between input and button */ 
+} 
+#btnSwitch {
+    font-size: 12px; 
+    cursor: pointer; 
+}

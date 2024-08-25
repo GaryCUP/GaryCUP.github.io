@@ -299,7 +299,8 @@ document.addEventListener('DOMContentLoaded', function() {
                                     to: toId,
                                     label: count.toString(),
                                     font: { align: 'middle' },
-                                    arrows: 'to'
+                                    arrows: 'both',
+                                    color: { opacity: 0.25 }  // Make edges slightly transparent
                                 });
                             }
                         }
@@ -314,6 +315,11 @@ document.addEventListener('DOMContentLoaded', function() {
         };
     
         const options = {
+            interaction: {
+                hover: true,  // Enable hover interaction
+                navigationButtons: true,  // Add navigation buttons
+                keyboard: true  // Allow keyboard navigation
+            },
             autoResize: false,  // Dynamically resize the graph,
             nodes: {
                 shape: 'circle',
@@ -354,7 +360,30 @@ document.addEventListener('DOMContentLoaded', function() {
 			
         };
     
-        new vis.Network(container, data, options);
+       const network= new vis.Network(container, data, options);
+          // Highlight edges on hover
+    network.on("hoverNode", function (params) {
+        const connectedEdges = network.getConnectedEdges(params.node);
+        edges.update(connectedEdges.map(edgeId => ({ id: edgeId, color: { opacity: 1 } })));
+    });
+
+    network.on("blurNode", function (params) {
+        edges.update(edges.map(edge => ({ id: edge.id, color: { opacity: 0.25 } })));
+    });
+
+    // Focus on node when clicked
+    network.on("click", function (params) {
+        if (params.nodes.length) {
+            const nodeId = params.nodes[0];
+            network.focus(nodeId, {
+                scale: 1.5,
+                animation: {
+                    duration: 500,
+                    easingFunction: 'easeInOutQuad'
+                }
+            });
+        }
+    });
          
     }
     
