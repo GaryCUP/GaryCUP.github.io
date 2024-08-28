@@ -89,7 +89,9 @@ document.addEventListener('DOMContentLoaded', function() {
         data.forEach(entry => {
             tagsData.moods.add(entry.mood);
             entry.activities.split('|').forEach(activity => {
-                tagsData.activities.add(activity.trim().replace(/^"|"$/g, ''));
+               // tagsData.activities.add(activity.trim().replace(/^"|"$/, ''));
+             tagsData.activities.add(activity.replace(/"/g, "").trim());
+
             });
         });
         tagsData.moods = Array.from(tagsData.moods);
@@ -148,6 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         });
     }
+    function normalizeTag(tag) {
+        //return tag.trim().replace(/^"(.*)"$/, '$1');        
+        return tag.replace(/"/g, "").trim();
+
+    }
 
     function calculateTagStats(dreams, selectedTags) {
         const tagCounts = { moods: {}, activities: {} };
@@ -155,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         dreams.forEach(dream => {
             const mood = dream.mood;
-            const activities = dream.activities.split('|').map(a => a.trim().replace(/^"|"$/g, ''));
+            const activities = dream.activities.split('|').map(a => a.replace(/"/g, "").trim())
 
             if (!selectedTags.length || selectedTags.includes(mood)) {
                 if (!tagCounts.moods[mood]) tagCounts.moods[mood] = 0;
@@ -210,11 +217,16 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedTags.forEach(tag => {
             cumulativeCounts[tag] = 0;
         });
+       
+        
 
         dreams.forEach(dream => {
             const dreamDateTime = new Date(dream.full_date + ' ' + dream.time).toISOString();
+            const taggs = [...dream.activities.split('|').map(a => a.trim())];
             selectedTags.forEach(tag => {
-                if (dream.mood === tag || dream.activities.includes(tag)) {
+                if(taggs.some(t => (t.toLowerCase().trim()) === (tag.toLowerCase())))
+                    {
+                      
                     cumulativeCounts[tag]++;
                 }
                 if (!tagData[tag][dreamDateTime] && cumulativeCounts[tag] > 0) {
@@ -279,147 +291,118 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    
-    function createNetworkGraph(coOccurrence, selectedTags) {
+    function createNetworkGraph(coOccurrence) {
         const container = document.getElementById('networkGraph');
         const nodes = new vis.DataSet();
         const edges = new vis.DataSet();
     
-        const moodColor = getRandomColor()  // Red for moods
-        const activityColor = getRandomColor();  // Teal for activities
-     // Create nodes only for selected moods and activities
-     for (const tag of selectedTags) {
-        if (tagsData.moods.includes(tag)) {
-            nodes.add({ id: `mood-${tag}`, label: tag, group: 'moods', color: moodColor });
-        } else if (tagsData.activities.includes(tag)) {
-            nodes.add({ id: `activity-${tag}`, label: tag, group: 'activities', color: activityColor });
-        }
-    }
-
-    // Create edges between selected moods and activities
-    for (const [mood, activities] of Object.entries(coOccurrence.moods)) {
-        if (selectedTags.includes(mood)) {
-            for (const [activity, count] of Object.entries(activities)) {
-                if (selectedTags.includes(activity)) {
-                    const edgeId = `mood-${mood}-activity-${activity}`;
-                    edges.add({
-                        id: edgeId,
-                        from: `mood-${mood}`,
-                        to: `activity-${activity}`,
-                        label: count.toString(),
-                        font: { align: 'middle' },
-                        arrows: 'to',
-                        color: { opacity: 0.5 }
-                    });
-                }
-            }
-        }
-    }
-
-    // Create edges between selected activities (only one edge per pair)
-    const processedPairs = new Set();
-    for (const [activity1, coActivities] of Object.entries(coOccurrence.activities)) {
-        if (selectedTags.includes(activity1)) {
-            for (const [activity2, count] of Object.entries(coActivities)) {
-                if (selectedTags.includes(activity2) && activity1 !== activity2) {
-                    const pairKey = [activity1, activity2].sort().join('-');
-                    if (!processedPairs.has(pairKey)) {
-                        processedPairs.add(pairKey);
-                        const reverseCount = coOccurrence.activities[activity2]?.[activity1] || 0;
-                        const totalCount = count + reverseCount;
-                        const edgeId = `activity-${pairKey}`;
-                        edges.add({
-                            id: edgeId,
-                            from: `activity-${activity1}`,
-                            to: `activity-${activity2}`,
-                            label: totalCount.toString(),
-                            font: { align: 'middle' },
-                            arrows: {
-                                to: {
-                                    enabled: count > 0
-                                },
-                                from: {
-                                    enabled: reverseCount > 0
-                                }
-                            },
-                            color: { opacity: 0.3 }
-                        });
+        // Create nodes and edges from co-occurrence data
+        for (const [type, tags] of Object.entries(coOccurrence)) {
+            for (const [tagName, coTags] of Object.entries(tags)) {
+                const fromId = `${type}-${tagName}`;  // Ensure unique ID
+                nodes.add({ id: fromId, label: tagName, group: type });
+    
+                for (const [coTagType, coTagsMap] of Object.entries(coTags)) {
+                    for (const [coTagName, count] of Object.entries(coTagsMap)) {
+                        const toId = `${coTagType}-${coTagName}`;  // Ensure unique ID
+    
+                        // Check if the reverse edge already exists
+                        const reverseEdgeId = `${toId}-${fromId}`;
+                        if (!edges.get(reverseEdgeId)) {
+                            const edgeId = `${fromId}-${toId}`;
+                            if (!edges.get(edgeId)) {
+                                edges.add({
+                                    id: edgeId,
+                                    from: fromId,
+                                    to: toId,
+                                    label: count.toString(),
+                                    font: { align: 'middle' },
+                                    arrows: 'both',
+                                    color: { opacity: 0.25 }  // Make edges slightly transparent
+                                });
+                            }
+                        }
                     }
                 }
             }
         }
-    }
+    
+        const data = {
+            nodes: nodes,
+            edges: edges
+        };
+    
+        const options = {
+            interaction: {
+                hover: true,  // Enable hover interaction
+                navigationButtons: true,  // Add navigation buttons
+                keyboard: true  // Allow keyboard navigation
+            },
+            autoResize: false,  // Dynamically resize the graph,
+            nodes: {
+                shape: 'circle',
+                size: 10,
+                font: {
+                    size: 14,
+                    face: 'Tahoma'
+                }
+            },
+            edges: {
+                width: 2,
+                smooth: {
+                    type: 'dynamic'
+                }
+            },
+            physics: {
+                enabled:true,
+                stabilization: true,
+                barnesHut: {
+                    gravitationalConstant: -30000,
+                    centralGravity: 0.4,
+                   // springLength: 100,
+                  //  springConstant: 0.06,
+                    damping: 0.6,
+                    avoidOverlap: .95
+                }
+            },
+            layout:{
+                improvedLayout: true,
+                
+                hierarchical: 
+                {
+                enabled: false,
+                sortMethod: 'hubsize'
+                }   
+            }
+			
+			
+        };
+    
+       const network= new vis.Network(container, data, options);
+          // Highlight edges on hover
+    network.on("hoverNode", function (params) {
+        const connectedEdges = network.getConnectedEdges(params.node);
+        edges.update(connectedEdges.map(edgeId => ({ id: edgeId, color: { opacity: 1 } })));
+    });
 
-    const data = {
-        nodes: nodes,
-        edges: edges
-    };
+    network.on("blurNode", function (params) {
+        edges.update(edges.map(edge => ({ id: edge.id, color: { opacity: 0.25 } })));
+    });
 
-    const options = {
-        nodes: {
-            shape: 'dot',
-            size: 16,
-            font: {
-                size: 12,
-                face: 'Tahoma'
-            }
-        },
-        edges: {
-            width: 0.15,
-            smooth: {
-                type: 'continuous'
-            }
-        },
-        physics: {
-            stabilization: false,
-            barnesHut: {
-                gravitationalConstant: -80000,
-                springConstant: 0.001,
-                springLength: 200
-            }
-        },
-        interaction: {
-            tooltipDelay: 200,
-            hideEdgesOnDrag: false
-        },
-        groups: {
-            moods: { color: moodColor },
-            activities: { color: activityColor }
+    // Focus on node when clicked
+    network.on("click", function (params) {
+        if (params.nodes.length) {
+            const nodeId = params.nodes[0];
+            network.focus(nodeId, {
+                scale: 1.5,
+                animation: {
+                    duration: 500,
+                    easingFunction: 'easeInOutQuad'
+                }
+            });
         }
-    };
-
-    
-        const network = new vis.Network(container, data, options);
-    
-        network.on("stabilizationProgress", function(params) {
-            console.log("Stabilization progress:", params.iterations, "/", params.total);
-        });
-    
-        network.once("stabilizationIterationsDone", function() {
-            console.log("Stabilization finished");
-        });
-    
-        network.on("hoverNode", function (params) {
-            const connectedEdges = network.getConnectedEdges(params.node);
-            edges.update(connectedEdges.map(edgeId => ({ id: edgeId, color: { opacity: 1 } })));
-        });
-    
-        network.on("blurNode", function (params) {
-            edges.update(edges.getIds().map(edgeId => ({ id: edgeId, color: { opacity: 0.3 } })));
-        });
-    
-        network.on("click", function (params) {
-            if (params.nodes.length) {
-                const nodeId = params.nodes[0];
-                network.focus(nodeId, {
-                    scale: 1.5,
-                    animation: {
-                        duration: 500,
-                        easingFunction: 'easeInOutQuad'
-                    }
-                });
-            }
-        });
+    });
+         
     }
     
 
@@ -559,7 +542,7 @@ document.addEventListener('DOMContentLoaded', function() {
         createStackedBarChart(dreams, selectedTags);
     
         // Create network graph
-        createNetworkGraph(coOccurrence, selectedTags);
+        createNetworkGraph(coOccurrence);
 		
     }
 });
