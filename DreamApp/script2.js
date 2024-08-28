@@ -33,11 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
                 tagsInput.forEach(tag => {
                     const li = document.createElement('li');
                     li.textContent = tag;
-                    
+                    const removeBtn = document.createElement('button');
+                    removeBtn.textContent = 'Remove';
+                    removeBtn.onclick = () => {
+                        tagsInput.splice(tagsInput.indexOf(tag), 1);
+                        updateSelectedTagsList();
+                    };
+                    li.appendChild(removeBtn);
                     selectedTagsList.appendChild(li);
                 });
             }
-        
             document.getElementById('uploadForm').addEventListener('submit', function(event) {
                 event.preventDefault();
         

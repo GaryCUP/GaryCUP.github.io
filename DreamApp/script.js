@@ -24,6 +24,8 @@ document.addEventListener('DOMContentLoaded', function() {
             const li = document.createElement('li');
             li.textContent = selectedTag;
             selectedTagsList.appendChild(li);
+            updateSelectedTagsList();
+
         }
     });
     
@@ -33,16 +35,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const li = document.createElement('li');
             li.textContent = tag;
             const removeBtn = document.createElement('button');
-            removeBtn.textContent = 'X';
-            removeBtn.addEventListener('click', () => {
-                tagsInput.delete(tag);
+            removeBtn.textContent = 'Remove';
+            removeBtn.onclick = () => {
+                tagsInput.splice(tagsInput.indexOf(tag), 1);
                 updateSelectedTagsList();
-            });
+            };
             li.appendChild(removeBtn);
             selectedTagsList.appendChild(li);
         });
     }
-
     document.getElementById('uploadForm').addEventListener('submit', function(event) {
         event.preventDefault();
 

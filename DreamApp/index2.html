@@ -10,14 +10,21 @@
     <script src="script2.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha512-XHDcSyqhOoO2ocB7sKOCJEkUjw/pQCJViP1ynpy+EGh/LggzrP6U/V3a++LQTnZT7sCQKeHRyWHfhN2afjXjCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script> 
-    function difDreams() { 
+    function difDreamsElse() { 
         window.open('index.html',target="_self"); 
     } 
+    function difMoods()
+    {
+        window.open('index3.html',target="_self"); 
+    }
 </script> 
 </head>
 <body>
     
-    <div class="form-container"><input id="btnSwitch" type="button" value="Switch to Elsewhere" onclick="difDreams();"> </div>        <div id="networkGraph" style="height: 600px;"> </div>
+    <div class="form-container"><input id="btnSwitchElse" type="button" value="Switch to Elsewhere" onclick="difDreamsElse();"> </div> 
+    <div class="form-container"><input id="btnSwitchDaylio" type="button" value="Switch to Daylio Moods" onclick="difMoods();"> </div> 
+
+           <div id="networkGraph" style="height: 600px;"> </div>
     
     <div class="container">
         <h1>Upload Your Dreams File(Luci)</h1>

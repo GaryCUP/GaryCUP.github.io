@@ -7,32 +7,33 @@
     <link rel="stylesheet" href="style.css"> 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
-    <script src="script.js"></script>
+    <script src="script3.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.21.0/vis.min.js" integrity="sha512-XHDcSyqhOoO2ocB7sKOCJEkUjw/pQCJViP1ynpy+EGh/LggzrP6U/V3a++LQTnZT7sCQKeHRyWHfhN2afjXjCg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script> 
-    function difDreamsLuci() { 
-        window.open('index2.html', target="_self"); 
-    }
-    function difMoods()
-    {
-        window.open('index3.html',target="_self"); 
+    function difDreamsElse() { 
+        window.open('index.html',target="_self"); 
     } 
+    function difDreamsLuci() { 
+        window.open('index2.html',target="_self"); 
+    } 
+ 
 </script> 
 </head>
 <body>
+    
+    <div class="form-container"><input id="btnSwitchElse" type="button" value="Switch to Elsewhere" onclick="difDreamsElse();"> </div>
     <div class="form-container"><input id="btnSwitchLuci" type="button" value="Switch to Luci" onclick="difDreamsLuci();"> </div>
-    <div class="form-container"><input id="btnSwitchDaylio" type="button" value="Switch to Daylio Moods" onclick="difMoods();"> </div>
 
-        <div id="networkGraph" style="height: 600px;"> </div>
+            <div id="networkGraph" style="height: 600px;"> </div>
     
     <div class="container">
-        <h1>Upload Your Dreams File</h1>
+        <h1>Upload Your Mood File(Daylio)</h1>
         <form id="uploadForm">
-            <label for="file">Choose JSON file:</label>
-            <input type="file" id="file" accept=".json" required>
+            <label for="file">Choose CSV file:</label>
+            <input type="file" id="file" accept=".csv" required>
             <br><br>
             <div class="dropdown">
-                <label for="tagDropdown">Select Tags:</label>
+                <label for="tagDropdown">Select Moods/Activities:</label>
                 <select id="tagDropdown">
                     <!-- Options will be dynamically populated by JavaScript -->
                 </select>
@@ -66,6 +67,7 @@
         <div id="result" class="result hidden"></div>
     </div>
     <canvas id="timeSeriesChart" width="400" height="200"></canvas>
+    <canvas id="stackedBarChart"></canvas>
 
 </body>
 </html>
