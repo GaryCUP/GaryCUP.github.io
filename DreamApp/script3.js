@@ -89,9 +89,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data.forEach(entry => {
             tagsData.moods.add(entry.mood);
             entry.activities.split('|').forEach(activity => {
-               // tagsData.activities.add(activity.trim().replace(/^"|"$/, ''));
-             tagsData.activities.add(activity.replace(/"/g, "").trim());
-
+                tagsData.activities.add(activity.trim().replace(/^"|"$/g, ''));
             });
         });
         tagsData.moods = Array.from(tagsData.moods);
@@ -150,11 +148,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return true;
         });
     }
-    function normalizeTag(tag) {
-        //return tag.trim().replace(/^"(.*)"$/, '$1');        
-        return tag.replace(/"/g, "").trim();
-
-    }
 
     function calculateTagStats(dreams, selectedTags) {
         const tagCounts = { moods: {}, activities: {} };
@@ -162,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         dreams.forEach(dream => {
             const mood = dream.mood;
-            const activities = dream.activities.split('|').map(a => a.replace(/"/g, "").trim())
+            const activities = dream.activities.split('|').map(a => a.trim().replace(/^"|"$/g, ''));
 
             if (!selectedTags.length || selectedTags.includes(mood)) {
                 if (!tagCounts.moods[mood]) tagCounts.moods[mood] = 0;
@@ -198,7 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let chartInstance = null;
-    let stackedBarChartInstance=null;
 
     function createTimeSeriesChart(dreams, selectedTags) {
         const ctx = document.getElementById('timeSeriesChart').getContext('2d');
@@ -217,16 +209,11 @@ document.addEventListener('DOMContentLoaded', function() {
         selectedTags.forEach(tag => {
             cumulativeCounts[tag] = 0;
         });
-       
-        
 
         dreams.forEach(dream => {
             const dreamDateTime = new Date(dream.full_date + ' ' + dream.time).toISOString();
-            const taggs = [...dream.activities.split('|').map(a => a.trim())];
             selectedTags.forEach(tag => {
-                if(taggs.some(t => (t.toLowerCase().trim()) === (tag.toLowerCase())))
-                    {
-                      
+                if (dream.mood === tag || dream.activities.includes(tag)) {
                     cumulativeCounts[tag]++;
                 }
                 if (!tagData[tag][dreamDateTime] && cumulativeCounts[tag] > 0) {
@@ -291,105 +278,108 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    function createNetworkGraph(coOccurrence) {
-        const container = document.getElementById('networkGraph');
-        const nodes = new vis.DataSet();
-        const edges = new vis.DataSet();
     
-        // Create nodes and edges from co-occurrence data
-        for (const [type, tags] of Object.entries(coOccurrence)) {
-            for (const [tagName, coTags] of Object.entries(tags)) {
-                const fromId = `${type}-${tagName}`;  // Ensure unique ID
-                nodes.add({ id: fromId, label: tagName, group: type });
-    
-                for (const [coTagType, coTagsMap] of Object.entries(coTags)) {
-                    for (const [coTagName, count] of Object.entries(coTagsMap)) {
-                        const toId = `${coTagType}-${coTagName}`;  // Ensure unique ID
-    
-                        // Check if the reverse edge already exists
-                        const reverseEdgeId = `${toId}-${fromId}`;
-                        if (!edges.get(reverseEdgeId)) {
-                            const edgeId = `${fromId}-${toId}`;
-                            if (!edges.get(edgeId)) {
-                                edges.add({
-                                    id: edgeId,
-                                    from: fromId,
-                                    to: toId,
-                                    label: count.toString(),
-                                    font: { align: 'middle' },
-                                    arrows: 'both',
-                                    color: { opacity: 0.25 }  // Make edges slightly transparent
-                                });
-                            }
-                        }
-                    }
-                }
+function createNetworkGraph(coOccurrence) {
+    const container = document.getElementById('networkGraph');
+    const nodes = new vis.DataSet();
+    const edges = new vis.DataSet();
+
+    // Create nodes for moods and activities
+    for (const mood of tagsData.moods) {
+        nodes.add({ id: `mood-${mood}`, label: mood, group: 'moods' });
+    }
+    for (const activity of tagsData.activities) {
+        nodes.add({ id: `activity-${activity}`, label: activity, group: 'activities' });
+    }
+
+    // Create edges between moods and activities
+    for (const [mood, activities] of Object.entries(coOccurrence.moods)) {
+        for (const [activity, count] of Object.entries(activities)) {
+            const edgeId = `mood-${mood}-activity-${activity}`;
+            edges.add({
+                id: edgeId,
+                from: `mood-${mood}`,
+                to: `activity-${activity}`,
+                label: count.toString(),
+                font: { align: 'middle' },
+                arrows: 'to',
+                color: { opacity: 0.5 }
+            });
+        }
+    }
+
+    // Create edges between activities
+    for (const [activity, coActivities] of Object.entries(coOccurrence.activities)) {
+        for (const [coActivity, count] of Object.entries(coActivities)) {
+            if (activity !== coActivity) {
+                const edgeId = `activity-${activity}-activity-${coActivity}`;
+                edges.add({
+                    id: edgeId,
+                    from: `activity-${activity}`,
+                    to: `activity-${coActivity}`,
+                    label: count.toString(),
+                    font: { align: 'middle' },
+                    arrows: 'to',
+                    color: { opacity: 0.3 }
+                });
             }
         }
-    
-        const data = {
-            nodes: nodes,
-            edges: edges
-        };
-    
-        const options = {
-            interaction: {
-                hover: true,  // Enable hover interaction
-                navigationButtons: true,  // Add navigation buttons
-                keyboard: true  // Allow keyboard navigation
-            },
-            autoResize: false,  // Dynamically resize the graph,
-            nodes: {
-                shape: 'circle',
-                size: 10,
-                font: {
-                    size: 14,
-                    face: 'Tahoma'
-                }
-            },
-            edges: {
-                width: 2,
-                smooth: {
-                    type: 'dynamic'
-                }
-            },
-            physics: {
-                enabled:true,
-                stabilization: true,
-                barnesHut: {
-                    gravitationalConstant: -30000,
-                    centralGravity: 0.4,
-                   // springLength: 100,
-                  //  springConstant: 0.06,
-                    damping: 0.6,
-                    avoidOverlap: .95
-                }
-            },
-            layout:{
-                improvedLayout: true,
-                
-                hierarchical: 
-                {
-                enabled: false,
-                sortMethod: 'hubsize'
-                }   
+    }
+
+    const data = {
+        nodes: nodes,
+        edges: edges
+    };
+
+    const options = {
+        nodes: {
+            shape: 'dot',
+            size: 16,
+            font: {
+                size: 12,
+                face: 'Tahoma'
             }
-			
-			
-        };
-    
-       const network= new vis.Network(container, data, options);
-          // Highlight edges on hover
+        },
+        edges: {
+            width: 0.15,
+            color: { inherit: 'both' },
+            smooth: {
+                type: 'continuous'
+            }
+        },
+        physics: {
+            stabilization: false,
+            barnesHut: {
+                gravitationalConstant: -80000,
+                springConstant: 0.001,
+                springLength: 200
+            }
+        },
+        interaction: {
+            tooltipDelay: 200,
+            hideEdgesOnDrag: true
+        }
+    };
+
+    const network = new vis.Network(container, data, options);
+
+    network.on("stabilizationProgress", function(params) {
+        console.log("Stabilization progress:", params.iterations, "/", params.total);
+    });
+
+    network.once("stabilizationIterationsDone", function() {
+        console.log("Stabilization finished");
+    });
+
     network.on("hoverNode", function (params) {
         const connectedEdges = network.getConnectedEdges(params.node);
         edges.update(connectedEdges.map(edgeId => ({ id: edgeId, color: { opacity: 1 } })));
     });
 
     network.on("blurNode", function (params) {
-        edges.update(edges.map(edge => ({ id: edge.id, color: { opacity: 0.25 } })));
+        edges.update(edges.getIds().map(edgeId => ({ id: edgeId, color: { opacity: 0.3 } })));
     });
 
-    // Focus on node when clicked
     network.on("click", function (params) {
         if (params.nodes.length) {
             const nodeId = params.nodes[0];
@@ -402,10 +392,8 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-         
-    }
-    
-
+}
+let stackedBarChartInstance = null;
   function createStackedBarChart(dreams,selectedTags) {
         const ctx = document.getElementById('stackedBarChart').getContext('2d');
 
@@ -446,7 +434,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const labels = Object.keys(monthlyData).sort();
 
-
+        /*       const datasets = selectedTags.map(tag => {
+            const dataPoints = [];
+            for (const [date, count] of Object.entries(tagData[tag])) {
+                dataPoints.push({ x: date, y: count });
+            }
+            return {
+                label: tag,
+                data: dataPoints,
+                fill: false,
+                borderColor: getRandomColor(),
+                tension: 0.1,
+                pointRadius: 2,
+                pointHoverRadius: 4
+            };
+        });
+        
+        */
 
          //working//
         const datasets = Array.from(allTags).map(tag => ({
@@ -456,7 +460,22 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
 
 
-
+/*const datasets = selectedTags.map(tag => {
+    const dataPoints = [];
+    for (const [date, count] of Object.entries(tagData[tag])) {
+        dataPoints.push({ x: date, y: count });
+    }
+    return {
+        label: tag,
+        data: dataPoints,
+        fill: false,
+        borderColor: getRandomColor(),
+        tension: 0.1,
+        pointRadius: 2,
+        pointHoverRadius: 4
+    };
+});
+*/
 
         stackedBarChartInstance = new Chart(ctx, {
             type: 'bar',
@@ -541,8 +560,6 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create stacked bar chart
         createStackedBarChart(dreams, selectedTags);
     
-        // Create network graph
-        createNetworkGraph(coOccurrence);
 		
     }
 });
