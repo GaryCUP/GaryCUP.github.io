@@ -232,7 +232,19 @@ document.addEventListener('DOMContentLoaded', function() {
             pointHoverRadius: 4 // Hover size
         };
     });
+    const minDateTs = Math.min(...dreams.map(dream => new Date(dream.date).getTime() * 1000));
+    const maxDateTs = Math.max(...dreams.map(dream => new Date(dream.date).getTime() * 1000));
+    const dateRangeTs = maxDateTs - minDateTs;
 
+    // Determine appropriate time unit based on date range
+    let timeUnitTs = 'day';
+    if (dateRangeTs > 10 * 365 * 24 * 60 * 60 * 1000) { // If range is more than 10 years
+        timeUnitTs = 'year';
+    } else if (dateRangeTs > 180 * 24 * 60 * 60 * 1000) { // If range is more than 6 months
+        timeUnitTs = 'month';
+    } else if (dateRangeTs > 7 * 24 * 60 * 60 * 1000) { // If range is more than a week
+        timeUnitTs = 'week';
+    }
     chartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -243,7 +255,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 x: {
                     type: 'time',
                     time: {
-                        unit: 'day'
+                        unit: timeUnitTs
                     },
                     title: {
                         display: true,
@@ -266,6 +278,21 @@ document.addEventListener('DOMContentLoaded', function() {
                             const value = tooltipItem.parsed.y;
                             return `${label}: ${value}`;
                         }
+                    }
+                },
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'xy',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'xy',
                     }
                 }
             }
@@ -349,7 +376,19 @@ function createTagRankChart(dreams, selectedTags) {
         pointRadius: 2,
         pointHoverRadius: 4
     }));
+    const minDate = Math.min(...dreams.map(dream => new Date(dream.date).getTime() * 1000));
+    const maxDate = Math.max(...dreams.map(dream => new Date(dream.date).getTime() * 1000));
+    const dateRange = maxDate - minDate;
 
+    // Determine appropriate time unit based on date range
+    let timeUnit = 'day';
+    if (dateRange > 5 * 365 * 24 * 60 * 60 * 1000) { // If range is more than 5 years
+        timeUnit = 'year';
+    } else if (dateRange > 60 * 24 * 60 * 60 * 1000) { // If range is more than 2 months
+        timeUnit = 'month';
+    } else if (dateRange > 7 * 24 * 60 * 60 * 1000) { // If range is more than a week
+        timeUnit = 'week';
+    }
     window.tagRankChartInstance = new Chart(ctx, {
         type: 'line',
         data: {
@@ -360,19 +399,25 @@ function createTagRankChart(dreams, selectedTags) {
                 x: {
                     type: 'time',
                     time: {
-                        unit: 'day'
+                        unit: timeUnit
                     },
                     title: {
                         display: true,
                         text: 'Dream Date'
-                    }
+                    },
+
+                    ticks:
+                    {
+                        
+                    },
                 },
                 y: {
                     type: 'time',
                     reverse:true,
+                    
                     time: {
-                        unit: 'day'
-                    },
+                        unit:timeUnit
+                                        },
                     title: {
                         display: true,
                         text: 'Actual or Projected Date to Become Rank 1'
@@ -380,6 +425,7 @@ function createTagRankChart(dreams, selectedTags) {
                 }
             },
             plugins: {
+                
                 tooltip: {
                     callbacks: {
                         label: function(context) {
@@ -390,6 +436,21 @@ function createTagRankChart(dreams, selectedTags) {
                                 ? `${label}: Ranked 1st on ${xDate}`
                                 : `${label}: Projected to be rank 1 on ${yDate} (Dream date: ${xDate})`;
                         }
+                    }
+                },
+                zoom: {
+                    zoom: {
+                        wheel: {
+                            enabled: true,
+                        },
+                        pinch: {
+                            enabled: true
+                        },
+                        mode: 'xy',
+                    },
+                    pan: {
+                        enabled: true,
+                        mode: 'xy',
                     }
                 }
             }

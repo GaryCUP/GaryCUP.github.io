@@ -201,6 +201,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     };
                 });
         
+                const minDateTs = Math.min(...dreams.map(dream => dream.timestamp * 1000));
+                const maxDateTs = Math.max(...dreams.map(dream => dream.timestamp * 1000));
+                const dateRangeTs = maxDateTs - minDateTs;
+            
+                // Determine appropriate time unit based on date range
+                let timeUnitTs = 'day';
+                if (dateRangeTs > 5 * 365 * 24 * 60 * 60 * 1000) { // If range is more than 5 years
+                    timeUnitTs = 'year';
+                } else if (dateRangeTs > 60 * 24 * 60 * 60 * 1000) { // If range is more than 2 months
+                    timeUnitTs = 'month';
+                } else if (dateRangeTs > 7 * 24 * 60 * 60 * 1000) { // If range is more than a week
+                    timeUnitTs = 'week';
+                }
                 chartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -211,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             x: {
                                 type: 'time',
                                 time: {
-                                    unit: 'day'
+                                    unit: timeUnitTs
                                 },
                                 title: {
                                     display: true,
@@ -234,6 +247,21 @@ document.addEventListener('DOMContentLoaded', function() {
                                         const value = tooltipItem.parsed.y;
                                         return `${label}: ${value}`;
                                     }
+                                }
+                            },
+                            zoom: {
+                                zoom: {
+                                    wheel: {
+                                        enabled: true,
+                                    },
+                                    pinch: {
+                                        enabled: true
+                                    },
+                                    mode: 'xy',
+                                },
+                                pan: {
+                                    enabled: true,
+                                    mode: 'xy',
                                 }
                             }
                         }
@@ -410,7 +438,19 @@ document.addEventListener('DOMContentLoaded', function() {
                     pointRadius: 2,
                     pointHoverRadius: 4
                 }));
+                const minDate = Math.min(...dreams.map(dream => dream.timestamp * 1000));
+                const maxDate = Math.max(...dreams.map(dream => dream.timestamp * 1000));
+                const dateRange = maxDate - minDate;
             
+                // Determine appropriate time unit based on date range
+                let timeUnit = 'day';
+                if (dateRange > 5 * 365 * 24 * 60 * 60 * 1000) { // If range is more than 5 years
+                    timeUnit = 'year';
+                } else if (dateRange > 60 * 24 * 60 * 60 * 1000) { // If range is more than 2 months
+                    timeUnit = 'month';
+                } else if (dateRange > 7 * 24 * 60 * 60 * 1000) { // If range is more than a week
+                    timeUnit = 'week';
+                }
                 window.tagRankChartInstance = new Chart(ctx, {
                     type: 'line',
                     data: {
@@ -421,7 +461,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             x: {
                                 type: 'time',
                                 time: {
-                                    unit: 'day'
+                                    unit: timeUnit
                                 },
                                 title: {
                                     display: true,
@@ -432,7 +472,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 type: 'time',
                                 reverse:true,
                                 time: {
-                                    unit: 'day'
+                                    unit: timeUnit
                                 },
                                 title: {
                                     display: true,
@@ -451,6 +491,21 @@ document.addEventListener('DOMContentLoaded', function() {
                                             ? `${label}: Ranked 1st on ${xDate}`
                                             : `${label}: Projected to be rank 1 on ${yDate} (Dream date: ${xDate})`;
                                     }
+                                }
+                            },
+                            zoom: {
+                                zoom: {
+                                    wheel: {
+                                        enabled: true,
+                                    },
+                                    pinch: {
+                                        enabled: true
+                                    },
+                                    mode: 'xy',
+                                },
+                                pan: {
+                                    enabled: true,
+                                    mode: 'xy',
                                 }
                             }
                         }
