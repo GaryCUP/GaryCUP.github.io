@@ -337,8 +337,126 @@ document.addEventListener('DOMContentLoaded', function() {
           });
             }
             
-          
+            function createTagRankChart(dreams, selectedTags) {
+                const ctx = document.getElementById('tagRankChart').getContext('2d');
             
+                if (window.tagRankChartInstance) {
+                    window.tagRankChartInstance.destroy();
+                }
+            
+                dreams.sort((a, b) => a.timestamp - b.timestamp);
+            
+                const tagCounts = {};
+                const tagFirstOccurrence = {};
+                const tagGrowthRates = {};
+                const datasets = {};
+            
+                selectedTags.forEach(tag => {
+                    tagCounts[tag] = 0;
+                    tagFirstOccurrence[tag] = null;
+                    tagGrowthRates[tag] = null;
+                    datasets[tag] = [];
+                });
+            
+                // Function to calculate growth rate
+                function calculateGrowthRate(tag, currentDate) {
+                    if (tagFirstOccurrence[tag] === null) return null;
+                    const totalDays = (currentDate - tagFirstOccurrence[tag]) / (1000 * 60 * 60 * 24);
+                    return tagCounts[tag] > 1 ? totalDays / (tagCounts[tag] - 1) : null;
+                }
+            
+                // Process each dream
+                dreams.forEach((dream, index) => {
+                    const dreamDate = new Date(dream.timestamp * 1000);
+                    const dreamDateISO = dreamDate.toISOString().split('T')[0];
+            
+                    // Update counts and calculate growth rates
+                    selectedTags.forEach(tag => {
+                        if (dream.tags.includes(tag)) {
+                            tagCounts[tag]++;
+                            if (tagFirstOccurrence[tag] === null) {
+                                tagFirstOccurrence[tag] = dreamDate;
+                            }
+                        }
+                        tagGrowthRates[tag] = calculateGrowthRate(tag, dreamDate);
+                    });
+            
+                    // Determine current top tag(s)
+                    const maxCount = Math.max(...Object.values(tagCounts));
+                    const topTags = selectedTags.filter(tag => tagCounts[tag] === maxCount);
+            
+                    // Add data points for all tags
+                    selectedTags.forEach(tag => {
+                        if (tagCounts[tag] > 0) {
+                            if (topTags.includes(tag)) {
+                                // Top tag(s) follow the diagonal
+                                datasets[tag].push({ x: dreamDate.getTime(), y: dreamDate.getTime() });
+                            } else if (tagGrowthRates[tag] !== null) {
+                                // Project when this tag might become top
+                                const projectedDays = (maxCount - tagCounts[tag]) * tagGrowthRates[tag];
+                                const projectedDate = new Date(dreamDate.getTime() + projectedDays * 24 * 60 * 60 * 1000);
+                                datasets[tag].push({ x: dreamDate.getTime(), y: projectedDate.getTime() });
+                            }
+                        }
+                    });
+                });
+            
+                const chartDatasets = selectedTags.map(tag => ({
+                    label: tag,
+                    data: datasets[tag],
+                    fill: false,
+                    borderColor: getRandomColor(),
+                    tension: 0.1,
+                    pointRadius: 2,
+                    pointHoverRadius: 4
+                }));
+            
+                window.tagRankChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        datasets: chartDatasets
+                    },
+                    options: {
+                        scales: {
+                            x: {
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Dream Date'
+                                }
+                            },
+                            y: {
+                                type: 'time',
+                                reverse:true,
+                                time: {
+                                    unit: 'day'
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Actual or Projected Date to Become Rank 1'
+                                }
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const label = context.dataset.label || '';
+                                        const xDate = new Date(context.parsed.x).toLocaleDateString();
+                                        const yDate = new Date(context.parsed.y).toLocaleDateString();
+                                        return xDate === yDate
+                                            ? `${label}: Ranked 1st on ${xDate}`
+                                            : `${label}: Projected to be rank 1 on ${yDate} (Dream date: ${xDate})`;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
             
             function getRandomColor() {
                 return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -356,7 +474,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 resultDiv.innerHTML += '</ul>';
             
                 resultDiv.classList.remove('hidden');
-            
+            //create timeto1st chrat
+            createTagRankChart(dreams, selectedTags);
                 // Create time series chart
                 createTimeSeriesChart(dreams, selectedTags);
             
