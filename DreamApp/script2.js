@@ -512,6 +512,149 @@ document.addEventListener('DOMContentLoaded', function() {
                     }
                 });
             }
+            function formatUnixTimestamp(unixTimestamp) {
+                const date = new Date(unixTimestamp * 1000); // Convert Unix timestamp to milliseconds
+                const options = { year: 'numeric', month: 'short' };
+                
+                return date.toLocaleDateString('en-US', options).replace(',', '');
+              }
+
+            let stackedBarChartInstance = null;
+            function createStackedBarChart(dreams,selectedTags) {
+                  const ctx = document.getElementById('stackedBarChart').getContext('2d');
+          
+                  if (stackedBarChartInstance) {
+                      stackedBarChartInstance.destroy();
+                  }
+          dreams.sort((a, b) => a.timestamp - b.timestamp);
+                  const monthlyData = {};
+                  const allTags = new Set();
+                  const tagData = {};
+                  selectedTags.forEach(tag => {
+                      tagData[tag] = {};
+                  });
+          
+                  dreams.forEach(dream => {
+                   // const dreamDate = new Date(dream.timestamp * 1000);
+                      const month = formatUnixTimestamp(dream.timestamp)// YYYY-MM
+                      const tags = [...dream.tags.map(a => a.trim('"'))];
+          
+                      if (!monthlyData[month]) {
+                          monthlyData[month] = {};
+                      }
+          
+                      selectedTags.forEach(tag => {
+                          if(tags.some(t => (t.toLowerCase().trim()) === (tag.toLowerCase())))
+                          {
+                              
+                              allTags.add(tag);
+                          if (!monthlyData[month][tag]) {
+                              monthlyData[month][tag] = 0;
+                          }
+                          monthlyData[month][tag]++;
+          
+                          }
+                         // monthlyData[month][tag]++;
+                          
+                      });
+                  });
+          
+                  const labels = Object.keys(monthlyData);
+          
+                  /*       const datasets = selectedTags.map(tag => {
+                      const dataPoints = [];
+                      for (const [date, count] of Object.entries(tagData[tag])) {
+                          dataPoints.push({ x: date, y: count });
+                      }
+                      return {
+                          label: tag,
+                          data: dataPoints,
+                          fill: false,
+                          borderColor: getRandomColor(),
+                          tension: 0.1,
+                          pointRadius: 2,
+                          pointHoverRadius: 4
+                      };
+                  });
+                  
+                  */
+          
+                   //working//
+                  const datasets = Array.from(allTags).map(tag => ({
+                      label: tag,
+                      data: labels.map(month => monthlyData[month][tag] || 0),
+                      backgroundColor: getRandomColor()
+                  }));
+          
+          
+          /*const datasets = selectedTags.map(tag => {
+              const dataPoints = [];
+              for (const [date, count] of Object.entries(tagData[tag])) {
+                  dataPoints.push({ x: date, y: count });
+              }
+              return {
+                  label: tag,
+                  data: dataPoints,
+                  fill: false,
+                  borderColor: getRandomColor(),
+                  tension: 0.1,
+                  pointRadius: 2,
+                  pointHoverRadius: 4
+              };
+          });
+          */
+          
+                  stackedBarChartInstance = new Chart(ctx, {
+                      type: 'bar',
+                      data: {
+                          labels: labels,
+                          datasets: datasets
+                      },
+                      options: {
+                          scales: {
+                              x: {
+                                  stacked: true,
+                                  title: {
+                                      display: true,
+                                      text: 'Month'
+                                  },
+                                  grid:{
+                                      offset:true
+                                  },
+                              },
+                              y: {
+                                  stacked: true,
+                                  beginAtZero: true,
+                                  title: {
+                                      display: true,
+                                      text: 'Count'
+                                  }
+                              }
+                          },
+                       
+                          plugins: {
+                              tooltip: {
+                                  mode: 'index',
+                                  intersect: false,
+                              
+                              },
+                              legend: {
+                                  position: 'top',
+                              },
+                              title: {
+                                  display: true,
+                                  text: 'Activities and Moods by Month'
+                              },
+                              datalabels: {
+                                  formatter: (value) => {
+                                    return value > 0 ? value : '';
+                                  }
+                                }
+                          },
+                          responsive: true
+                      }
+                  });
+              }
             
             function getRandomColor() {
                 return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
@@ -535,7 +678,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 createTimeSeriesChart(dreams, selectedTags);
             
                 // Create network graph
-                createNetworkGraph(coOccurrence);
+             ///createNetworkGraph(coOccurrence);////////////////////////////////////////////////////////////////
+
+                  // Create stacked bar chart
+        createStackedBarChart(dreams, selectedTags);
             }
 
         });
