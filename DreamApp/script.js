@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
         dreams.forEach(dream => {
             dream.tags.forEach(tag => {
-                const tagName = tag.name;
+                const tagName = tag.tag_name;
                 const tagType = tag.type;
     
                 if (!selectedTags.length || selectedTags.includes(tagName)) {
