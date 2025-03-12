@@ -79,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const tags = {};
         data.forEach(dream => {
             dream.tags.forEach(tag => {
-                const tagType = tag.type;
-                const tagName = tag.name;
+                const tagType = tag.tag_type;
+                const tagName = tag.tag_name;
 
                 if (!tags[tagType]) {
                     tags[tagType] = [];
