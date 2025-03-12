@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
         dreams.forEach(dream => {
             dream.tags.forEach(tag => {
                 const tagName = tag.tag_name;
-                const tagType = tag.type;
+                const tagType = tag.tag_type;
     
                 if (!selectedTags.length || selectedTags.includes(tagName)) {
                     if (!tagCounts[tagType]) {
@@ -160,9 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     tagCounts[tagType][tagName]++;
     
                     dream.tags.forEach(coTag => {
-                        if (coTag.name !== tagName) {
-                            const coTagName = coTag.name;
-                            const coTagType = coTag.type;
+                        if (coTag.tag_name !== tagName) {
+                            const coTagName = coTag.tag_name;
+                            const coTagType = coTag.tag_type;
     
                             if (!coOccurrence[tagType]) {
                                 coOccurrence[tagType] = {};
@@ -208,7 +208,7 @@ document.addEventListener('DOMContentLoaded', function() {
     dreams.forEach(dream => {
         const dreamDate = new Date(dream.date).toISOString().split('T')[0];
         selectedTags.forEach(tag => {
-            if (dream.tags.some(t => t.name === tag)) {
+            if (dream.tags.some(t => t.tag_name === tag)) {
                 cumulativeCounts[tag]++;
             }
             if (!tagData[tag][dreamDate] && cumulativeCounts[tag] > 0) {
@@ -337,7 +337,7 @@ function createTagRankChart(dreams, selectedTags) {
 
         // Update counts and calculate growth rates
         selectedTags.forEach(tag => {
-            if (dream.tags.some(t => t.name === tag)) {
+            if (dream.tags.some(t => t.tag_name === tag)) {
                 tagCounts[tag]++;
                 if (tagFirstOccurrence[tag] === null) {
                     tagFirstOccurrence[tag] = dreamDate;
