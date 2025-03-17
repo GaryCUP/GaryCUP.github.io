@@ -2,10 +2,11 @@
 const DreamJournalTagExplorer = () => {
     // Destructure Recharts components
     const {
-      BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
-      ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, 
-      RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis
-    } = Recharts;
+        BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
+        ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, 
+        RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, 
+        ComposedChart, Area
+      } = Recharts;
   
     // State for storing data
     const [dreamData, setDreamData] = React.useState([]);

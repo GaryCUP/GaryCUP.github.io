@@ -1,13 +1,14 @@
 // DaylioExplorer component
+import React, { useState, useEffect } from 'react';
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
+  ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, 
+  ComposedChart, Area 
+} from 'recharts';
+import Papa from 'papaparse';
+import _ from 'lodash';
+
 const DaylioExplorer = () => {
-    // Destructure Recharts components
-    const {
-      BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
-      ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, 
-      RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, 
-      ComposedChart, Area
-    } = Recharts;
-  
     // State for storing data
     const [daylioData, setDaylioData] = React.useState([]);
     const [fileUploaded, setFileUploaded] = React.useState(false);
@@ -1018,3 +1019,4 @@ const DaylioExplorer = () => {
       </div>
     );
   };
+  export default DaylioExplorer;
